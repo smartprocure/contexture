@@ -100,6 +100,10 @@ export let renameOn = (from, to, obj) => {
 export let compactMapAsync = async (...args) =>
   _.compact(await Promise.all(F.mapIndexed(...args)))
 
+// Similar to F.getOrReturn but for _.set
+export const setOrReturn = (path, val, obj) =>
+  path ? _.set(path, val, obj) : val
+
 // _.groupBy but also passing the current key
 export const groupByIndexed = _.curry((it, coll) =>
   F.reduceIndexed(

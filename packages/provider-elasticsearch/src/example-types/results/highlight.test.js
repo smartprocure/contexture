@@ -1,10 +1,11 @@
 import {
   getHighlightFields,
   mergeHighlights,
-  inlineHighlightResults,
+  alignHighlightsWithSourceStructure,
+  highlightArray,
 } from './highlight.js'
 
-const tags = { pre: '<em>', post: '</em>' }
+const highlightConfig = { pre_tag: '<em>', post_tag: '</em>' }
 
 describe('getHighlightFields()', () => {
   it('should exclude fields without mappings', () => {
@@ -49,8 +50,8 @@ describe('getHighlightFields()', () => {
       {
         elasticsearch: {
           subFields: {
-            keyword: { shouldHighlight: false },
-            exact: { shouldHighlight: true },
+            keyword: { highlight: false },
+            exact: { highlight: true },
           },
         },
         fields: {
@@ -82,7 +83,7 @@ describe('getHighlightFields()', () => {
       {
         elasticsearch: {
           subFields: {
-            exact: { shouldHighlight: true },
+            exact: { highlight: true },
           },
         },
         fields: {
@@ -152,7 +153,7 @@ describe('getHighlightFields()', () => {
       {
         elasticsearch: {
           subFields: {
-            exact: { shouldHighlight: true },
+            exact: { highlight: true },
           },
         },
         fields: {
@@ -188,7 +189,8 @@ describe('getHighlightFields()', () => {
 describe('mergeHighlights()', () => {
   it('should merge highlights that do not overlap', () => {
     const actual = mergeHighlights(
-      tags,
+      highlightConfig.pre_tag,
+      highlightConfig.post_tag,
       'The <em>quick</em> brown fox jumps over the lazy dog',
       'The quick brown <em>fox jumps</em> over the lazy dog'
     )
@@ -199,7 +201,8 @@ describe('mergeHighlights()', () => {
 
   it('should merge highlights that overlap', () => {
     const actual = mergeHighlights(
-      tags,
+      highlightConfig.pre_tag,
+      highlightConfig.post_tag,
       'The quick brown fox <em>jumps over</em> the lazy dog',
       'The quick brown <em>fox jumps</em> over the lazy dog'
     )
@@ -209,7 +212,8 @@ describe('mergeHighlights()', () => {
 
   it('should merge highlights that are contained within another', () => {
     const actual = mergeHighlights(
-      tags,
+      highlightConfig.pre_tag,
+      highlightConfig.post_tag,
       'The quick brown fox <em>jumps</em> over the lazy dog',
       'The quick brown <em>fox jumps over</em> the lazy dog'
     )
@@ -219,7 +223,8 @@ describe('mergeHighlights()', () => {
 
   it('should merge highlights at the end of the string', () => {
     const actual = mergeHighlights(
-      tags,
+      highlightConfig.pre_tag,
+      highlightConfig.post_tag,
       'The quick brown fox <em>jumps</em> over the lazy dog',
       'The quick brown fox jumps over the lazy <em>dog</em>'
     )
@@ -229,25 +234,83 @@ describe('mergeHighlights()', () => {
   })
 })
 
-describe('inlineHighlightResults()', () => {
-  it('should work', () => {
-    const hit = {
-      _source: {
-        name: 'John Wayne',
-        state: 'New Jersey',
-        city: { street: 'Jefferson Ave' },
+describe('highlightArray()', () => {
+  it('should return ordered array of fragments', () => {
+    const actual = highlightArray(
+      ['Meridian St.', 'Collins Ave.'],
+      ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
+      highlightConfig
+    )
+    const expected = ['<em>Meridian St.</em>', 'Collins <em>Ave.</em>']
+    expect(actual).toEqual(expected)
+  })
+
+  it('should return ordered and filtered array of fragments', () => {
+    const actual = highlightArray(
+      ['Meridian St.', 'Collins Ave.', 'Raunch Rd.'],
+      ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
+      { ...highlightConfig, filterSourceArrays: true }
+    )
+    const expected = ['<em>Meridian St.</em>', 'Collins <em>Ave.</em>']
+    expect(actual).toEqual(expected)
+  })
+
+  it('should return ordered array of objects with fragments', () => {
+    const actual = highlightArray(
+      [
+        { state: 'Florida', city: { number: 405, street: 'Meridian St.' } },
+        { state: 'Georgia', city: { number: 235, street: 'Collins Ave.' } },
+      ],
+      ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
+      { ...highlightConfig, fragmentPath: 'city.street' }
+    )
+    const expected = [
+      {
+        state: 'Florida',
+        city: { number: 405, street: '<em>Meridian St.</em>' },
       },
-      highlight: {
-        state: ['<em>New</em> Jersey'],
-        'state.exact': ['New <em>Jersey</em>'],
-        'city.street': ['<em>Jefferson</em> Ave'],
-        'city.street.exact': ['Jefferson <em>Ave</em>'],
+      {
+        state: 'Georgia',
+        city: { number: 235, street: 'Collins <em>Ave.</em>' },
       },
-    }
+    ]
+    expect(actual).toEqual(expected)
+  })
+
+  it('should return ordered and filtered array of objects with fragments', () => {
+    const actual = highlightArray(
+      [
+        { state: 'Florida', city: { number: 405, street: 'Meridian St.' } },
+        { state: 'Georgia', city: { number: 235, street: 'Collins Ave.' } },
+        { state: 'Iowa', city: { number: 111, street: 'Raunch Rd.' } },
+      ],
+      ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
+      {
+        ...highlightConfig,
+        fragmentPath: 'city.street',
+        filterSourceArrays: true,
+      }
+    )
+    const expected = [
+      {
+        state: 'Florida',
+        city: { number: 405, street: '<em>Meridian St.</em>' },
+      },
+      {
+        state: 'Georgia',
+        city: { number: 235, street: 'Collins <em>Ave.</em>' },
+      },
+    ]
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('alignHighlightsWithSourceStructure()', () => {
+  describe('text fields', () => {
     const schema = {
       elasticsearch: {
         subFields: {
-          exact: { shouldHighlight: true },
+          exact: { highlight: true },
         },
       },
       fields: {
@@ -263,43 +326,38 @@ describe('inlineHighlightResults()', () => {
         },
       },
     }
-    inlineHighlightResults(tags, schema, {}, [hit])
-    const expected = {
-      _source: {
-        name: 'John Wayne',
+
+    it('should merge fragments', () => {
+      const hit = {
+        _source: {
+          name: 'John Wayne',
+          state: 'New Jersey',
+          city: { street: 'Jefferson Ave' },
+        },
+        highlight: {
+          state: ['<em>New</em> Jersey'],
+          'state.exact': ['New <em>Jersey</em>'],
+          'city.street': ['<em>Jefferson</em> Ave'],
+          'city.street.exact': ['Jefferson <em>Ave</em>'],
+        },
+      }
+      const actual = alignHighlightsWithSourceStructure(
+        schema,
+        highlightConfig
+      )(hit)
+      const expected = {
         state: '<em>New</em> <em>Jersey</em>',
-        city: { street: '<em>Jefferson</em> <em>Ave</em>' },
-      },
-      highlight: {
-        state: ['<em>New</em> Jersey'],
-        'state.exact': ['New <em>Jersey</em>'],
-        'city.street': ['<em>Jefferson</em> Ave'],
-        'city.street.exact': ['Jefferson <em>Ave</em>'],
-      },
-    }
-    expect(hit).toEqual(expected)
+        'city.street': '<em>Jefferson</em> <em>Ave</em>',
+      }
+      expect(actual).toEqual(expected)
+    })
   })
 
-  it('should not merge fragments for blob text fields', () => {
-    const hit = {
-      _source: {},
-      highlight: {
-        blob: [
-          '<em>Meridian</em> St.',
-          '<em>Collins</em> Ave.',
-          '<em>Ocean</em> Drive',
-        ],
-        'blob.exact': [
-          '<em>Jefferson</em> Ave.',
-          '<em>Washington</em> St.',
-          '<em>Lincoln</em> Rd.',
-        ],
-      },
-    }
+  describe('blob text fields', () => {
     const schema = {
       elasticsearch: {
         subFields: {
-          exact: { shouldHighlight: true },
+          exact: { highlight: true },
         },
       },
       fields: {
@@ -311,16 +369,38 @@ describe('inlineHighlightResults()', () => {
         },
       },
     }
-    inlineHighlightResults(tags, schema, {}, [hit])
-    expect(hit._source).toEqual({
-      blob: [
-        '<em>Meridian</em> St.',
-        '<em>Collins</em> Ave.',
-        '<em>Ocean</em> Drive',
-        '<em>Jefferson</em> Ave.',
-        '<em>Washington</em> St.',
-        '<em>Lincoln</em> Rd.',
-      ],
+
+    it('should not merge fragments', () => {
+      const hit = {
+        _source: {},
+        highlight: {
+          blob: [
+            '<em>Meridian</em> St.',
+            '<em>Collins</em> Ave.',
+            '<em>Ocean</em> Drive',
+          ],
+          'blob.exact': [
+            '<em>Jefferson</em> Ave.',
+            '<em>Washington</em> St.',
+            '<em>Lincoln</em> Rd.',
+          ],
+        },
+      }
+      const actual = alignHighlightsWithSourceStructure(
+        schema,
+        highlightConfig
+      )(hit)
+      const expected = {
+        blob: [
+          '<em>Meridian</em> St.',
+          '<em>Collins</em> Ave.',
+          '<em>Ocean</em> Drive',
+          '<em>Jefferson</em> Ave.',
+          '<em>Washington</em> St.',
+          '<em>Lincoln</em> Rd.',
+        ],
+      }
+      expect(actual).toEqual(expected)
     })
   })
 
@@ -338,12 +418,14 @@ describe('inlineHighlightResults()', () => {
           'city.street': ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
         },
       }
-      inlineHighlightResults(tags, schema, {}, [hit])
-      expect(hit._source).toEqual({
-        city: {
-          street: ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
-        },
-      })
+      const actual = alignHighlightsWithSourceStructure(
+        schema,
+        highlightConfig
+      )(hit)
+      const expected = {
+        'city.street': ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
+      }
+      expect(actual).toEqual(expected)
     })
 
     it('should inline array of strings when source has value', () => {
@@ -357,16 +439,18 @@ describe('inlineHighlightResults()', () => {
           'city.street': ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
         },
       }
-      inlineHighlightResults(tags, schema, {}, [hit])
-      expect(hit._source).toEqual({
-        city: {
-          street: [
-            'Jefferson Ave.',
-            '<em>Meridian St.</em>',
-            'Collins <em>Ave.</em>',
-          ],
-        },
-      })
+      const actual = alignHighlightsWithSourceStructure(
+        schema,
+        highlightConfig
+      )(hit)
+      const expected = {
+        'city.street': [
+          'Jefferson Ave.',
+          '<em>Meridian St.</em>',
+          'Collins <em>Ave.</em>',
+        ],
+      }
+      expect(actual).toEqual(expected)
     })
 
     it('should inline and filter array of strings when source is empty', () => {
@@ -376,12 +460,14 @@ describe('inlineHighlightResults()', () => {
           'city.street': ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
         },
       }
-      inlineHighlightResults(tags, schema, { filterSourceArrays: true }, [hit])
-      expect(hit._source).toEqual({
-        city: {
-          street: ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
-        },
-      })
+      const actual = alignHighlightsWithSourceStructure(schema, {
+        ...highlightConfig,
+        filterSourceArrays: true,
+      })(hit)
+      const expected = {
+        'city.street': ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
+      }
+      expect(actual).toEqual(expected)
     })
 
     it('should inline and filter array of strings when source has value', () => {
@@ -401,12 +487,14 @@ describe('inlineHighlightResults()', () => {
           'city.street': ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
         },
       }
-      inlineHighlightResults(tags, schema, { filterSourceArrays: true }, [hit])
-      expect(hit._source).toEqual({
-        city: {
-          street: ['<em>Meridian St.</em>', 'Collins <em>Ave.</em>'],
-        },
-      })
+      const actual = alignHighlightsWithSourceStructure(schema, {
+        ...highlightConfig,
+        filterSourceArrays: true,
+      })(hit)
+      const expected = {
+        'city.street': ['<em>Meridian St.</em>', 'Collins <em>Ave.</em>'],
+      }
+      expect(actual).toEqual(expected)
     })
 
     it('should inline source array with empty array when there are no highlights', () => {
@@ -424,12 +512,14 @@ describe('inlineHighlightResults()', () => {
         },
         highlight: {},
       }
-      inlineHighlightResults(tags, schema, { filterSourceArrays: true }, [hit])
-      expect(hit._source).toEqual({
-        city: {
-          street: [],
-        },
-      })
+      const actual = alignHighlightsWithSourceStructure(schema, {
+        ...highlightConfig,
+        filterSourceArrays: true,
+      })(hit)
+      const expected = {
+        'city.street': [],
+      }
+      expect(actual).toEqual(expected)
     })
   })
 
@@ -451,15 +541,17 @@ describe('inlineHighlightResults()', () => {
           ],
         },
       }
-      inlineHighlightResults(tags, schema, {}, [hit])
-      expect(hit._source).toEqual({
-        city: {
-          street: [
-            { name: 'Collins <em>Ave.</em>' },
-            { name: '<em>Meridian St.</em>' },
-          ],
-        },
-      })
+      const actual = alignHighlightsWithSourceStructure(
+        schema,
+        highlightConfig
+      )(hit)
+      const expected = {
+        'city.street': [
+          { name: 'Collins <em>Ave.</em>' },
+          { name: '<em>Meridian St.</em>' },
+        ],
+      }
+      expect(actual).toEqual(expected)
     })
 
     it('should inline array of objects when source has value', () => {
@@ -480,16 +572,18 @@ describe('inlineHighlightResults()', () => {
           ],
         },
       }
-      inlineHighlightResults(tags, schema, {}, [hit])
-      expect(hit._source).toEqual({
-        city: {
-          street: [
-            { number: 101, name: 'Jefferson Ave.' },
-            { number: 235, name: '<em>Meridian St.</em>' },
-            { number: 9, name: 'Collins <em>Ave.</em>' },
-          ],
-        },
-      })
+      const actual = alignHighlightsWithSourceStructure(
+        schema,
+        highlightConfig
+      )(hit)
+      const expected = {
+        'city.street': [
+          { number: 101, name: 'Jefferson Ave.' },
+          { number: 235, name: '<em>Meridian St.</em>' },
+          { number: 9, name: 'Collins <em>Ave.</em>' },
+        ],
+      }
+      expect(actual).toEqual(expected)
     })
 
     it('should inline and filter array of objects when source is empty', () => {
@@ -502,15 +596,17 @@ describe('inlineHighlightResults()', () => {
           ],
         },
       }
-      inlineHighlightResults(tags, schema, { filterSourceArrays: true }, [hit])
-      expect(hit._source).toEqual({
-        city: {
-          street: [
-            { name: 'Collins <em>Ave.</em>' },
-            { name: '<em>Meridian St.</em>' },
-          ],
-        },
-      })
+      const actual = alignHighlightsWithSourceStructure(schema, {
+        ...highlightConfig,
+        filterSourceArrays: true,
+      })(hit)
+      const expected = {
+        'city.street': [
+          { name: 'Collins <em>Ave.</em>' },
+          { name: '<em>Meridian St.</em>' },
+        ],
+      }
+      expect(actual).toEqual(expected)
     })
 
     it('should inline and filter array of objects when source has value', () => {
@@ -533,15 +629,17 @@ describe('inlineHighlightResults()', () => {
           ],
         },
       }
-      inlineHighlightResults(tags, schema, { filterSourceArrays: true }, [hit])
-      expect(hit._source).toEqual({
-        city: {
-          street: [
-            { number: 235, name: '<em>Meridian St.</em>' },
-            { number: 9, name: 'Collins <em>Ave.</em>' },
-          ],
-        },
-      })
+      const actual = alignHighlightsWithSourceStructure(schema, {
+        ...highlightConfig,
+        filterSourceArrays: true,
+      })(hit)
+      const expected = {
+        'city.street': [
+          { number: 235, name: '<em>Meridian St.</em>' },
+          { number: 9, name: 'Collins <em>Ave.</em>' },
+        ],
+      }
+      expect(actual).toEqual(expected)
     })
 
     it('should inline source array with empty array when there are no highlights', () => {
@@ -559,12 +657,12 @@ describe('inlineHighlightResults()', () => {
         },
         highlight: {},
       }
-      inlineHighlightResults(tags, schema, { filterSourceArrays: true }, [hit])
-      expect(hit._source).toEqual({
-        city: {
-          street: [],
-        },
-      })
+      const actual = alignHighlightsWithSourceStructure(schema, {
+        ...highlightConfig,
+        filterSourceArrays: true,
+      })(hit)
+      const expected = { 'city.street': [] }
+      expect(actual).toEqual(expected)
     })
   })
 })

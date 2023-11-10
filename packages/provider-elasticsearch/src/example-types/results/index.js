@@ -1,9 +1,18 @@
 // https://stackoverflow.com/questions/70177601/does-elasticsearch-provide-highlighting-on-copy-to-field-in-their-newer-versio
 // https://github.com/elastic/elasticsearch/issues/5172
 
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import { getHighlightFields, inlineHighlightResults } from './highlight.js'
+import {
+  getHighlightFields,
+  alignHighlightsWithSourceStructure,
+} from './highlight.js'
 import { getField } from '../../utils/fields.js'
+
+const defaultHighlightConfig = {
+  pre_tag: '<b class="search-highlight">',
+  post_tag: '</b>',
+}
 
 export default {
   validContext: () => true,
@@ -15,16 +24,7 @@ export default {
       ? getField(schema, node.sortField)
       : '_score'
 
-    const index = schema.elasticsearch.index
-
-    console.info('')
-    console.time(`${index}:getHighlightFields`)
-    const highlightFields =
-      node.highlight?.enable &&
-      getHighlightFields(schema, node._meta.relevantFilters)
-    console.timeEnd(`${index}:getHighlightFields`)
-
-    const tags = { pre: '<b class="search-highlight">', post: '</b>' }
+    const highlightConfig = _.defaults(defaultHighlightConfig, node.highlight)
 
     const body = F.omitBlank({
       from: startRecord,
@@ -33,28 +33,29 @@ export default {
       explain: node.explain,
       // Without this, ES7+ stops counting at 10k instead of returning the actual count
       track_total_hits: true,
-      _source: F.omitBlank({
-        includes: node.include,
-        excludes: node.exclude,
-      }),
-      highlight: highlightFields && {
-        pre_tags: [tags.pre],
-        post_tags: [tags.post],
+      _source: F.omitBlank({ includes: node.include, excludes: node.exclude }),
+      highlight: highlightConfig.enable && {
+        pre_tags: [highlightConfig.pre_tag],
+        post_tags: [highlightConfig.post_tag],
         number_of_fragments: 0,
         require_field_match: true,
-        fields: highlightFields,
+        fields: getHighlightFields(schema, node._meta.relevantFilters),
       },
     })
 
-    console.time(`${index}:search`)
     const response = await search(body)
     const results = response.hits.hits
-    console.timeEnd(`${index}:search`)
 
-    if (node.highlight?.enable) {
-      console.time(`${index}:inlineHighlightResults`)
-      inlineHighlightResults(tags, schema, node.highlight, results)
-      console.timeEnd(`${index}:inlineHighlightResults`)
+    if (highlightConfig.enable) {
+      // Not mutating source in the helper function leaves the door open
+      // for a configuration flag to control inlining of highlighted
+      // results in source
+      const fn = alignHighlightsWithSourceStructure(schema, highlightConfig)
+      for (const result of results) {
+        for (const [field, val] of _.toPairs(fn(result))) {
+          F.setOn(field, val, result._source)
+        }
+      }
     }
 
     return {

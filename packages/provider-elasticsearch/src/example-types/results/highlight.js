@@ -1,7 +1,7 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import { CartesianProduct } from 'js-combinatorics'
-import { groupByIndexed } from '../../utils/futil.js'
+import { groupByIndexed, setOrReturn } from '../../utils/futil.js'
 
 /**
  * Set of all fields groups in the mappings, including their cartesian product with
@@ -10,7 +10,7 @@ import { groupByIndexed } from '../../utils/futil.js'
  * {
  *   elasticsearch: {
  *     subFields: {
- *       exact: { shouldHighlight: true }
+ *       exact: { highlight: true }
  *     }
  *   },
  *   fields: {
@@ -30,7 +30,7 @@ import { groupByIndexed } from '../../utils/futil.js'
  */
 const getAllFieldsGroups = _.memoize((schema) => {
   const highlightSubFields = _.keys(
-    _.pickBy('shouldHighlight', schema.elasticsearch?.subFields)
+    _.pickBy('highlight', schema.elasticsearch?.subFields)
   )
   return new Set(
     _.flatMap((field) => {
@@ -85,7 +85,7 @@ const getAllFieldsGroups = _.memoize((schema) => {
 const getSubFieldsMappings = (schema, multiFieldMapping, multiFieldName) =>
   F.reduceIndexed(
     (acc, mapping, name) => {
-      if (schema.elasticsearch.subFields[name]?.shouldHighlight) {
+      if (schema.elasticsearch.subFields[name]?.highlight) {
         acc[`${multiFieldName}.${name}`] = {
           ...mapping,
           meta: { ...multiFieldMapping.meta, isSubField: true },
@@ -231,141 +231,124 @@ export const getHighlightFields = (schema, query) => {
  *
  * `A <em>red</em> <em>car</em>`
  */
-const getHighlightRanges = (tags, str) => {
+const getHighlightRanges = (pre, post, str) => {
   let runningTagsLength = 0
   const ranges = []
-  const regexp = new RegExp(`${tags.pre}(?<capture>.*?)${tags.post}`, 'g')
+  const regexp = new RegExp(`${pre}(?<capture>.*?)${post}`, 'g')
   for (const match of str.matchAll(regexp)) {
     const start = match.index - runningTagsLength
     const end = start + match.groups.capture.length
     ranges.push([start, end])
-    runningTagsLength += tags.pre.length + tags.post.length
+    runningTagsLength += pre.length + post.length
   }
   return ranges
 }
 
 /** Wrap substrings given by [start, end] ranges with pre/post tags */
-const highlightFromRanges = (tags, str, ranges) => {
+const highlightFromRanges = (pre, post, str, ranges) => {
   const starts = _.fromPairs(_.map((x) => [x[0]], ranges))
   const ends = _.fromPairs(_.map((x) => [x[1]], ranges))
   const highlighted = str.replace(/./g, (match, index) => {
-    if (index in starts) return `${tags.pre}${match}`
-    if (index in ends) return `${tags.post}${match}`
+    if (index in starts) return `${pre}${match}`
+    if (index in ends) return `${post}${match}`
     return match
   })
   // Sometimes the last word is highlighted so the index for the last tag is
   // `str.length` but `replace` only makes it up to `str.length - 1`.
   return _.last(_.last(ranges)) === str.length
-    ? `${highlighted}${tags.post}`
+    ? `${highlighted}${post}`
     : highlighted
 }
 
-export const mergeHighlights = (tags, ...strs) => {
+export const mergeHighlights = (pre, post, ...strs) => {
   // This may look unnecessary but merging highlights is not cheap and many
   // times is not even needed
   if (_.size(strs) <= 1) return _.head(strs)
   const ranges = F.mergeRanges(
-    _.flatMap((str) => getHighlightRanges(tags, str), strs)
+    _.flatMap((str) => getHighlightRanges(pre, post, str), strs)
   )
-  const plain = _.head(strs).replaceAll(tags.pre, '').replaceAll(tags.post, '')
-  return highlightFromRanges(tags, plain, ranges)
+  const plain = _.head(strs).replaceAll(pre, '').replaceAll(post, '')
+  return highlightFromRanges(pre, post, plain, ranges)
 }
 
-// This function mutates hits for performance reasons
-export const inlineHighlightResults = (tags, schema, highlight, hits) => {
-  const isSubType = _.curry(
-    (subType, field) => field?.elasticsearch?.meta?.subType === subType
-  )
+const stripTags = _.curry((pre, post, fragment) =>
+  fragment.replaceAll(pre, '').replaceAll(post, '')
+)
 
-  const isSubField = _.curry(
-    (subField, field) => !!field?.elasticsearch?.fields?.[subField]
+export const highlightArray = (array, fragments, config) => {
+  if (_.isEmpty(array)) {
+    return _.map(
+      (fragment) => setOrReturn(config.fragmentPath, fragment, {}),
+      fragments
+    )
+  }
+  const fragmentsMap = F.arrayToObject(
+    stripTags(config.pre_tag, config.post_tag),
+    _.identity,
+    fragments
   )
+  return _.reduce(
+    (acc, item) => {
+      const plain = F.getOrReturn(config.fragmentPath, item)
+      const fragment = fragmentsMap[plain]
+      return config.filterSourceArrays && fragment === undefined
+        ? acc
+        : F.push(setOrReturn(config.fragmentPath, fragment ?? plain, item), acc)
+    },
+    [],
+    array
+  )
+}
 
-  const arrayFields = _.keys(_.pickBy(isSubType('array'), schema.fields))
+// Best-effort naming here :/
+export const alignHighlightsWithSourceStructure = (schema, highlightConfig) => {
+  const arrayFields = _.pickBy(
+    { elasticsearch: { meta: { subType: 'array' } } },
+    schema.fields
+  )
+  const emptyArrayFields = _.mapValues(_.constant([]), arrayFields)
+  const arrayFieldsNames = _.keys(arrayFields)
+  const getArrayFieldName = (field) =>
+    _.find((k) => field.startsWith(k), arrayFieldsNames)
 
   const lastWordRegex = /\.(\w+)$/
-  const getFieldKey = (val, key) => {
-    const [field, sub] = key.split(lastWordRegex)
-    return isSubField(sub, schema.fields[field]) ? field : key
+  const getMultiFieldName = (field) => {
+    const [multi, sub] = field.split(lastWordRegex)
+    return schema.fields[multi]?.elasticsearch?.fields?.[sub] ? multi : field
   }
 
-  for (const hit of hits) {
-    const highlights = F.reduceIndexed(
-      (acc, fragments, field) => {
-        const arrayField = _.find((k) => field.startsWith(k), arrayFields)
+  const getHighlightedArray = (fragments, field, source) => {
+    const arrayPath = getArrayFieldName(field)
+    return highlightArray(_.get(arrayPath, source), fragments, {
+      ...highlightConfig,
+      fragmentPath: field.slice(arrayPath.length + 1), // +1 strips off leading dot
+    })
+  }
 
-        if (!arrayField) {
-          if (isSubType('blob', schema.fields[field])) {
-            acc[field] = fragments
-          } else {
-            acc[field] = mergeHighlights(tags, ...fragments)
-          }
-          return acc
-        }
-
-        const nestedField = field.slice(arrayField.length).replace('.', '')
-        const array = _.get(arrayField, hit._source)
-
-        if (!array) {
-          acc[arrayField] = nestedField
-            ? _.map((fragment) => _.set(nestedField, fragment, {}), fragments)
-            : fragments
-        } else {
-          const fragmentsMap = _.reduce(
-            (acc, fragment) => {
-              const plain = fragment
-                .replaceAll(tags.pre, '')
-                .replaceAll(tags.post, '')
-              acc[plain] = fragment
-              return acc
-            },
-            {},
-            fragments
-          )
-
-          acc[arrayField] = []
-
-          for (let index in array) {
-            if (nestedField) {
-              const fragment = fragmentsMap[_.get(nestedField, array[index])]
-              const item = highlight.filterSourceArrays
-                ? undefined
-                : _.get(nestedField, array[index])
-              acc[arrayField].push(
-                _.set(nestedField, fragment ?? item, array[index])
-              )
-            } else {
-              const fragment = fragmentsMap[array[index]]
-              const item = highlight.filterSourceArrays
-                ? undefined
-                : array[index]
-              acc[arrayField].push(fragment ?? item)
-            }
-          }
-
-          if (highlight.filterSourceArrays) {
-            acc[arrayField] = _.remove(
-              (item) =>
-                _.isUndefined(nestedField ? _.get(nestedField, item) : item),
-              acc[arrayField]
+  return (hit) =>
+    _.flow(
+      // Group `city` and `city.exact` under `city`
+      groupByIndexed((v, k) => getMultiFieldName(k)),
+      _.mapValues(_.flatten),
+      // Transform highlighted segments into something that can be used to
+      // replace source values
+      F.mapValuesIndexed((fragments, field) =>
+        getArrayFieldName(field)
+          ? getHighlightedArray(fragments, field, hit._source)
+          : schema.fields[field]?.elasticsearch?.meta?.subType === 'blob'
+          ? fragments
+          : mergeHighlights(
+              highlightConfig.pre_tag,
+              highlightConfig.post_tag,
+              ...fragments
             )
-          }
-        }
-
-        return acc
-      },
-      {},
-      _.mapValues(_.flatten, groupByIndexed(getFieldKey, hit.highlight))
-    )
-
-    if (highlight.filterSourceArrays) {
-      for (const field of arrayFields) {
-        highlights[field] ??= []
-      }
-    }
-
-    for (const [field, val] of _.toPairs(highlights)) {
-      F.setOn(field, val, hit._source)
-    }
-  }
+      ),
+      // Rename `streets.name` to `streets` if `streets` is an array field so
+      // that we can simply replace arrays wholesale in the source.
+      _.mapKeys((field) => getArrayFieldName(field) ?? field),
+      // Default to empty arrays if source arrays should be filtered but no
+      // highlights come back. That way the source arrays will get replaced with
+      // empty arrays when highlights are inlined.
+      _.defaults(highlightConfig.filterSourceArrays ? emptyArrayFields : {})
+    )(hit.highlight)
 }
