@@ -275,6 +275,7 @@ const stripTags = _.curry((pre, post, fragment) =>
   fragment.replaceAll(pre, '').replaceAll(post, '')
 )
 
+// Merge highlighted fragments onto a source array
 export const highlightArray = (array, fragments, config) => {
   if (_.isEmpty(array)) {
     return _.map(
@@ -300,7 +301,7 @@ export const highlightArray = (array, fragments, config) => {
   )
 }
 
-// Best-effort naming here :/
+// Best-effort naming on this function :/
 export const alignHighlightsWithSourceStructure = (schema, highlightConfig) => {
   const arrayFields = _.pickBy(
     { elasticsearch: { meta: { subType: 'array' } } },
@@ -312,11 +313,13 @@ export const alignHighlightsWithSourceStructure = (schema, highlightConfig) => {
     _.find((k) => field.startsWith(k), arrayFieldsNames)
 
   const lastWordRegex = /\.(\w+)$/
+  // Ex: `title` and `title.exact` both result in `title`
   const getMultiFieldName = (field) => {
     const [multi, sub] = field.split(lastWordRegex)
     return schema.fields[multi]?.elasticsearch?.fields?.[sub] ? multi : field
   }
 
+  // Merge highlighted fragments onto a source array
   const getHighlightedArray = (fragments, field, source) => {
     const arrayPath = getArrayFieldName(field)
     return highlightArray(_.get(arrayPath, source), fragments, {
@@ -325,30 +328,34 @@ export const alignHighlightsWithSourceStructure = (schema, highlightConfig) => {
     })
   }
 
+  // Transform highlighted fragments into something that can be used to replace
+  // source values
+  const handleHighlightedFragments = (hit) => (fragments, field) =>
+    getArrayFieldName(field)
+      ? getHighlightedArray(fragments, field, hit._source)
+      : // Do not do anything with fragments for text blobs
+      schema.fields[field]?.elasticsearch?.meta?.subType === 'blob'
+      ? fragments
+      : // Assumming we sent `number_of_fragments:0` to elastic, there should be
+        // at most one fragment per multi-field (ex: `title`) and at most one
+        // fragment for each sub-field (ex: `title.exact`, `title.keyword`).
+        mergeHighlights(
+          highlightConfig.pre_tag,
+          highlightConfig.post_tag,
+          ...fragments
+        )
+
   return (hit) =>
     _.flow(
       // Group `city` and `city.exact` under `city`
       groupByIndexed((v, k) => getMultiFieldName(k)),
       _.mapValues(_.flatten),
-      // Transform highlighted segments into something that can be used to
-      // replace source values
-      F.mapValuesIndexed((fragments, field) =>
-        getArrayFieldName(field)
-          ? getHighlightedArray(fragments, field, hit._source)
-          : schema.fields[field]?.elasticsearch?.meta?.subType === 'blob'
-          ? fragments
-          : mergeHighlights(
-              highlightConfig.pre_tag,
-              highlightConfig.post_tag,
-              ...fragments
-            )
-      ),
+      F.mapValuesIndexed(handleHighlightedFragments(hit)),
       // Rename `streets.name` to `streets` if `streets` is an array field so
       // that we can simply replace arrays wholesale in the source.
       _.mapKeys((field) => getArrayFieldName(field) ?? field),
       // Default to empty arrays if source arrays should be filtered but no
-      // highlights come back. That way the source arrays will get replaced with
-      // empty arrays when highlights are inlined.
+      // highlights come back for them.
       _.defaults(highlightConfig.filterSourceArrays ? emptyArrayFields : {})
     )(hit.highlight)
 }
