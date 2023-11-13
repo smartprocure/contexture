@@ -31,8 +31,8 @@ let fromEsIndexMapping = (mapping) => {
         extractFieldsAndEsType,
         // TODO: think about how to let users pass this multi-field config information
         _.set('elasticsearch.subFields', {
-          keyword: { shouldHighlight: false },
-          exact: { shouldHighlight: true },
+          keyword: { highlight: false },
+          exact: { highlight: true },
         }),
         _.update(
           'fields',

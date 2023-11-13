@@ -4,8 +4,8 @@ export default {
       index: 'movies',
       type: 'movie',
       subFields: {
-        keyword: { shouldHighlight: false },
-        exact: { shouldHighlight: true },
+        keyword: { highlight: false },
+        exact: { highlight: true },
       },
     },
     fields: {
@@ -308,8 +308,8 @@ export default {
       type: 'movie',
       aliasOf: 'movies',
       subFields: {
-        keyword: { shouldHighlight: false },
-        exact: { shouldHighlight: true },
+        keyword: { highlight: false },
+        exact: { highlight: true },
       },
     },
     fields: {

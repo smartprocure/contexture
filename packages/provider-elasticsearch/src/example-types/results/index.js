@@ -34,7 +34,7 @@ export default {
       // Without this, ES7+ stops counting at 10k instead of returning the actual count
       track_total_hits: true,
       _source: F.omitBlank({ includes: node.include, excludes: node.exclude }),
-      highlight: highlightConfig.enable && {
+      highlight: highlightConfig.behavior && {
         pre_tags: [highlightConfig.pre_tag],
         post_tags: [highlightConfig.post_tag],
         number_of_fragments: 0,
@@ -46,14 +46,14 @@ export default {
     const response = await search(body)
     const results = response.hits.hits
 
-    if (highlightConfig.enable) {
-      // Not mutating source in the helper function leaves the door open
-      // for a configuration flag to control inlining of highlighted
-      // results in source
-      const fn = alignHighlightsWithSourceStructure(schema, highlightConfig)
+    if (highlightConfig.behavior === 'replaceSource') {
+      const getHighlights = alignHighlightsWithSourceStructure(
+        schema,
+        highlightConfig
+      )
       for (const result of results) {
-        for (const [field, val] of _.toPairs(fn(result))) {
-          F.setOn(field, val, result._source)
+        for (const [k, v] of _.toPairs(getHighlights(result))) {
+          F.setOn(k, v, result._source)
         }
       }
     }

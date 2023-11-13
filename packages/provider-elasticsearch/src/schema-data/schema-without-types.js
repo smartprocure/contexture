@@ -3,8 +3,8 @@ export default {
     elasticsearch: {
       index: 'movies',
       subFields: {
-        keyword: { shouldHighlight: false },
-        exact: { shouldHighlight: true },
+        keyword: { highlight: false },
+        exact: { highlight: true },
       },
     },
     fields: {
@@ -50,8 +50,8 @@ export default {
       index: 'imdb',
       aliasOf: 'movies',
       subFields: {
-        keyword: { shouldHighlight: false },
-        exact: { shouldHighlight: true },
+        keyword: { highlight: false },
+        exact: { highlight: true },
       },
     },
     fields: {
