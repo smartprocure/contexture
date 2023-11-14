@@ -142,8 +142,12 @@ let handleNested = ({
     }
   }, hit.highlight)
 
-  if (filterNested && !(nestedPath in hit.highlight)) {
-    F.setOn(nestedPath, [], hit._source)
+  if (filterNested) {
+    for (const path of nested) {
+      if (!(path in hit.highlight)) {
+        F.setOn(nestedPath, [], hit._source)
+      }
+    }
   }
 }
 
