@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.25.5
+
+### Patch Changes
+
+- 867c633e: Fix regression in PR #159
+
 ## 1.25.4
 
 ### Patch Changes
