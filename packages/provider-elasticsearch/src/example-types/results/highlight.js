@@ -103,6 +103,8 @@ const getHighlightFieldsMappings = _.memoize((schema) => {
   const allFieldsGroups = getAllFieldsGroups(schema)
   return F.reduceIndexed(
     (acc, { elasticsearch: mapping }, name) => {
+      // Only include leaf fields (have mapping) and do not include fields
+      // groups.
       if (mapping && !allFieldsGroups.has(name)) {
         Object.assign(acc, {
           [name]: mapping,
@@ -244,7 +246,17 @@ const getHighlightRanges = (pre, post, str) => {
   return ranges
 }
 
-/** Wrap substrings given by [start, end] ranges with pre/post tags */
+/**
+ * Wrap substrings given by [start, end] ranges with pre/post tags
+ *
+ * This function could extend `F.highlight` functionality to accept ranges. For
+ * example:
+ *
+ * ```javascript
+ * const braceHighlight = F.highlight("{", "}")
+ * braceHighlight([[2, 4], [9, 10]], "hello world") // -> "he{llo} wor{ld}"
+ * ````
+ */
 const highlightFromRanges = (pre, post, str, ranges) => {
   const starts = _.fromPairs(_.map((x) => [x[0]], ranges))
   const ends = _.fromPairs(_.map((x) => [x[1]], ranges))
@@ -275,7 +287,7 @@ const stripTags = _.curry((pre, post, fragment) =>
   fragment.replaceAll(pre, '').replaceAll(post, '')
 )
 
-// Merge highlighted fragments onto a source array
+/** Merge highlighted fragments onto a source array */
 export const highlightArray = (array, fragments, config) => {
   if (_.isEmpty(array)) {
     return _.map(
@@ -331,11 +343,10 @@ export const alignHighlightsWithSourceStructure = (schema, highlightConfig) => {
   // Transform highlighted fragments into something that can be used to replace
   // source values
   const handleHighlightedFragments = (hit) => (fragments, field) =>
-    getArrayFieldName(field)
-      ? getHighlightedArray(fragments, field, hit._source)
-      : // Do not do anything with fragments for text blobs
-      schema.fields[field]?.elasticsearch?.meta?.subType === 'blob'
+    schema.fields[field]?.elasticsearch?.meta?.subType === 'blob'
       ? fragments
+      : getArrayFieldName(field)
+      ? getHighlightedArray(fragments, field, hit._source)
       : // Assumming we sent `number_of_fragments:0` to elastic, there should be
         // at most one fragment per multi-field (ex: `title`) and at most one
         // fragment for each sub-field (ex: `title.exact`, `title.keyword`).

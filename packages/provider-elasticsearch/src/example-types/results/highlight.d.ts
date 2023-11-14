@@ -1,8 +1,8 @@
 declare enum HighlightBehavior {
   /**
-   * Replace source values with highlighted results.
+   * Merge highlighted results onto _source.
    */
-  replaceSource,
+  mergeOnSource,
 }
 
 interface Highlight {

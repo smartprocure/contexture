@@ -37,8 +37,8 @@ export default {
       highlight: highlightConfig.behavior && {
         pre_tags: [highlightConfig.pre_tag],
         post_tags: [highlightConfig.post_tag],
-        number_of_fragments: 0,
-        require_field_match: true,
+        number_of_fragments:
+          highlightConfig.behavior === 'mergeOnSource' ? 0 : undefined,
         fields: getHighlightFields(schema, node._meta.relevantFilters),
       },
     })
@@ -46,7 +46,7 @@ export default {
     const response = await search(body)
     const results = response.hits.hits
 
-    if (highlightConfig.behavior === 'replaceSource') {
+    if (highlightConfig.behavior === 'mergeOnSource') {
       const getHighlights = alignHighlightsWithSourceStructure(
         schema,
         highlightConfig
