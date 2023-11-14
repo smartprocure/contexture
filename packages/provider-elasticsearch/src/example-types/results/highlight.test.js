@@ -407,6 +407,7 @@ describe('alignHighlightsWithSourceStructure()', () => {
   describe('arrays of strings', () => {
     const schema = {
       fields: {
+        state: {},
         'city.street': { elasticsearch: { meta: { subType: 'array' } } },
       },
     }
@@ -500,6 +501,7 @@ describe('alignHighlightsWithSourceStructure()', () => {
     it('should inline source array with empty array when there are no highlights', () => {
       const hit = {
         _source: {
+          state: 'New Jersey',
           city: {
             street: [
               'Jefferson Ave.',
@@ -510,13 +512,16 @@ describe('alignHighlightsWithSourceStructure()', () => {
             ],
           },
         },
-        highlight: {},
+        highlight: {
+          state: '<em>New</em> Jersey',
+        },
       }
       const actual = alignHighlightsWithSourceStructure(schema, {
         ...highlightConfig,
         filterSourceArrays: true,
       })(hit)
       const expected = {
+        state: '<em>New</em> Jersey',
         'city.street': [],
       }
       expect(actual).toEqual(expected)
@@ -645,6 +650,7 @@ describe('alignHighlightsWithSourceStructure()', () => {
     it('should inline source array with empty array when there are no highlights', () => {
       const hit = {
         _source: {
+          state: 'New Jersey',
           city: {
             street: [
               { number: 101, name: 'Jefferson Ave.' },
@@ -655,13 +661,18 @@ describe('alignHighlightsWithSourceStructure()', () => {
             ],
           },
         },
-        highlight: {},
+        highlight: {
+          state: '<em>New</em> Jersey',
+        },
       }
       const actual = alignHighlightsWithSourceStructure(schema, {
         ...highlightConfig,
         filterSourceArrays: true,
       })(hit)
-      const expected = { 'city.street': [] }
+      const expected = {
+        state: '<em>New</em> Jersey',
+        'city.street': [],
+      }
       expect(actual).toEqual(expected)
     })
   })
