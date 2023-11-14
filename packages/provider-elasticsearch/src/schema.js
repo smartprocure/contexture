@@ -29,11 +29,6 @@ let fromEsIndexMapping = (mapping) => {
         // filters out 'dynamic_templates' (an array), 'dynamic: true', etc.
         _.pickBy(_.isPlainObject),
         extractFieldsAndEsType,
-        // TODO: think about how to let users pass this multi-field config information
-        _.set('elasticsearch.subFields', {
-          keyword: { highlight: false },
-          exact: { highlight: true },
-        }),
         _.update(
           'fields',
           _.flow(
