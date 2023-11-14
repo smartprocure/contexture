@@ -301,30 +301,34 @@ describe('highlighting', () => {
         additionalFields: [],
       })
     })
-
-    it('should clear nested when filterNested and highlight is empty', () => {
+    it('should clear nested when filterNested and highlight does not contain nestedPath', () => {
       let schemaHighlight = {
         nested: ['comments.text'],
         nestedPath: 'comments',
         filterNested: true,
+        inline: ['title'],
       }
       let hit = {
         _source: {
-          title: '...',
-          description: '...',
-          comments: [{ text: 'foo' }, { text: 'bar' }, { text: 'baz' }],
+          title: 'The quick brown fox jumps over the lazy dog',
+          comments: [
+            { text: 'John Snow' },
+            { text: 'Anakin Skywalker' },
+            { text: 'Neo' },
+          ],
         },
-        highlight: {},
+        highlight: {
+          title: ['The quick brown <em>fox</em> jumps over the lazy dog'],
+        },
       }
       let result = highlightResults({
         schemaHighlight,
         nodeHighlight,
         hit,
-        include: ['title', 'description', 'comments.text'],
+        include: ['title', 'comments.text'],
       })
       expect(hit._source).toEqual({
-        title: '...',
-        description: '...',
+        title: 'The quick brown <em>fox</em> jumps over the lazy dog',
         comments: [],
       })
       expect(result).toEqual({

@@ -141,6 +141,14 @@ let handleNested = ({
       }
     }
   }, hit.highlight)
+
+  if (filterNested) {
+    for (const path of nested) {
+      if (!(path in hit.highlight)) {
+        F.setOn(nestedPath, [], hit._source)
+      }
+    }
+  }
 }
 
 // TODO: Support multiple nestedPaths...
@@ -152,7 +160,7 @@ export let highlightResults = ({
   hit, // The ES result
   include, // The columns to return
 }) => {
-  let { inline, inlineAliases, nestedPath, filterNested } = schemaHighlight
+  let { inline, inlineAliases } = schemaHighlight
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
 
   let additionalFields = getAdditionalFields({
@@ -169,11 +177,6 @@ export let highlightResults = ({
     hit,
     additionalFields,
   })
-
-  // TODO: Do not mutate `hit._source`
-  if (filterNested && _.isEmpty(hit.highlight)) {
-    F.setOn(nestedPath, [], hit._source)
-  }
 
   // Copy over all inline highlighted fields
   if (hit.highlight) {
