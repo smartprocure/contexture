@@ -23,12 +23,12 @@ let sortAndLimitIfNotSearching = (should, limit) =>
   sortAndLimitIfSearching(!should, limit)
 
 let getSearchableKeysList = _.flow(
-  _.getOr('_id', 'label.fields'),
+  _.getOr('_strfield', 'label.fields'),
   _.castArray,
-  _.map((label) => (label === '_id' ? label : `label.${label}`))
+  _.map((label) => (label === '_strfield' ? label : `label.${label}`))
 )
 
-let getMatchesForMultipleKeywords = (list, optionsFilter) => ({
+let getMatchesForMultipleKeywords = (list, filterWords) => ({
   $and: _.map(
     (option) => ({
       $or: _.map(
@@ -41,30 +41,33 @@ let getMatchesForMultipleKeywords = (list, optionsFilter) => ({
         list
       ),
     }),
-    _.words(optionsFilter)
+    filterWords
   ),
 })
 
-let setMatchOperators = (list, node) =>
-  list.length > 1
-    ? getMatchesForMultipleKeywords(list, node.optionsFilter)
+let setMatchOperators = (node) => {
+  const list = getSearchableKeysList(node)
+  const filterWords = _.compact(_.split(/\s+/, node.optionsFilter))
+  return list.length > 1
+    ? getMatchesForMultipleKeywords(list, filterWords)
     : {
-        $and: _.flow(
-          _.words,
-          _.map((option) => ({
+        $and: _.map(
+          (option) => ({
             [_.first(list)]: {
               $options: 'i',
               $regex: option,
             },
-          }))
-        )(node.optionsFilter),
+          }),
+          filterWords
+        ),
       }
+}
 
-let mapKeywordFilters = (node) =>
-  node.optionsFilter &&
-  _.flow(getSearchableKeysList, (list) => ({
-    $match: setMatchOperators(list, node),
-  }))(node)
+let mapKeywordFilters = (node) => [
+  // Cast field we're searching on to string to enable regex matches on it.
+  { $addFields: { _strfield: { $toString: '$_id' } } },
+  { $match: setMatchOperators(node) },
+]
 
 let lookupLabel = (node) =>
   _.get('label', node)
@@ -129,7 +132,7 @@ export default {
     let optionsFilterAggs = _.compact([
       ...lookupLabel(node),
       _.get('label.fields', node) && projectStageFromLabelFields(node),
-      mapKeywordFilters(node),
+      ...(node.optionsFilter ? mapKeywordFilters(node) : []),
     ])
 
     let results = await Promise.all([

@@ -69,7 +69,7 @@ describe('facet', () => {
         $match: {
           $and: [
             {
-              _id: {
+              _strfield: {
                 $options: 'i',
                 $regex: 'cable',
               },
@@ -94,13 +94,13 @@ describe('facet', () => {
         $match: {
           $and: [
             {
-              _id: {
+              _strfield: {
                 $options: 'i',
                 $regex: 'dis',
               },
             },
             {
-              _id: {
+              _strfield: {
                 $options: 'i',
                 $regex: 'comp',
               },
