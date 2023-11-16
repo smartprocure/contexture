@@ -304,4 +304,6 @@ assert.deepEqual(actual, expected)
 
 ## 3. Source Merging
 
-Fields present in the highlighted results but not in the source still get merged onto the source.
+Merging highlighted results into `_source` is done via a straightforward lodash's `merge`. Highlighted fields not present in `_source` still get merged onto it.
+
+Arrays get special treatment when `filterSourceArrays` is set: non-highlighted items are discarded.
