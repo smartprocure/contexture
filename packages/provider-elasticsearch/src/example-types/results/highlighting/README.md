@@ -1,6 +1,14 @@
-## Request
+# Highlighting
 
-Our approach to highlighting is designed to be as out of the box as possible, without too many configuration options.
+Our approach to highlighting is designed to be as out of the box as possible, without too many configuration options. See `./type.d.ts` for more details on the API.
+
+There are three pieces involved in highlighting:
+
+1. Building out highlight configuration to send with an elastic request.
+2. Transforming highlighted fragments in the elastic response into a structure similar to that of `_source`.
+3. Merging such structure into a hit's `_source`.
+
+## 1. Request
 
 ### Fields sent for highlighting
 
@@ -151,15 +159,15 @@ In the spirit of keeping our API simple, we generate opinionated highlighting co
 
 </details>
 
-## Response
+## 2. Response
 
-Currently the only supported behavior is to merge highlighted fields into source fields (we may provide an option to opt-out in the future). Fields present in the highlighted results but not in the source still get merged onto the source. For this approach to work, the highlighted fields must contain the entire field value (as opposed to only fragments), so we set [number_of_fragments](https://www.elastic.co/guide/en/elasticsearch/reference/current/highlighting.html#highlighting-settings) to `0` in the request. The exception being blob text fields which we default to return highlighted fragments instead of the entire highlighted value.
+Currently the only supported behavior is to merge highlighted fragments into `_source` (we may provide an option to opt-out in the future). For this approach to work, fragments must contain the entire field value, so we set [number_of_fragments](https://www.elastic.co/guide/en/elasticsearch/reference/current/highlighting.html#highlighting-settings) to `0` in the request. The exception being blob text fields which set `number_of_fragments` to something `> 0` since they're too big to highlight in their entirety.
 
-Before merging, highlighted results need to be transformed. Assumming `exact` to be a sub-field of `details`, the following rules apply:
+Assumming `exact` to be a sub-field of `details`, the following rules apply when transforming the highlight response:
 
 #### 1. Text fields
 
-The first fragments of each field (which should contain the entire field value because of `number_of_fragments: 0`) are merged into one value
+The first fragments of each field (which should contain the entire field value because of `number_of_fragments: 0`) are merged into a single fragment
 
 ```json
 {
@@ -180,7 +188,7 @@ Merging of highlighted fragments could be handled by elastic but this is still [
 
 #### 2. Blob text fields
 
-Blob text fields get their highlighted fragments joined, because there is no other behavior we could take here:
+Blob text fields fragments are concatenated because that's the only sensible thing to do:
 
 ```json
 {
@@ -226,11 +234,11 @@ Elastic doesn't have a concept of array fields, so we rely again on the `subType
 
 </details>
 
-which allows us to order highlighted array items based on the source array (as long as it's present)
+which allows us to order highlighted array items based on the source array (as long as the source array is present in the response)
 
 <details>
 
-<summary>ordering.test.js</summary>
+<summary>scalar-array.test.js</summary>
 
 ```javascript
 import assert from 'node:assert'
@@ -244,7 +252,9 @@ const hit = {
   },
 }
 
-const actual = order(hit.highlight.names, hit._source.names)
+// `fn` is just for illustration purposes
+const actual = fn(hit.highlight.names, hit._source.names)
+
 const expected = [undefined, '<em>Smith</em>', undefined, '<em>Austen</em>']
 
 assert.deepEqual(actual, expected)
@@ -253,3 +263,45 @@ assert.deepEqual(actual, expected)
 </details>
 
 Ideally elastic's response would include enough information to deduce the array index for each highlighted fragment but unfortunately this is still [an open issue](https://github.com/elastic/elasticsearch/issues/7416).
+
+Arrays of objects are equally ordered. Additionally, their structure is made to follow the source array's structure
+
+<details>
+
+<summary>object-array.test.js</summary>
+
+```javascript
+import assert from 'node:assert'
+
+const hit = {
+  _source: {
+    people: [
+      { name: 'John' },
+      { name: 'Smith' },
+      { name: 'Jane' },
+      { name: 'Austen' },
+    ],
+  },
+  highlight: {
+    'people.name': ['<em>Austen</em>', '<em>Smith</em>'],
+  },
+}
+
+// `fn` is just for illustration purposes
+const actual = fn(hit.highlight['people.name'], hit._source.people)
+
+const expected = [
+  undefined,
+  { name: '<em>Smith</em>' },
+  undefined,
+  { name: '<em>Austen</em>' },
+]
+
+assert.deepEqual(actual, expected)
+```
+
+</details>
+
+## 3. Source Merging
+
+Fields present in the highlighted results but not in the source still get merged onto the source.

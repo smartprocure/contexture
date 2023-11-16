@@ -1,13 +1,9 @@
-// https://stackoverflow.com/questions/70177601/does-elasticsearch-provide-highlighting-on-copy-to-field-in-their-newer-versio
-// https://github.com/elastic/elasticsearch/issues/5172
-
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import {
-  getHighlightFields,
-  alignHighlightsWithSourceStructure,
-} from './highlight.js'
 import { getField } from '../../utils/fields.js'
+import { getRequestBodyHighlight } from './highlighting/request.js'
+import { transformHighlightResponse } from './highlighting/response.js'
+import { mergeHighlightsOnSource } from './highlighting/merging.js'
 
 const defaultHighlightConfig = {
   pre_tag: '<b class="search-highlight">',
@@ -33,28 +29,28 @@ export default {
       explain: node.explain,
       // Without this, ES7+ stops counting at 10k instead of returning the actual count
       track_total_hits: true,
+      highlight:
+        highlightConfig.enable &&
+        getRequestBodyHighlight(schema, node, highlightConfig),
       _source: F.omitBlank({ includes: node.include, excludes: node.exclude }),
-      highlight: highlightConfig.behavior && {
-        pre_tags: [highlightConfig.pre_tag],
-        post_tags: [highlightConfig.post_tag],
-        number_of_fragments:
-          highlightConfig.behavior === 'mergeOnSource' ? 0 : undefined,
-        fields: getHighlightFields(schema, node._meta.relevantFilters),
-      },
     })
 
     const response = await search(body)
     const results = response.hits.hits
 
-    if (highlightConfig.behavior === 'mergeOnSource') {
-      const getHighlights = alignHighlightsWithSourceStructure(
-        schema,
-        highlightConfig
-      )
-      for (const result of results) {
-        for (const [k, v] of _.toPairs(getHighlights(result))) {
-          F.setOn(k, v, result._source)
-        }
+    if (highlightConfig.enable) {
+      for (const hit of results) {
+        const highlights = transformHighlightResponse(
+          schema,
+          highlightConfig,
+          hit
+        )
+        mergeHighlightsOnSource(
+          schema,
+          highlightConfig,
+          hit._source,
+          highlights
+        )
       }
     }
 

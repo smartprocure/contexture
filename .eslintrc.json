@@ -11,8 +11,7 @@
     "jest": true
   },
   "rules": {
-    "import/extensions": [2, { "js": "always" }],
-    "no-reserved-keys": [0]
+    "import/extensions": [2, { "js": "always" }]
   },
   "settings": {
     "import/resolver": {
