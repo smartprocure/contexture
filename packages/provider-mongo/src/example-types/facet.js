@@ -23,9 +23,9 @@ let sortAndLimitIfNotSearching = (should, limit) =>
   sortAndLimitIfSearching(!should, limit)
 
 let getSearchableKeysList = _.flow(
-  _.getOr('_strfield', 'label.fields'),
+  _.getOr('_nodeFieldStr', 'label.fields'),
   _.castArray,
-  _.map((label) => (label === '_strfield' ? label : `label.${label}`))
+  _.map((label) => (label === '_nodeFieldStr' ? label : `label.${label}`))
 )
 
 let getMatchesForMultipleKeywords = (list, filterWords) => ({
@@ -65,7 +65,7 @@ let setMatchOperators = (node) => {
 
 let mapKeywordFilters = (node) => [
   // Cast field we're searching on to string to enable regex matches on it.
-  { $addFields: { _strfield: { $toString: '$_id' } } },
+  { $addFields: { _nodeFieldStr: { $toString: '$_id' } } },
   { $match: setMatchOperators(node) },
 ]
 
