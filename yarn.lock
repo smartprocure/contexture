@@ -7765,7 +7765,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture-elasticsearch@^1.22.3, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
+"contexture-elasticsearch@npm:^1.22.3":
+  version: 1.25.5
+  resolution: "contexture-elasticsearch@npm:1.25.5"
+  dependencies:
+    "@elastic/datemath": ^2.3.0
+    debug: ^4.3.1
+    futil: ^1.76.0
+    js-combinatorics: ^2.1.1
+    lodash: ^4.17.4
+    moment: ^2.18.1
+    moment-timezone: ^0.5.28
+    unidecode: ^0.1.8
+  checksum: 9f599cafe0cdb21fcff255fb43b32735852ec1a2ef486c0dc205814e17708756ae202536d67bb3cf82d39a86a244592a7be92c5634fbf82129b333b1c0403703
+  languageName: node
+  linkType: hard
+
+"contexture-elasticsearch@workspace:packages/provider-elasticsearch":
   version: 0.0.0-use.local
   resolution: "contexture-elasticsearch@workspace:packages/provider-elasticsearch"
   dependencies:
