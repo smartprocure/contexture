@@ -2,10 +2,6 @@ export default {
   movies: {
     elasticsearch: {
       index: 'movies',
-      subFields: {
-        keyword: { highlight: false },
-        exact: { highlight: true },
-      },
     },
     fields: {
       actors: {
@@ -49,10 +45,6 @@ export default {
     elasticsearch: {
       index: 'imdb',
       aliasOf: 'movies',
-      subFields: {
-        keyword: { highlight: false },
-        exact: { highlight: true },
-      },
     },
     fields: {
       actors: {

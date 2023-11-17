@@ -3,10 +3,6 @@ export default {
     elasticsearch: {
       index: 'movies',
       type: 'movie',
-      subFields: {
-        keyword: { highlight: false },
-        exact: { highlight: true },
-      },
     },
     fields: {
       actors: {
@@ -307,10 +303,6 @@ export default {
       index: 'imdb',
       type: 'movie',
       aliasOf: 'movies',
-      subFields: {
-        keyword: { highlight: false },
-        exact: { highlight: true },
-      },
     },
     fields: {
       actors: {

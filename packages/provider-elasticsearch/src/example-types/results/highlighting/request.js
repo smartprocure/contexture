@@ -25,7 +25,7 @@ const getFieldsGroupsNames = _.memoize((schema) => {
  */
 const getSubFieldsMappings = (schema, mapping) =>
   _.flow(
-    F.pickByIndexed((v, k) => schema.elasticsearch.subFields?.[k]?.highlight),
+    F.pickByIndexed((v, k) => schema.elasticsearch?.subFields?.[k]?.highlight),
     F.mapValuesIndexed((v, k) => ({
       ...v,
       meta: mapping.meta,

@@ -5,11 +5,6 @@ const config = { pre_tag: '<em>', post_tag: '</em>' }
 describe('transformHighlightResponse()', () => {
   describe('text fields', () => {
     const schema = {
-      elasticsearch: {
-        subFields: {
-          exact: { highlight: true },
-        },
-      },
       fields: {
         state: {
           elasticsearch: {
@@ -49,11 +44,6 @@ describe('transformHighlightResponse()', () => {
 
   describe('blob text fields', () => {
     const schema = {
-      elasticsearch: {
-        subFields: {
-          exact: { highlight: true },
-        },
-      },
       fields: {
         blob: {
           elasticsearch: {
