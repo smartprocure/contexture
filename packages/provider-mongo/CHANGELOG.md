@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.26.15
+
+### Patch Changes
+
+- 50f4137a: Fix mongo facet filter query splitting
+
 ## 0.26.14
 
 ### Patch Changes

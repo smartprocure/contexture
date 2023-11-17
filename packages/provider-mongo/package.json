@@ -1,6 +1,6 @@
 {
   "name": "contexture-mongo",
-  "version": "0.26.14",
+  "version": "0.26.15",
   "description": "Mongo Provider for Contexture",
   "type": "module",
   "exports": {
