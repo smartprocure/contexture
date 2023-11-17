@@ -14,7 +14,7 @@ export let setupListeners = (tree) => {
       // Trigger watcher if keys match or no keys passed
       if (_.isEmpty(keys) || hasSome(keys, delta)) f(node, delta)
     })
-  tree.watchTree = (f, keys, path) => 
+  tree.watchTree = (f, keys, path) =>
     onAny((eventPath, node, delta) => {
       // already encoded, so isParent not needed
       // Use case is, for example, watching a group and all its children

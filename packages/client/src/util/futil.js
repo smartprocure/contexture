@@ -14,7 +14,7 @@ export let eventEmitter = (listeners = {}) => {
     _.over(listeners[topic])(...args)
     _.over(listeners[allTopics])(topic, ...args)
   }
-  let on = (topic, fn)  => {
+  let on = (topic, fn) => {
     if (!listeners[topic]) listeners[topic] = []
     listeners[topic].push(fn)
     // unlisten

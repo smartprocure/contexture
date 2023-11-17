@@ -195,7 +195,7 @@ let AllTests = (ContextureClient) => {
     it('watchTree', async () => {
       let service = sinon.spy(mockService({ delay: 10 }))
       let tree = ContextureClient(
-        { service, debounce: 1},
+        { service, debounce: 1 },
         {
           key: 'root',
           join: 'and',
@@ -204,29 +204,29 @@ let AllTests = (ContextureClient) => {
               key: 'filter',
               type: 'facet',
               field: 'facetfield',
-              values: ['some value']
+              values: ['some value'],
             },
-            { key: 'results', type: 'results' }
+            { key: 'results', type: 'results' },
           ],
         }
       )
       let filterDom = ''
       let resultsDom = ''
-      tree.watchTree(root => {
+      tree.watchTree((root) => {
         filterDom = `<div>
   <h1>Facet<h1>
   <b>Field: ${root.children[0].field}</b>
   values: ${_.join(', ', root.children[0].values)}
 </div>`
         resultsDom = `<table>${_.map(
-          result =>
-            `\n<tr>${_.map(val => `<td>${val}</td>`, _.values(result))}</tr>`,
-            root.children[1].context.results
+          (result) =>
+            `\n<tr>${_.map((val) => `<td>${val}</td>`, _.values(result))}</tr>`,
+          root.children[1].context.results
         )}
 </table>`
       })
       expect(filterDom).toBe('')
-      let action = tree.mutate(['root', 'filter'], {values: ['other Value']})
+      let action = tree.mutate(['root', 'filter'], { values: ['other Value'] })
       expect(filterDom).toBe(`<div>
   <h1>Facet<h1>
   <b>Field: facetfield</b>
