@@ -6,7 +6,6 @@ node_modules/
 
 # Build output
 dist
-!packages/example-types/dist
 
 # Jest
 coverage

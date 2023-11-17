@@ -5,7 +5,7 @@ await esbuild.build({
   splitting: true,
   packages: 'external',
   platform: 'neutral',
-  outdir: 'dist',
+  outdir: 'build',
   entryPoints: [
     { in: './src/types/bool/client.js', out: 'client/bool' },
     { in: './src/types/bool/provider-mongo.js', out: 'provider-mongo/bool' },
