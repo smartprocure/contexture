@@ -52,10 +52,10 @@ export let initNode = _.curry((actionProps, dedupe, parentPath, node) => {
     ..._.omit(_.keys(node), snapshot(getTypeProp(types, 'defaults', node))),
     key,
     path: [...parentPath, key],
-    ...node.children && {
+    ...(node.children && {
       someError: () => anyLeaves('error', node),
       everyPaused: () => allLeaves('paused', node),
-    }
+    }),
   })
 })
 

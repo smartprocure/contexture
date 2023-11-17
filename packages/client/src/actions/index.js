@@ -131,7 +131,7 @@ export default (config) => {
 
   let anyPathLeaves = (path, fn) => anyLeaves(fn, getNode(path))
   let allPathLeaves = (path, fn) => allLeaves(fn, getNode(path))
-  let isPausedNested = path => allPathLeaves(path, 'paused')
+  let isPausedNested = (path) => allPathLeaves(path, 'paused')
 
   return {
     add,
