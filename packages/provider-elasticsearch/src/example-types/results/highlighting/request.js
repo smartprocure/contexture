@@ -12,11 +12,9 @@ const getFieldsGroupsNames = _.memoize((schema) => {
 
   const fields = _.flatMap((field) => {
     const copy_to = field.elasticsearch?.copy_to
-    if (!_.isEmpty(copy_to)) {
-      const product = new CartesianProduct(copy_to, subFields)
-      return [...copy_to, ...Array.from(product).map(_.join('.'))]
-    }
-    return copy_to
+    if (_.isEmpty(copy_to)) return copy_to
+    const product = new CartesianProduct(copy_to, subFields)
+    return [...copy_to, ...Array.from(product).map(_.join('.'))]
   }, schema.fields)
 
   return new Set(fields)
@@ -26,20 +24,14 @@ const getFieldsGroupsNames = _.memoize((schema) => {
  * Return mappings for all sub-fields that can be highlighted in `mapping`.
  */
 const getSubFieldsMappings = (schema, mapping) =>
-  F.reduceIndexed(
-    (acc, sfMapping, sfName) => {
-      if (schema.elasticsearch.subFields?.[sfName]?.highlight) {
-        acc[sfName] = {
-          ...sfMapping,
-          meta: mapping.meta,
-          copy_to: _.map((k) => `${k}.${sfName}`, mapping.copy_to),
-        }
-      }
-      return acc
-    },
-    {},
-    mapping.fields
-  )
+  _.flow(
+    F.pickByIndexed((v, k) => schema.elasticsearch.subFields?.[k]?.highlight),
+    F.mapValuesIndexed((v, k) => ({
+      ...v,
+      meta: mapping.meta,
+      copy_to: _.map((multi) => `${multi}.${k}`, mapping.copy_to),
+    }))
+  )(mapping.fields)
 
 /**
  * Return mappings for all fields and their sub-fields that can be highlighted
