@@ -193,7 +193,7 @@ let AllTests = (ContextureClient) => {
       expect(resultWatcher).toBeCalledTimes(2)
     })
     it('watchTree', async () => {
-      let service = sinon.spy(mockService({ delay: 10 }))
+      let service = jest.fn(mockService({ delay: 10 }))
       let tree = ContextureClient(
         { service, debounce: 1 },
         {
