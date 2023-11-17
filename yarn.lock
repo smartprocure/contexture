@@ -7784,6 +7784,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"contexture-example-types@workspace:packages/example-types":
+  version: 0.0.0-use.local
+  resolution: "contexture-example-types@workspace:packages/example-types"
+  dependencies:
+    lodash: ^4.17.21
+  languageName: unknown
+  linkType: soft
+
 "contexture-export@workspace:packages/export":
   version: 0.0.0-use.local
   resolution: "contexture-export@workspace:packages/export"

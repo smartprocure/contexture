@@ -1,0 +1,40 @@
+{
+  "name": "contexture-example-types",
+  "version": "0.1.0",
+  "description": "Example types for the contexture packages",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./*": {
+      "import": "./dist/esm/*",
+      "require": "./dist/cjs/*"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "node ../../scripts/esbuild.js --platform=node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartprocure/contexture.git"
+  },
+  "keywords": [
+    "search",
+    "data-context"
+  ],
+  "author": "Samuel Greene",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smartprocure/contexture/issues"
+  },
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/example-types",
+  "packageManager": "yarn@3.2.4",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
