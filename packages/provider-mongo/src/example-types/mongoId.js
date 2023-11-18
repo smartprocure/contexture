@@ -1,14 +1,12 @@
 import _ from 'lodash/fp.js'
-import mongodb from 'mongodb'
-
-let { ObjectID } = mongodb
+import { ObjectId } from 'bson'
 
 export default {
   hasValue: (node) => node.values || node.value,
   filter: (node) => ({
     [node.field]: {
       [node.mode === 'exclude' ? '$nin' : '$in']: _.map(
-        ObjectID,
+        (x) => new ObjectId(x),
         node.values || [node.value]
       ),
     },

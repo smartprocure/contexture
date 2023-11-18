@@ -1,8 +1,6 @@
 import F from 'futil'
 import _ from 'lodash/fp.js'
-import mongodb from 'mongodb'
-
-let { ObjectId } = mongodb
+import { ObjectId } from 'bson'
 
 let projectStageFromLabelFields = (node) => ({
   $project: {
@@ -123,7 +121,7 @@ export default {
   filter: (node) => ({
     [node.field]: {
       [node.mode === 'exclude' ? '$nin' : '$in']: node.isMongoId
-        ? _.map(ObjectId, node.values)
+        ? _.map((v) => new ObjectId(v), node.values)
         : node.values,
     },
   }),
@@ -174,7 +172,10 @@ export default {
       )
     )
 
-    let maybeMapObjectId = F.when(node.isMongoId, _.map(ObjectId))
+    let maybeMapObjectId = F.when(
+      node.isMongoId,
+      _.map((x) => new ObjectId(x))
+    )
 
     if (!_.isEmpty(lostIds)) {
       let lostOptions = await search(
