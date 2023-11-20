@@ -3,6 +3,7 @@ import { MongoClient } from 'mongodb'
 
 export const mongoClient = {
   async connect() {
+    console.log({ MONGO_URI: process.env.MONGO_URI })
     global.__mongoClient = await MongoClient.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
