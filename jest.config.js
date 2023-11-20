@@ -8,8 +8,6 @@ export default {
     '!<rootDir>/packages/*/src/**/*.test.js',
   ],
   reporters: ['default', ['github-actions', { silent: false }]],
-  globalSetup: './jest/globalSetup.js',
-  globalTeardown: './jest/globalTeardown.js',
   projects: [
     {
       displayName: 'client',
@@ -30,6 +28,8 @@ export default {
     {
       displayName: 'provider-mongo',
       testMatch: ['<rootDir>/packages/provider-mongo/src/**/*.test.js'],
+      globalSetup: './packages/provider-mongo/jest/globalSetup.js',
+      globalTeardown: './packages/provider-mongo/jest/globalTeardown.js',
     },
   ],
 }
