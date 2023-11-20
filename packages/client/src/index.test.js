@@ -897,7 +897,7 @@ let AllTests = (ContextureClient) => {
     tree.mutate(['root', 'a'], { values: [1] })
     let node = tree.getNode(['root', 'b'])
     // Allow updating to start (after debounce elaspses) but before the service finishes
-    await Promise.delay(5)
+    await Promise.delay(10)
     expect(node.updating).toBe(true)
     await node.updatingPromise
     expect(node.updating).toBe(false)
