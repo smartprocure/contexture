@@ -1,13 +1,17 @@
 import _ from 'lodash/fp.js'
 import Contexture from 'contexture'
 import { ObjectId } from 'bson'
-import { mongoClient, usingCollections } from '../jest/util.js'
+import {
+  mongoConnect,
+  mongoDisconnect,
+  usingCollections,
+} from '../jest/mongoTestUtil.js'
 import provider from './index.js'
 import types from './types.js'
 
-beforeAll(mongoClient.connect)
+beforeAll(mongoConnect)
 
-afterAll(mongoClient.disconnect)
+afterAll(mongoDisconnect)
 
 const records = _.map(
   ({ _id, nextCode, ...rest }) => ({

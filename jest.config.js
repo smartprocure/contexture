@@ -8,6 +8,8 @@ export default {
     '!<rootDir>/packages/*/src/**/*.test.js',
   ],
   reporters: ['default', ['github-actions', { silent: false }]],
+  globalSetup: './jest/globalSetup.js',
+  globalTeardown: './jest/globalTeardown.js',
   projects: [
     {
       displayName: 'client',

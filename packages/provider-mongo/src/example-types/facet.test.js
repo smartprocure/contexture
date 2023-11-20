@@ -1,10 +1,14 @@
 import _ from 'lodash/fp.js'
+import {
+  mongoConnect,
+  mongoDisconnect,
+  usingCollections,
+} from '../../jest/mongoTestUtil.js'
 import facet from './facet.js'
-import { mongoClient, usingCollections } from '../../jest/util.js'
 
-beforeAll(mongoClient.connect)
+beforeAll(mongoConnect)
 
-afterAll(mongoClient.disconnect)
+afterAll(mongoDisconnect)
 
 describe('facet', () => {
   describe('facet.hasValue', () => {

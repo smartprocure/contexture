@@ -1,17 +1,15 @@
 import _ from 'lodash/fp.js'
 import { MongoClient } from 'mongodb'
 
-export const mongoClient = {
-  async connect() {
-    console.log({ MONGO_URI: process.env.MONGO_URI })
-    global.__mongoClient = await MongoClient.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-  },
-  async disconnect() {
-    await global.__mongoClient.close()
-  },
+export const mongoConnect = async () => {
+  global.__mongoClient = await MongoClient.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+}
+
+export const mongoDisconnect = async () => {
+  await global.__mongoClient.close()
 }
 
 export const usingCollections = async (cb) => {

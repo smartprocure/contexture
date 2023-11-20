@@ -1,10 +1,14 @@
 import _ from 'lodash/fp.js'
-import { mongoClient, usingCollections } from '../../jest/util.js'
+import {
+  mongoConnect,
+  mongoDisconnect,
+  usingCollections,
+} from '../../jest/mongoTestUtil.js'
 import dateHistogram from './dateHistogram.js'
 
-beforeAll(mongoClient.connect)
+beforeAll(mongoConnect)
 
-afterAll(mongoClient.disconnect)
+afterAll(mongoDisconnect)
 
 describe('dateHistogram', () => {
   describe('dateHistogram.result', () => {

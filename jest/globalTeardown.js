@@ -1,5 +1,7 @@
 // https://nodkz.github.io/mongodb-memory-server/docs/guides/integration-examples/test-runners/
 
 export default async () => {
-  await global.__mongoServer.stop()
+  if (globalThis.__mongoServer) {
+    await globalThis.__mongoServer.stop()
+  }
 }
