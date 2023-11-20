@@ -3,6 +3,7 @@
 import { MongoMemoryServer } from 'mongodb-memory-server'
 
 export default async (jestConfig, projectConfig) => {
+  console.log(projectConfig.displayName)
   if (projectConfig.displayName.name === 'provider-mongo') {
     globalThis.__mongoServer = await MongoMemoryServer.create()
     // Each test file has its own environment with its own `global` instance so
