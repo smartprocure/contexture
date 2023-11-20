@@ -15,15 +15,18 @@ export const mergeHighlightsOnSource = (schema, config, source, highlights) => {
 
   // Mutate source only for performance reasons
   _.convert({ immutable: false }).mergeWith(
-    (src, hi) => {
+    (src, target) => {
       if (_.isArray(src) && config?.filterSourceArrays) {
         return F.reduceIndexed(
-          (acc, v, i) =>
-            _.isUndefined(v)
+          (acc, value, index) =>
+            _.isUndefined(value)
               ? acc
-              : F.push(_.isPlainObject(v) ? _.merge(src[i], v) : v, acc),
+              : F.push(
+                  _.isPlainObject(value) ? _.merge(src[index], value) : value,
+                  acc
+                ),
           [],
-          hi
+          target
         )
       }
     },
