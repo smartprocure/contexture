@@ -1,7 +1,5 @@
 import mongoId from './mongoId.js'
-import mongodb from 'mongodb'
-
-let { ObjectID } = mongodb
+import { ObjectId } from 'bson'
 
 describe('mongoId', () => {
   describe('mongoId.hasValue', () => {
@@ -30,7 +28,7 @@ describe('mongoId', () => {
         })
       ).toEqual({
         _id: {
-          $in: [new ObjectID('53b46feb938d89315aae1477')],
+          $in: [new ObjectId('53b46feb938d89315aae1477')],
         },
       })
     })
@@ -42,7 +40,7 @@ describe('mongoId', () => {
         })
       ).toEqual({
         _id: {
-          $in: [new ObjectID('53b46feb938d89315aae1477')],
+          $in: [new ObjectId('53b46feb938d89315aae1477')],
         },
       })
     })
@@ -55,7 +53,7 @@ describe('mongoId', () => {
         })
       ).toEqual({
         _id: {
-          $nin: [new ObjectID('53b46feb938d89315aae1477')],
+          $nin: [new ObjectId('53b46feb938d89315aae1477')],
         },
       })
     })
