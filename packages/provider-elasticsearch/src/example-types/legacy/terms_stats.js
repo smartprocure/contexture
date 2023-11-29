@@ -12,7 +12,7 @@ export default {
   async result(node, search, schema) {
     let field = getField(schema, node.key_field)
     let x = await esTwoLevel.result(
-      _.merge(
+      _.mergeAll([
         {
           filter_agg:
             node.filter && buildRegexQueryForWords(field)(node.filter),
@@ -24,8 +24,9 @@ export default {
           },
           value_type: 'stats',
         },
-        node
-      ),
+        node,
+        { value_field: getField(schema, node.value_field) },
+      ]),
       search
     )
     return {
