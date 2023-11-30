@@ -80,7 +80,8 @@ let TermsStatsTable = ({
                     <div>
                       <Button
                         onClick={async () => {
-                          let field = criteriaField || node.key_field
+                          let field =
+                            criteriaField || node.key_field || node.groupField
                           let filter =
                             criteria &&
                             _.find({ field }, tree.getNode(criteria).children)
@@ -112,7 +113,7 @@ let TermsStatsTable = ({
             ]
           : _.compact(children),
       }}
-      data={node.context.terms}
+      data={node.context?.terms ?? node.context?.results}
       sortField={node.order}
       sortDir={node.sortDir}
       columnSort={(column) => {
