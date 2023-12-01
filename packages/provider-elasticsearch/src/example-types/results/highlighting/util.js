@@ -1,12 +1,43 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 
-export const getArrayFieldsPaths = _.memoize(
-  (schema) =>
-    _.keys(
-      _.pickBy({ elasticsearch: { meta: { subType: 'array' } } }, schema.fields)
-    ),
-  _.get('elasticsearch.index')
+export const findByPrefix = (str, arr) => _.find((k) => str.startsWith(k), arr)
+
+export const isLeafField = (field) => !!field?.elasticsearch?.dataType
+
+export const isBlobField = (field) =>
+  field?.elasticsearch?.meta?.subType === 'blob' && isLeafField(field)
+
+export const isArrayField = (field) =>
+  field?.elasticsearch?.meta?.subType === 'array'
+
+export const isArrayOfScalarsField = (field) =>
+  isArrayField(field) && isLeafField(field)
+
+export const isArrayOfObjectsField = (field) =>
+  isArrayField(field) && !isLeafField(field)
+
+// Object keys are paths of arrays of objects fields in the schema and values
+// are lists of paths for fields under each array field.
+export const getArrayOfObjectsPathsMap = _.memoize((schema) => {
+  const fieldsPaths = _.keys(schema.fields)
+  return F.reduceIndexed(
+    (acc, field, arrayPath) => {
+      if (isArrayOfObjectsField(field)) {
+        acc[arrayPath] = _.filter(_.startsWith(`${arrayPath}.`), fieldsPaths)
+      }
+      return acc
+    },
+    {},
+    schema.fields
+  )
+}, _.get('elasticsearch.index'))
+
+export const stripTags = (tags, str) =>
+  str.replaceAll(tags.pre, '').replaceAll(tags.post, '')
+
+const getRangesRegexp = _.memoize(
+  (tags) => new RegExp(`${tags.pre}(?<capture>.*?)${tags.post}`, 'g')
 )
 
 /**
@@ -17,18 +48,17 @@ export const getArrayFieldsPaths = _.memoize(
  *
  * `A <em>red</em> <em>car</em>`
  */
-const getHighlightRanges = (pre, post, str) => {
+const getHighlightRanges = _.curry((tags, str) => {
   let runningTagsLength = 0
   const ranges = []
-  const regexp = new RegExp(`${pre}(?<capture>.*?)${post}`, 'g')
-  for (const match of str.matchAll(regexp)) {
+  for (const match of str.matchAll(getRangesRegexp(tags))) {
     const start = match.index - runningTagsLength
     const end = start + match.groups.capture.length
     ranges.push([start, end])
-    runningTagsLength += pre.length + post.length
+    runningTagsLength += match[0].length - match[1].length
   }
   return ranges
-}
+})
 
 /**
  * Wrap substrings given by [start, end] ranges with pre/post tags
@@ -56,18 +86,15 @@ const highlightFromRanges = (pre, post, ranges, str) => {
     : highlighted
 }
 
-export const mergeHighlights = (config, ...strs) => {
+export const mergeHighlights = (tags, ...strs) => {
   // This may look unnecessary but merging highlights is not cheap and many
   // times is not even needed
-  if (_.size(strs) <= 1) return _.head(strs)
-  const { pre_tag: pre, post_tag: post } = config
-  const ranges = F.mergeRanges(
-    _.flatMap((str) => getHighlightRanges(pre, post, str), strs)
-  )
+  if (strs.length <= 1) return _.head(strs)
+  const ranges = F.mergeRanges(_.flatMap(getHighlightRanges(tags), strs))
   return highlightFromRanges(
-    pre,
-    post,
+    tags.pre,
+    tags.post,
     ranges,
-    _.head(strs).replaceAll(pre, '').replaceAll(post, '')
+    stripTags(tags, _.head(strs))
   )
 }

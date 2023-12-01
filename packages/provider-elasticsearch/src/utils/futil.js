@@ -1,6 +1,10 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 
+export const removePrefix = _.curry((prefix, str) =>
+  str && prefix ? str.slice(prefix.length) : ''
+)
+
 export let unsetOnTree = _.curry((prop, tree) =>
   _.compact(F.treeToArrayBy()(F.popProperty(prop), tree))
 )
@@ -99,10 +103,6 @@ export let renameOn = (from, to, obj) => {
 // Async version of compactMap (and indexed)
 export let compactMapAsync = async (...args) =>
   _.compact(await Promise.all(F.mapIndexed(...args)))
-
-// Similar to F.getOrReturn but for _.set
-export const setOrReturn = (path, val, obj) =>
-  path ? _.set(path, val, obj) : val
 
 // _.groupBy but also passing the current key
 export const groupByIndexed = _.curry((it, coll) =>

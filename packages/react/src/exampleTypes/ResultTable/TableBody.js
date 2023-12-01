@@ -2,21 +2,22 @@ import React from 'react'
 import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
 import { getRecord, getResults } from '../../utils/schema.js'
-import HighlightedColumn from './HighlightedColumn.js'
 import { addBlankRows, blankResult } from '../../utils/format.js'
 import { withTheme } from '../../utils/theme.js'
 import { StripedLoader } from '../../greyVest/index.js'
 
-let displayCell = ({ display, value, record, result }) =>
-  result.isBlank ? blankResult(display)(value, record) : display(value, record)
+let displayCell = ({ display, value, record, result, ...props }) =>
+  result.isBlank
+    ? blankResult(display)(value, record, props)
+    : display(value, record, props)
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = ({
   node,
+  tree,
   visibleFields,
   fields,
   hiddenFields,
-  schema,
   getRowKey = _.get('_id'),
   blankRows,
   pageSize,
@@ -66,19 +67,12 @@ let TableBody = ({
                         value: _.get(field, getRecord(x)),
                         record: getRecord(x),
                         result: x,
+                        tree,
+                        node,
                       })}
                     </Cell>
                   ),
                   visibleFields
-                )}
-                {node.showOtherMatches && (
-                  <HighlightedColumn
-                    {...{
-                      node,
-                      additionalFields: _.result('additionalFields.slice', x),
-                      schema,
-                    }}
-                  />
                 )}
               </Row>
             ),

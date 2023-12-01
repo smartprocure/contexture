@@ -1,56 +1,51 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import { CartesianProduct } from 'js-combinatorics'
+import { isLeafField, isBlobField } from './util.js'
 
-/**
- * Return names for all fields groups and their sub-fields in `schema`.
- */
-const getFieldsGroupsNames = _.memoize((schema) => {
-  const subFields = _.keys(
-    _.pickBy('highlight', schema.elasticsearch?.subFields)
-  )
+// Names of all subfields that can be highlighted.
+const getHighlightSubFieldsNames = (schema) =>
+  _.keys(_.pickBy('highlight', schema.elasticsearch?.subFields))
 
-  const fields = _.flatMap((field) => {
+// Paths of all fields groups and their subfields in a schema that can be highlighted.
+export const getHighlightFieldsGroupsPaths = _.memoize((schema) => {
+  const subFieldsNames = getHighlightSubFieldsNames(schema)
+  return _.flatMap((field) => {
     const copy_to = field.elasticsearch?.copy_to
-    if (_.isEmpty(copy_to)) return copy_to
-    const product = new CartesianProduct(copy_to, subFields)
-    return [...copy_to, ...Array.from(product).map(_.join('.'))]
+    if (!_.isEmpty(copy_to)) {
+      const product = new CartesianProduct(copy_to, subFieldsNames)
+      return [...copy_to, ..._.map(_.join('.'), Array.from(product))]
+    }
+    return copy_to ?? []
   }, schema.fields)
-
-  return new Set(fields)
 }, _.get('elasticsearch.index'))
 
-/**
- * Return mappings for all sub-fields that can be highlighted in `mapping`.
- */
-const getSubFieldsMappings = (schema, mapping) =>
-  _.flow(
-    F.pickByIndexed((v, k) => schema.elasticsearch?.subFields?.[k]?.highlight),
-    F.mapValuesIndexed((v, k) => ({
-      ...v,
-      meta: mapping.meta,
-      copy_to: _.map((multi) => `${multi}.${k}`, mapping.copy_to),
-    }))
-  )(mapping.fields)
-
-/**
- * Return mappings for all fields and their sub-fields that can be highlighted
- * in `schema`.
- */
-const getFieldsMappings = _.memoize((schema) => {
-  const fieldsGroups = getFieldsGroupsNames(schema)
+// Object of all fields and their subfields in a schema that can be highlighted.
+export const getAllHighlightFields = _.memoize((schema) => {
+  const subFieldsNames = getHighlightSubFieldsNames(schema)
+  const groupsPaths = getHighlightFieldsGroupsPaths(schema)
+  const isFieldsGroupPath = (path) => _.includes(path, groupsPaths)
   return F.reduceIndexed(
-    (acc, { elasticsearch: mapping }, name) => {
-      // Only include leaf fields (have mapping) and do not include fields
-      // groups.
-      if (mapping && !fieldsGroups.has(name)) {
-        Object.assign(acc, {
-          [name]: mapping,
-          ..._.mapKeys(
-            (k) => `${name}.${k}`,
-            getSubFieldsMappings(schema, mapping)
-          ),
-        })
+    (acc, field, path) => {
+      if (!isLeafField(field) || isFieldsGroupPath(path)) {
+        return acc
+      }
+      acc[path] = field
+      const subFieldsMappings = _.pick(
+        subFieldsNames,
+        field.elasticsearch.fields
+      )
+      for (const name in subFieldsMappings) {
+        acc[`${path}.${name}`] = {
+          elasticsearch: {
+            ...subFieldsMappings[name],
+            meta: field.elasticsearch.meta,
+            copy_to: _.map(
+              (path) => `${path}.${name}`,
+              field.elasticsearch.copy_to
+            ),
+          },
+        }
       }
       return acc
     },
@@ -59,42 +54,41 @@ const getFieldsMappings = _.memoize((schema) => {
   )
 }, _.get('elasticsearch.index'))
 
-export const getRequestBodyHighlight = (schema, node, config) => {
+export const getHighlightFields = (schema, node) => {
   const query = node._meta?.relevantFilters
   const querystr = JSON.stringify(query)
-  const allFieldsGroups = getFieldsGroupsNames(schema)
+  const groupsPaths = getHighlightFieldsGroupsPaths(schema)
 
   // Pre-computed list of fields groups present in the query
-  const queryFieldsGroups = []
-  F.walk()((val, key) => {
-    if (allFieldsGroups.has(val)) queryFieldsGroups.push(val)
-    if (allFieldsGroups.has(key)) queryFieldsGroups.push(key)
-  })(query)
+  const queryFieldsGroups = F.reduceTree()(
+    (acc, val, key) =>
+      _.includes(val, groupsPaths)
+        ? F.push(val, acc)
+        : _.includes(key, groupsPaths)
+        ? F.push(key, acc)
+        : acc,
+    [],
+    query
+  )
 
-  const getHighlightQuery = (mapping, name) => {
-    const toReplace = _.intersection(queryFieldsGroups, mapping.copy_to)
-    if (!_.isEmpty(toReplace)) {
-      const regexp = new RegExp(_.join('|', toReplace), 'g')
-      return JSON.parse(_.replace(regexp, name, querystr))
+  const getHighlightQuery = (field, path) => {
+    const pathsToReplace = _.intersection(
+      queryFieldsGroups,
+      field.elasticsearch?.copy_to
+    )
+    if (!_.isEmpty(pathsToReplace)) {
+      const regexp = new RegExp(_.join('|', pathsToReplace), 'g')
+      return JSON.parse(_.replace(regexp, path, querystr))
     }
   }
 
-  const mappingToHighlightConfig = (mapping, name) => {
-    const isBlob = mapping.meta?.subType === 'blob'
-    return F.omitBlank({
-      fragment_size: isBlob ? 250 : null,
-      number_of_fragments: isBlob ? 3 : null,
-      highlight_query: getHighlightQuery(mapping, name),
-    })
-  }
-
-  return {
-    pre_tags: [config.pre_tag],
-    post_tags: [config.post_tag],
-    number_of_fragments: 0,
-    fields: F.mapValuesIndexed(
-      mappingToHighlightConfig,
-      getFieldsMappings(schema)
-    ),
-  }
+  return F.mapValuesIndexed(
+    (field, path) =>
+      F.omitBlank({
+        fragment_size: isBlobField(field) ? 250 : null,
+        number_of_fragments: isBlobField(field) ? 3 : null,
+        highlight_query: getHighlightQuery(field, path),
+      }),
+    getAllHighlightFields(schema)
+  )
 }

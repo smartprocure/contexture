@@ -1,3 +1,9 @@
+# Included fields
+
+TODO: Talk about include/exclude and how highlighting gets affected by it
+
+If fields inside arrays of objects are specified in `node.include` (after wildcards are expanded), they will be also included in the highlighted results for the array of objects regardless of whether they are excluded from source.
+
 # Highlighting
 
 Our approach to highlighting is designed to be as out of the box as possible, without too many configuration options. See `./type.d.ts` for more details on the API.

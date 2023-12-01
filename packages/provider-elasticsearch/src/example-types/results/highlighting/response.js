@@ -1,14 +1,14 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import { groupByIndexed, setOrReturn } from '../../../utils/futil.js'
-import { getArrayFieldsPaths, mergeHighlights } from './util.js'
-
-const stripTags = _.curry((pre, post, str) =>
-  str.replaceAll(pre, '').replaceAll(post, '')
-)
-
-const getParentArrayPath = (schema, field) =>
-  _.find((k) => field.startsWith(k), getArrayFieldsPaths(schema))
+import { removePrefix, groupByIndexed } from '../../../utils/futil.js'
+import {
+  stripTags,
+  mergeHighlights,
+  isBlobField,
+  isArrayOfScalarsField,
+  findByPrefix,
+  getArrayOfObjectsPathsMap,
+} from './util.js'
 
 const lastWordRegex = /\.(\w+)$/
 
@@ -17,48 +17,62 @@ const getMultiFieldName = (schema, field) => {
   return schema.fields[multi]?.elasticsearch?.fields?.[sub] ? multi : field
 }
 
-export const transformHighlightResponse = (schema, config, hit) => {
-  // Group `city` and `city.exact` under `city`
+export const transformResponseHighlight = (
+  schema,
+  hit,
+  tags,
+  arrayIncludes = {}
+) => {
+  const arrayOfObjectsPaths = _.keys(getArrayOfObjectsPathsMap(schema))
+
+  // Group `city` and `city.subfield` under `city`
   const grouped = _.flow(
     groupByIndexed((v, k) => getMultiFieldName(schema, k)),
     _.mapValues(_.flatten)
   )(hit.highlight)
 
-  const getOrderedArrayFragments = (fragments, field) => {
-    const arrayPath = getParentArrayPath(schema, field)
-    const fragmentPath = field.slice(arrayPath.length + 1) // +1 strips off leading dot
-    const sourceArray = _.get(arrayPath, hit._source)
+  hit.highlight = F.reduceIndexed(
+    (acc, fragments, path) => {
+      const field = schema.fields[path]
+      const arrayPath = isArrayOfScalarsField(field)
+        ? path
+        : findByPrefix(path, arrayOfObjectsPaths)
 
-    if (_.isEmpty(sourceArray)) {
-      return _.map(
-        (fragment) => setOrReturn(fragmentPath, fragment, {}),
-        fragments
-      )
-    }
+      if (arrayPath) {
+        const itemPath = removePrefix(`${arrayPath}.`, path)
+        const fragmentsMap = _.groupBy(
+          (fragment) => stripTags(tags, fragment),
+          fragments
+        )
+        const sourceArray = _.get(arrayPath, hit._source)
+        for (const index in sourceArray) {
+          const lookupKey = itemPath
+            ? _.get(itemPath, sourceArray[index])
+            : sourceArray[index]
+          const fragments = fragmentsMap[lookupKey]
+          if (fragments) {
+            acc[arrayPath] ??= {}
+            F.setOn(
+              F.dotJoin([index, itemPath]),
+              mergeHighlights(tags, ...fragments),
+              acc[arrayPath]
+            )
+            for (const itemPath of arrayIncludes[arrayPath] ?? []) {
+              F.updateOn(
+                F.dotJoin([index, itemPath]),
+                (highlight) => highlight ?? _.get(itemPath, sourceArray[index]),
+                acc[arrayPath]
+              )
+            }
+          }
+        }
+      } else if (isBlobField(schema.fields[path])) {
+        acc[path] = fragments
+      } else {
+        acc[path] = mergeHighlights(tags, ...fragments)
+      }
 
-    // Map of `array item -> highlighted fragment` to speed up ordering the
-    // highlighted fragments.
-    const fragmentsMap = F.arrayToObject(
-      stripTags(config.pre_tag, config.post_tag),
-      _.identity,
-      fragments
-    )
-
-    return _.map((item) => {
-      const plain = F.getOrReturn(fragmentPath, item)
-      const fragment = fragmentsMap[plain]
-      return fragment && setOrReturn(fragmentPath, fragment, {})
-    }, sourceArray)
-  }
-
-  return F.reduceIndexed(
-    (acc, fragments, field) => {
-      const path = getParentArrayPath(schema, field)
-      return path
-        ? _.set(path, getOrderedArrayFragments(fragments, field), acc)
-        : schema.fields[field]?.elasticsearch?.meta?.subType === 'blob'
-        ? _.set(field, fragments, acc)
-        : _.set(field, mergeHighlights(config, ...fragments), acc)
+      return acc
     },
     {},
     grouped

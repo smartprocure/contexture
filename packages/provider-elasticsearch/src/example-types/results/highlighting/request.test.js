@@ -1,37 +1,41 @@
-import { getRequestBodyHighlight } from './request.js'
+import { getHighlightFields } from './request.js'
 
-describe('getRequestBodyHighlight()', () => {
+describe('getHighlightFields()', () => {
   it('should exclude fields without mappings', () => {
     const schema = {
       fields: {
         other: {},
-        state: { elasticsearch: {} },
-        'city.street': { elasticsearch: {} },
+        state: { elasticsearch: { dataType: 'text' } },
+        'city.street': { elasticsearch: { dataType: 'text' } },
       },
     }
-    const actual = getRequestBodyHighlight(schema, {}, {}).fields
-    const expected = {
+    const node = {}
+    const actual = getHighlightFields(schema, node)
+    expect(actual).toEqual({
       state: {},
       'city.street': {},
-    }
-    expect(actual).toEqual(expected)
+    })
   })
 
   it('should exclude group fields', () => {
     const schema = {
       fields: {
-        all: { elasticsearch: {} },
-        address: { elasticsearch: {} },
-        state: { elasticsearch: { copy_to: ['all', 'address'] } },
-        'city.street': { elasticsearch: { copy_to: ['all', 'address'] } },
+        all: { elasticsearch: { dataType: 'text' } },
+        address: { elasticsearch: { dataType: 'text' } },
+        state: {
+          elasticsearch: { dataType: 'text', copy_to: ['all', 'address'] },
+        },
+        'city.street': {
+          elasticsearch: { dataType: 'text', copy_to: ['all', 'address'] },
+        },
       },
     }
-    const actual = getRequestBodyHighlight(schema, {}, {}).fields
-    const expected = {
+    const node = {}
+    const actual = getHighlightFields(schema, node)
+    expect(actual).toEqual({
       state: {},
       'city.street': {},
-    }
-    expect(actual).toEqual(expected)
+    })
   })
 
   it('should include whitelisted sub fields', () => {
@@ -39,68 +43,91 @@ describe('getRequestBodyHighlight()', () => {
       elasticsearch: {
         subFields: {
           keyword: { highlight: false },
-          exact: { highlight: true },
+          subfield: { highlight: true },
         },
       },
       fields: {
         state: {
           elasticsearch: {
-            fields: { keyword: {}, exact: {} },
+            dataType: 'text',
+            fields: { keyword: {}, subfield: {} },
           },
         },
         'city.street': {
           elasticsearch: {
-            fields: { keyword: {}, exact: {} },
+            dataType: 'text',
+            fields: { keyword: {}, subfield: {} },
           },
         },
       },
     }
-    const actual = getRequestBodyHighlight(schema, {}, {}).fields
-    const expected = {
+    const node = {}
+    const actual = getHighlightFields(schema, node)
+    expect(actual).toEqual({
       state: {},
-      'state.exact': {},
+      'state.subfield': {},
       'city.street': {},
-      'city.street.exact': {},
-    }
-    expect(actual).toEqual(expected)
+      'city.street.subfield': {},
+    })
   })
 
   it('should generate configuration for blob text fields', () => {
     const schema = {
       elasticsearch: {
         subFields: {
-          exact: { highlight: true },
+          subfield: {
+            highlight: true,
+          },
         },
       },
       fields: {
         state: {
           elasticsearch: {
+            dataType: 'text',
             meta: { subType: 'blob' },
-            fields: { exact: {} },
+            fields: {
+              subfield: {
+                dataType: 'text',
+              },
+            },
           },
         },
       },
     }
-    const actual = getRequestBodyHighlight(schema, {}, {}).fields
-    const expected = {
+    const node = {}
+    const actual = getHighlightFields(schema, node)
+    expect(actual).toEqual({
       state: {
         fragment_size: 250,
         number_of_fragments: 3,
       },
-      'state.exact': {
+      'state.subfield': {
         fragment_size: 250,
         number_of_fragments: 3,
       },
-    }
-    expect(actual).toEqual(expected)
+    })
   })
 
   it('should generate highlight_query with fields groups replaced', () => {
     const schema = {
       fields: {
-        address: { elasticsearch: {} },
-        state: { elasticsearch: { copy_to: ['address'] } },
-        'city.street': { elasticsearch: { copy_to: ['address'] } },
+        address: {
+          elasticsearch: {
+            dataType: 'text',
+          },
+        },
+        state: {
+          elasticsearch: {
+            dataType: 'text',
+            copy_to: ['address'],
+          },
+        },
+        'city.street': {
+          elasticsearch: {
+            dataType: 'text',
+            copy_to: ['address'],
+          },
+        },
       },
     }
     const query = (field) => ({
@@ -111,40 +138,51 @@ describe('getRequestBodyHighlight()', () => {
         ],
       },
     })
-    const node = { _meta: { relevantFilters: query('address') } }
-    const actual = getRequestBodyHighlight(schema, node, {}).fields
-    const expected = {
+    const node = {
+      _meta: {
+        relevantFilters: query('address'),
+      },
+    }
+    const actual = getHighlightFields(schema, node)
+    expect(actual).toEqual({
       state: {
         highlight_query: query('state'),
       },
       'city.street': {
         highlight_query: query('city.street'),
       },
-    }
-    expect(actual).toEqual(expected)
+    })
   })
 
   it('should generate highlight_query with fields groups replaced for sub fields', () => {
     const schema = {
       elasticsearch: {
         subFields: {
-          exact: { highlight: true },
+          subfield: { highlight: true },
         },
       },
       fields: {
         address: {
-          elasticsearch: {},
+          elasticsearch: {
+            dataType: 'text',
+          },
         },
         state: {
           elasticsearch: {
+            dataType: 'text',
             copy_to: ['address'],
-            fields: { exact: {} },
+            fields: {
+              subfield: { dataType: 'text' },
+            },
           },
         },
         'city.street': {
           elasticsearch: {
+            dataType: 'text',
             copy_to: ['address'],
-            fields: { exact: {} },
+            fields: {
+              subfield: { dataType: 'text' },
+            },
           },
         },
       },
@@ -157,14 +195,19 @@ describe('getRequestBodyHighlight()', () => {
         ],
       },
     })
-    const node = { _meta: { relevantFilters: query('address.exact') } }
-    const actual = getRequestBodyHighlight(schema, node, {}).fields
-    const expected = {
-      state: {},
-      'state.exact': { highlight_query: query('state.exact') },
-      'city.street': {},
-      'city.street.exact': { highlight_query: query('city.street.exact') },
+    const node = {
+      _meta: {
+        relevantFilters: query('address.subfield'),
+      },
     }
-    expect(actual).toEqual(expected)
+    const actual = getHighlightFields(schema, node)
+    expect(actual).toEqual({
+      state: {},
+      'state.subfield': { highlight_query: query('state.subfield') },
+      'city.street': {},
+      'city.street.subfield': {
+        highlight_query: query('city.street.subfield'),
+      },
+    })
   })
 })

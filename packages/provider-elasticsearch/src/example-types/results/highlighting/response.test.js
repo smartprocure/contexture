@@ -1,204 +1,231 @@
-import { transformHighlightResponse } from './response.js'
+import { schema } from './schema.test.js'
+import { transformResponseHighlight } from './response.js'
 
-const config = { pre_tag: '<em>', post_tag: '</em>' }
+const tags = { pre: '<em>', post: '</em>' }
 
-describe('transformHighlightResponse()', () => {
+describe('transformResponseHighlight()', () => {
   describe('text fields', () => {
-    const schema = {
-      fields: {
-        state: {
-          elasticsearch: {
-            fields: { exact: {} },
-          },
-        },
-        'city.street': {
-          elasticsearch: {
-            fields: { exact: {} },
-          },
-        },
-      },
-    }
-
     it('should merge fragments', () => {
       const hit = {
-        _source: {
-          name: 'John Wayne',
-          state: 'New Jersey',
-          city: { street: 'Jefferson Ave' },
-        },
         highlight: {
-          state: ['<em>New</em> Jersey'],
-          'state.exact': ['New <em>Jersey</em>'],
-          'city.street': ['<em>Jefferson</em> Ave'],
-          'city.street.exact': ['Jefferson <em>Ave</em>'],
+          'library.name': [
+            '<em>Imperial</em> College <em>London Abdus</em> Salam Library',
+          ],
+          'library.name.subfield': [
+            'Imperial College London <em>Abdus Salam</em> Library',
+          ],
         },
       }
-      const actual = transformHighlightResponse(schema, config, hit)
-      const expected = {
-        state: '<em>New</em> <em>Jersey</em>',
-        city: { street: '<em>Jefferson</em> <em>Ave</em>' },
-      }
-      expect(actual).toEqual(expected)
+      transformResponseHighlight(schema, hit, tags)
+      expect(hit.highlight).toEqual({
+        'library.name':
+          '<em>Imperial</em> College <em>London Abdus Salam</em> Library',
+      })
     })
   })
 
   describe('blob text fields', () => {
-    const schema = {
-      fields: {
-        blob: {
-          elasticsearch: {
-            meta: { subType: 'blob' },
-            fields: { exact: {} },
-          },
-        },
-      },
-    }
-
     it('should not merge fragments', () => {
       const hit = {
-        _source: {},
         highlight: {
-          blob: [
-            '<em>Meridian</em> St.',
-            '<em>Collins</em> Ave.',
-            '<em>Ocean</em> Drive',
+          'library.about': [
+            'The <em>Abdus Salam Library</em> is',
+            'is the <em>largest</em> of',
           ],
-          'blob.exact': [
-            '<em>Jefferson</em> Ave.',
-            '<em>Washington</em> St.',
-            '<em>Lincoln</em> Rd.',
+          'library.about.subfield': [
+            'went on to <em>form part</em> of',
+            'used <em>extensively</em> by members of the college',
           ],
         },
       }
-      const actual = transformHighlightResponse(schema, config, hit)
-      const expected = {
-        blob: [
-          '<em>Meridian</em> St.',
-          '<em>Collins</em> Ave.',
-          '<em>Ocean</em> Drive',
-          '<em>Jefferson</em> Ave.',
-          '<em>Washington</em> St.',
-          '<em>Lincoln</em> Rd.',
+      transformResponseHighlight(schema, hit, tags)
+      expect(hit.highlight).toEqual({
+        'library.about': [
+          'The <em>Abdus Salam Library</em> is',
+          'is the <em>largest</em> of',
+          'went on to <em>form part</em> of',
+          'used <em>extensively</em> by members of the college',
         ],
-      }
-      expect(actual).toEqual(expected)
+      })
     })
   })
 
   describe('arrays of strings', () => {
-    const schema = {
-      fields: {
-        state: {},
-        'city.street': { elasticsearch: { meta: { subType: 'array' } } },
-      },
-    }
-
-    it('should do nothing when source is empty', () => {
-      const hit = {
-        _source: {},
-        highlight: {
-          'city.street': ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
-        },
-      }
-      const actual = transformHighlightResponse(schema, config, hit)
-      const expected = {
-        city: { street: ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'] },
-      }
-      expect(actual).toEqual(expected)
-    })
-
-    it('should order items when source has value', () => {
+    it('should resolve highlights indexes and merge fragments', () => {
       const hit = {
         _source: {
-          city: {
-            street: [
-              'Jefferson Ave.',
-              'Meridian St.',
-              'Washington St.',
-              'Collins Ave.',
+          library: {
+            categories: [
+              'Ethnic & Cultural',
+              'Computer Science',
+              'Alternative Medicine',
             ],
           },
         },
         highlight: {
-          'city.street': ['Collins <em>Ave.</em>', '<em>Meridian St.</em>'],
-        },
-      }
-      const actual = transformHighlightResponse(schema, config, hit)
-      const expected = {
-        city: {
-          street: [
-            undefined,
-            '<em>Meridian St.</em>',
-            undefined,
-            'Collins <em>Ave.</em>',
+          'library.categories': [
+            'Alternative <em>Medicine</em>',
+            '<em>Ethnic</em> & Cultural',
+          ],
+          'library.categories.subfield': [
+            'Ethnic & <em>Cultural</em>',
+            '<em>Alternative</em> Medicine',
           ],
         },
       }
-      expect(actual).toEqual(expected)
+      transformResponseHighlight(schema, hit, tags)
+      expect(hit.highlight).toEqual({
+        'library.categories': {
+          0: '<em>Ethnic</em> & <em>Cultural</em>',
+          2: '<em>Alternative</em> <em>Medicine</em>',
+        },
+      })
     })
   })
 
   describe('arrays of objects', () => {
-    const schema = {
-      fields: {
-        'city.street': { elasticsearch: { meta: { subType: 'array' } } },
-        'city.street.name': {},
-      },
-    }
-
-    it('should do nothing when source is empty', () => {
-      const hit = {
-        _source: {},
-        highlight: {
-          'city.street.name': [
-            'Collins <em>Ave.</em>',
-            '<em>Meridian St.</em>',
-          ],
-        },
-      }
-      const actual = transformHighlightResponse(schema, config, hit)
-      const expected = {
-        city: {
-          street: [
-            { name: 'Collins <em>Ave.</em>' },
-            { name: '<em>Meridian St.</em>' },
-          ],
-        },
-      }
-      expect(actual).toEqual(expected)
-    })
-
-    it('should order items when source has value', () => {
+    it('should resolve highlights indexes and merge fragments', () => {
       const hit = {
         _source: {
-          city: {
-            street: [
-              { number: 101, name: 'Jefferson Ave.' },
-              { number: 235, name: 'Meridian St.' },
-              { number: 88, name: 'Washington St.' },
-              { number: 9, name: 'Collins Ave.' },
+          library: {
+            // prettier-ignore
+            books: [
+              { cover: { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald' } },
+              { cover: { title: 'The Grapes of Wrath', author: 'John Steinbeck' } },
+              { cover: { title: 'Nineteen Eighty-Four', author: 'George Orwell' } },
+              { cover: { title: 'Ulysses', author: 'James Joyce' } },
             ],
           },
         },
         highlight: {
-          'city.street.name': [
-            'Collins <em>Ave.</em>',
-            '<em>Meridian St.</em>',
+          'library.books.cover.title': [
+            'Nineteen <em>Eighty-Four</em>',
+            '<em>The</em> Great Gatsby',
+          ],
+          'library.books.cover.title.subfield': [
+            '<em>Nineteen</em> Eighty-Four',
+            'The Great <em>Gatsby</em>',
+          ],
+          'library.books.cover.author': [
+            '<em>George</em> Orwell',
+            'James <em>Joyce</em>',
+          ],
+          'library.books.cover.author.subfield': [
+            'George <em>Orwell</em>',
+            '<em>James</em> Joyce',
           ],
         },
       }
-      const actual = transformHighlightResponse(schema, config, hit)
-      const expected = {
-        city: {
-          street: [
-            undefined,
-            { name: '<em>Meridian St.</em>' },
-            undefined,
-            { name: 'Collins <em>Ave.</em>' },
+      transformResponseHighlight(schema, hit, tags)
+      expect(hit.highlight).toEqual({
+        'library.books': {
+          0: {
+            cover: {
+              title: '<em>The</em> Great <em>Gatsby</em>',
+            },
+          },
+          2: {
+            cover: {
+              title: '<em>Nineteen</em> <em>Eighty-Four</em>',
+              author: '<em>George</em> <em>Orwell</em>',
+            },
+          },
+          3: {
+            cover: {
+              author: '<em>James</em> <em>Joyce</em>',
+            },
+          },
+        },
+      })
+    })
+
+    it('should copy source fields', () => {
+      const hit = {
+        _source: {
+          library: {
+            // prettier-ignore
+            books: [
+              { cover: { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald' } },
+              { cover: { title: 'The Grapes of Wrath', author: 'John Steinbeck' } },
+              { cover: { title: 'Nineteen Eighty-Four', author: 'George Orwell' } },
+              { cover: { title: 'Ulysses', author: 'James Joyce' } },
+            ],
+          },
+        },
+        highlight: {
+          'library.books.cover.title': [
+            'Nineteen <em>Eighty-Four</em>',
+            '<em>The</em> Great Gatsby',
           ],
         },
       }
-      expect(actual).toEqual(expected)
+      const arrayIncludes = { 'library.books': ['cover.author'] }
+      transformResponseHighlight(schema, hit, tags, arrayIncludes)
+      expect(hit.highlight).toEqual({
+        'library.books': {
+          0: {
+            cover: {
+              title: '<em>The</em> Great Gatsby',
+              author: 'F. Scott Fitzgerald',
+            },
+          },
+          2: {
+            cover: {
+              title: 'Nineteen <em>Eighty-Four</em>',
+              author: 'George Orwell',
+            },
+          },
+        },
+      })
+    })
+
+    it('should not overwrite highlights when copying source fields', () => {
+      const hit = {
+        _source: {
+          library: {
+            // prettier-ignore
+            books: [
+              { cover: { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald' } },
+              { cover: { title: 'The Grapes of Wrath', author: 'John Steinbeck' } },
+              { cover: { title: 'Nineteen Eighty-Four', author: 'George Orwell' } },
+              { cover: { title: 'Ulysses', author: 'James Joyce' } },
+            ],
+          },
+        },
+        highlight: {
+          'library.books.cover.title': [
+            'Nineteen <em>Eighty-Four</em>',
+            '<em>The</em> Great Gatsby',
+          ],
+          'library.books.cover.author': [
+            '<em>George</em> Orwell',
+            'James <em>Joyce</em>',
+          ],
+        },
+      }
+      const arrayIncludes = { 'library.books': ['cover.title'] }
+      transformResponseHighlight(schema, hit, tags, arrayIncludes)
+      expect(hit.highlight).toEqual({
+        'library.books': {
+          0: {
+            cover: {
+              title: '<em>The</em> Great Gatsby',
+            },
+          },
+          2: {
+            cover: {
+              title: 'Nineteen <em>Eighty-Four</em>',
+              author: '<em>George</em> Orwell',
+            },
+          },
+          3: {
+            cover: {
+              title: 'Ulysses',
+              author: 'James <em>Joyce</em>',
+            },
+          },
+        },
+      })
     })
   })
 })
