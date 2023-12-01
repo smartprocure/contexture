@@ -8855,7 +8855,6 @@ __metadata:
   resolution: "contexture-mongo@workspace:packages/provider-mongo"
   dependencies:
     "@elastic/datemath": ^2.3.0
-    bluebird: ^3.5.0
     bson: ^6.2.0
     contexture: ^0.12.19
     debug: ^4.3.1

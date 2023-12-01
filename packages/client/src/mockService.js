@@ -1,4 +1,3 @@
-import Promise from 'bluebird'
 import F from 'futil'
 import { Tree } from './util/tree.js'
 
@@ -19,7 +18,7 @@ export let defaultMocks = ({ type }) =>
 
 export default ({ mocks = defaultMocks, logInput, logOutput, delay } = {}) =>
   async (dto, lastUpdateTime) => {
-    if (delay) await Promise.delay(delay)
+    if (delay) await new Promise((resolve) => setTimeout(resolve, delay))
     if (logInput) console.info('dto', JSON.stringify(dto, 0, 2))
     let result = Tree.transform((node) => {
       let context = mocks(node)
