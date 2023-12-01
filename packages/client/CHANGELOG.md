@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.53.5
+
+### Patch Changes
+
+- fc043097: Remove bluebird dependency
+- fc043097: Remove bluebird dependency
+
 ## 2.53.4
 
 ### Patch Changes
