@@ -13,7 +13,9 @@ let CheckableTermsStatsTable = ({
   theme: { Checkbox },
   ...props
 }) => {
-  let results = _.result('context.terms.slice', node)
+  let results =
+    _.result('context.terms.slice', node) ??
+    _.result('context.results.slice', node)
   let allChecked = _.size(results) === _.size(F.view(selected))
   let checkAll = F.sets(
     allChecked ? [] : _.map(_.iteratee(getValue), results),

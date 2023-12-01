@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.10
+
+### Patch Changes
+
+- 2893edf7: Support fieldValuesGroupStats node type in TermsStatsTable
+
 ## 2.58.9
 
 ### Patch Changes
