@@ -2,7 +2,6 @@ import { jest } from '@jest/globals'
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import ContextureClient, { encode, exampleTypes } from './index.js'
-import Promise from 'bluebird'
 import mockService from './mockService.js'
 import wrap from './actions/wrap.js'
 import { observable, toJS, set } from 'mobx'
@@ -13,10 +12,12 @@ let ContextureMobx = _.curry((x, y) =>
   ContextureClient({ ...mobxAdapter, ...x })(y)
 )
 
+let asyncSetTimeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 let addDelay =
   (delay, fn) =>
   async (...args) => {
-    await Promise.delay(delay)
+    await asyncSetTimeout(delay)
     return fn(...args)
   }
 
@@ -382,7 +383,7 @@ let AllTests = (ContextureClient) => {
     let service = jest.fn(async (dto, lastUpdateTime) => {
       let testChange = dto.children[0].values[0]
       // arbitrarily delay the first call to trigger a stale update
-      await Promise.delay(testChange === 'a' ? 20 : 1)
+      await asyncSetTimeout(testChange === 'a' ? 20 : 1)
       return mockService()(dto, lastUpdateTime)
     })
 
@@ -401,7 +402,7 @@ let AllTests = (ContextureClient) => {
       values: ['a'],
     })
     // Give it enough time for the server to trigger a search for step 1 (but not awaiting step1 because that would also wait for the service)
-    await Promise.delay(10)
+    await asyncSetTimeout(10)
     let step2 = Tree.mutate(['root', 'filter'], {
       values: ['b'],
     })
@@ -441,7 +442,7 @@ let AllTests = (ContextureClient) => {
     let step1 = Tree.mutate(['root', 'filter'], {
       values: ['a'],
     })
-    await Promise.delay(20)
+    await asyncSetTimeout(20)
     await Promise.resolve(step1)
     expect(spy).toBeCalledTimes(1)
   })
@@ -480,7 +481,7 @@ let AllTests = (ContextureClient) => {
       }
     )
     let step1 = tree.mutate(['root', 'a'], { values: [1] })
-    await Promise.delay(5)
+    await asyncSetTimeout(5)
     await Promise.resolve(step1)
     expect(spy).toBeCalledTimes(1)
     let node = tree.getNode(['root', 'b'])
@@ -864,7 +865,7 @@ let AllTests = (ContextureClient) => {
     let spy = jest.fn(mockService({}))
     let service = async (...args) => {
       // Add an artificial delay so we can see when updating starts
-      await Promise.delay(10)
+      await asyncSetTimeout(10)
       return spy(...args)
     }
     let tree = ContextureClient(
@@ -897,7 +898,7 @@ let AllTests = (ContextureClient) => {
     tree.mutate(['root', 'a'], { values: [1] })
     let node = tree.getNode(['root', 'b'])
     // Allow updating to start (after debounce elaspses) but before the service finishes
-    await Promise.delay(5)
+    await asyncSetTimeout(10)
     expect(node.updating).toBe(true)
     await node.updatingPromise
     expect(node.updating).toBe(false)
@@ -2592,7 +2593,7 @@ let AllTests = (ContextureClient) => {
     expect(!!tree.getNode(['root']).isStale).toBe(false)
 
     // Preparing to search (0 ms delay because validate is async)
-    await Promise.delay()
+    await asyncSetTimeout()
     expect(tree.getNode(['root', 'results']).isStale).toBe(true)
     expect(tree.getNode(['root']).markedForUpdate).toBe(true)
     expect(tree.getNode(['root']).isStale).toBe(true)
@@ -2600,7 +2601,7 @@ let AllTests = (ContextureClient) => {
 
     // Prepare for search, but run before search finishes
     /// TODOOO HERE:::: unpredicable fail - could be timing issue???
-    await Promise.delay(5)
+    await asyncSetTimeout(5)
     expect(tree.getNode(['root']).markedForUpdate).toBe(false)
     expect(tree.getNode(['root']).isStale).toBe(true)
     expect(tree.getNode(['root']).updating).toBe(true)
@@ -2658,11 +2659,11 @@ let AllTests = (ContextureClient) => {
 
     let action = tree.mutate(['root', 'results'], { page: 2 })
     // Preparing to search (0 ms delay because validate is async)
-    await Promise.delay()
+    await asyncSetTimeout()
     // await action
     expect(tree.getNode(['root']).markedForUpdate).toBe(true)
     expect(tree.getNode(['root']).isStale).toBe(true)
-    await Promise.delay(1)
+    await asyncSetTimeout(1)
     expect(tree.getNode(['root']).markedForUpdate).toBe(false)
     expect(tree.getNode(['root']).updating).toBe(true)
     expect(tree.getNode(['root']).isStale).toBe(true)

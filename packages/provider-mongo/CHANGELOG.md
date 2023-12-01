@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.26.16
+
+### Patch Changes
+
+- a6a1d15c: Remove mongodb peer dependency
+
+## 0.26.15
+
+### Patch Changes
+
+- 50f4137a: Fix mongo facet filter query splitting
+
 ## 0.26.14
 
 ### Patch Changes

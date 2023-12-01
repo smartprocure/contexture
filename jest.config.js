@@ -28,13 +28,8 @@ export default {
     {
       displayName: 'provider-mongo',
       testMatch: ['<rootDir>/packages/provider-mongo/src/**/*.test.js'],
+      globalSetup: './packages/provider-mongo/jest/globalSetup.js',
+      globalTeardown: './packages/provider-mongo/jest/globalTeardown.js',
     },
-    // TODO: Fix tests
-    // {
-    //   displayName: 'provider-mongo:integration',
-    //   testMatch: [
-    //     '<rootDir>/packages/provider-mongo/integration-test/example-types/**/*.js',
-    //   ],
-    // },
   ],
 }
