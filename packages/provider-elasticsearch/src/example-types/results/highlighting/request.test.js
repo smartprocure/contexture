@@ -1,6 +1,167 @@
-import { getHighlightFields } from './request.js'
+import { schema } from './schema.test.js'
+import {
+  addPathsToRequestSource,
+  getRequestHighlightFields,
+} from './request.js'
 
-describe('getHighlightFields()', () => {
+describe('addPathsToRequestSource()', () => {
+  describe('paths with no wildcards', () => {
+    it('should not add path when source is empty', () => {
+      const source = {}
+      const added = addPathsToRequestSource(schema, source, ['library.name'])
+      expect(source).toEqual({})
+      expect(added).toEqual([])
+    })
+
+    it('should not add path when there are no paths to add', () => {
+      const source = {
+        includes: ['library.name'],
+        excludes: ['library.about'],
+      }
+      const added = addPathsToRequestSource(schema, source)
+      expect(source).toEqual({
+        includes: ['library.name'],
+        excludes: ['library.about'],
+      })
+      expect(added).toEqual([])
+    })
+
+    it('should not add path when includes is empty and path is not excluded', () => {
+      const source = {
+        excludes: ['library.about'],
+      }
+      const added = addPathsToRequestSource(schema, source, ['library.name'])
+      expect(source).toEqual({
+        excludes: ['library.about'],
+      })
+      expect(added).toEqual([])
+    })
+
+    it('should add path when includes is empty and path is excluded', () => {
+      const source = {
+        excludes: ['library.name'],
+      }
+      const added = addPathsToRequestSource(schema, source, ['library.name'])
+      expect(source).toEqual({})
+      expect(added).toEqual(['library.name'])
+    })
+
+    it('should add path when includes is not empty and path is not excluded', () => {
+      const source = {
+        includes: ['library.categories'],
+        excludes: ['library.about'],
+      }
+      const added = addPathsToRequestSource(schema, source, ['library.name'])
+      expect(source).toEqual({
+        includes: ['library.categories', 'library.name'],
+        excludes: ['library.about'],
+      })
+      expect(added).toEqual(['library.name'])
+    })
+
+    it('should add path when includes is not empty and path is excluded', () => {
+      const source = {
+        includes: ['library.categories'],
+        excludes: ['library.name'],
+      }
+      const added = addPathsToRequestSource(schema, source, ['library.name'])
+      expect(source).toEqual({
+        includes: ['library.categories', 'library.name'],
+      })
+      expect(added).toEqual(['library.name'])
+    })
+
+    it('should add path in array of objects and adjust excludes accordingly', () => {
+      const source = {
+        includes: ['library.about'],
+        excludes: ['library.books'],
+      }
+      const added = addPathsToRequestSource(schema, source, [
+        'library.books.cover.title',
+      ])
+      expect(source).toEqual({
+        includes: ['library.about', 'library.books.cover.title'],
+        excludes: ['library.books.cover.author'],
+      })
+      expect(added).toEqual(['library.books.cover.title'])
+    })
+  })
+
+  describe('paths with wildcards', () => {
+    it('should not add path when includes is empty and path is not excluded', () => {
+      const source = {
+        excludes: ['library.books.*'],
+      }
+      const added = addPathsToRequestSource(schema, source, ['library.name'])
+      expect(source).toEqual({
+        excludes: ['library.books.*'],
+      })
+      expect(added).toEqual([])
+    })
+
+    it('should add path when includes is empty and path is excluded', () => {
+      const source = {
+        excludes: ['library.*'],
+      }
+      const added = addPathsToRequestSource(schema, source, ['library.about'])
+      expect(source).toEqual({
+        excludes: [
+          'library.name',
+          'library.categories',
+          'library.books.cover.title',
+          'library.books.cover.author',
+        ],
+      })
+      expect(added).toEqual(['library.about'])
+    })
+
+    it('should add path when includes is not empty and path is not excluded', () => {
+      const source = {
+        includes: ['library.about'],
+        excludes: ['library.books.*'],
+      }
+      const added = addPathsToRequestSource(schema, source, ['library.name'])
+      expect(source).toEqual({
+        includes: ['library.about', 'library.name'],
+        excludes: ['library.books.*'],
+      })
+      expect(added).toEqual(['library.name'])
+    })
+
+    it('should add path when includes is not empty and path is excluded', () => {
+      const source = {
+        includes: ['library.*'],
+        excludes: ['library.books.*'],
+      }
+      const added = addPathsToRequestSource(schema, source, [
+        'library.books.cover.title',
+      ])
+      expect(source).toEqual({
+        includes: ['library.*'],
+        excludes: ['library.books.cover.author'],
+      })
+      expect(added).toEqual(['library.books.cover.title'])
+    })
+
+    it('should expand includes when adding to it', () => {
+      const source = {
+        includes: ['library.books.*'],
+        excludes: ['library.name'],
+      }
+      const added = addPathsToRequestSource(schema, source, ['library.name'])
+      expect(source).toEqual({
+        includes: [
+          'library.books.cover.title',
+          'library.books.cover.author',
+          'library.name',
+        ],
+      })
+      expect(added).toEqual(['library.name'])
+    })
+  })
+})
+
+describe('getRequestHighlightFields()', () => {
   it('should exclude fields without mappings', () => {
     const schema = {
       fields: {
@@ -10,7 +171,7 @@ describe('getHighlightFields()', () => {
       },
     }
     const node = {}
-    const actual = getHighlightFields(schema, node)
+    const actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
       state: {},
       'city.street': {},
@@ -31,7 +192,7 @@ describe('getHighlightFields()', () => {
       },
     }
     const node = {}
-    const actual = getHighlightFields(schema, node)
+    const actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
       state: {},
       'city.street': {},
@@ -62,7 +223,7 @@ describe('getHighlightFields()', () => {
       },
     }
     const node = {}
-    const actual = getHighlightFields(schema, node)
+    const actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
       state: {},
       'state.subfield': {},
@@ -95,7 +256,7 @@ describe('getHighlightFields()', () => {
       },
     }
     const node = {}
-    const actual = getHighlightFields(schema, node)
+    const actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
       state: {
         fragment_size: 250,
@@ -143,7 +304,7 @@ describe('getHighlightFields()', () => {
         relevantFilters: query('address'),
       },
     }
-    const actual = getHighlightFields(schema, node)
+    const actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
       state: {
         highlight_query: query('state'),
@@ -200,7 +361,7 @@ describe('getHighlightFields()', () => {
         relevantFilters: query('address.subfield'),
       },
     }
-    const actual = getHighlightFields(schema, node)
+    const actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
       state: {},
       'state.subfield': { highlight_query: query('state.subfield') },

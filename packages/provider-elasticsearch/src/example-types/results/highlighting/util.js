@@ -1,7 +1,8 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 
-export const findByPrefix = (str, arr) => _.find((k) => str.startsWith(k), arr)
+export const findByPrefix = (str, arr) =>
+  _.find((k) => _.startsWith(k, str), arr)
 
 export const isLeafField = (field) => !!field?.elasticsearch?.dataType
 
@@ -33,8 +34,9 @@ export const getArrayOfObjectsPathsMap = _.memoize((schema) => {
   )
 }, _.get('elasticsearch.index'))
 
-export const stripTags = (tags, str) =>
+export const stripTags = _.curry((tags, str) =>
   str.replaceAll(tags.pre, '').replaceAll(tags.post, '')
+)
 
 const getRangesRegexp = _.memoize(
   (tags) => new RegExp(`${tags.pre}(?<capture>.*?)${tags.post}`, 'g')
