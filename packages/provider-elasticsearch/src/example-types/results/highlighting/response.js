@@ -135,11 +135,11 @@ export const removePathsFromSource = (schema, hit, paths) => {
 /*
  * Merge elastic hit highlights onto hit source.
  *
- * Future developer: once you clever lil beast discover that the following
- * function is a dirty and unholy `_.merge` you will want to refactor it so that
- * all is good can prevail again. However, before you do that, consider that
- * this implementation is about 100x faster than `_.merge`. Query 100 records
- * with arrays of thousands of elements each and convince yourself.
+ * As a clever developer, you will notice that the following function is a dirty
+ * and unholy version `_.merge`. So before you refactor it to use exactly that,
+ * consider that this implementation is about 100x faster than (immutable)
+ * `_.merge`. Query 100 records with arrays of thousands of elements each and
+ * convince yourself.
  */
 export const mergeHighlightsOnSource = (schema, hit) => {
   for (const path in hit.highlight) {
