@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.25.6
+
+### Patch Changes
+
+- b77aa6f3: When performing scrolling searches make sure to pass scroll_id in the body of the request
+
 ## 1.25.5
 
 ### Patch Changes
