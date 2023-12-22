@@ -5,18 +5,16 @@ import { searchWithHighlights } from './highlighting/search.js'
 export default {
   validContext: () => true,
   async result(node, search, schema) {
-    const page = (node.page || 1) - 1
-    const pageSize = node.pageSize || 10
-    const startRecord = page * pageSize
-    const sortField = node.sortField
-      ? getField(schema, node.sortField)
-      : '_score'
+    let page = (node.page || 1) - 1
+    let pageSize = node.pageSize || 10
+    let startRecord = page * pageSize
+    let sortField = node.sortField ? getField(schema, node.sortField) : '_score'
 
-    search = node.highlight?.enable
-      ? searchWithHighlights(node, search, schema)
-      : search
+    search = node.highlight?.disable
+      ? search
+      : searchWithHighlights(node, search, schema)
 
-    const response = await search(
+    let response = await search(
       F.omitBlank({
         from: startRecord,
         size: pageSize,

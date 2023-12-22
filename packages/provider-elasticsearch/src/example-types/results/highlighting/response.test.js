@@ -1,17 +1,17 @@
 import _ from 'lodash/fp.js'
-import { schema } from './schema.test.js'
+import { schema } from './testSchema.js'
 import {
   mergeHighlightsOnSource,
   removePathsFromSource,
   transformResponseHighlight,
 } from './response.js'
 
-const tags = { pre: '<em>', post: '</em>' }
+let tags = { pre: '<em>', post: '</em>' }
 
 describe('transformResponseHighlight()', () => {
   describe('text fields', () => {
     it('should merge fragments', () => {
-      const hit = {
+      let hit = {
         highlight: {
           'library.name': [
             '<em>Imperial</em> College <em>London Abdus</em> Salam Library',
@@ -31,7 +31,7 @@ describe('transformResponseHighlight()', () => {
 
   describe('blob text fields', () => {
     it('should not merge fragments', () => {
-      const hit = {
+      let hit = {
         highlight: {
           'library.about': [
             'The <em>Abdus Salam Library</em> is',
@@ -57,7 +57,7 @@ describe('transformResponseHighlight()', () => {
 
   describe('arrays of strings', () => {
     it('should resolve highlights indexes and merge fragments', () => {
-      const hit = {
+      let hit = {
         _source: {
           library: {
             categories: [
@@ -90,7 +90,7 @@ describe('transformResponseHighlight()', () => {
 
   describe('arrays of objects', () => {
     it('should resolve highlights indexes and merge fragments', () => {
-      const hit = {
+      let hit = {
         _source: {
           library: {
             // prettier-ignore
@@ -145,7 +145,7 @@ describe('transformResponseHighlight()', () => {
     })
 
     it('should copy source fields', () => {
-      const hit = {
+      let hit = {
         _source: {
           library: {
             // prettier-ignore
@@ -164,7 +164,7 @@ describe('transformResponseHighlight()', () => {
           ],
         },
       }
-      const nestedArrayIncludes = { 'library.books': ['cover.author'] }
+      let nestedArrayIncludes = { 'library.books': ['cover.author'] }
       transformResponseHighlight(schema, hit, tags, nestedArrayIncludes)
       expect(hit.highlight).toEqual({
         'library.books': {
@@ -185,7 +185,7 @@ describe('transformResponseHighlight()', () => {
     })
 
     it('should not overwrite highlights when copying source fields', () => {
-      const hit = {
+      let hit = {
         _source: {
           library: {
             // prettier-ignore
@@ -208,7 +208,7 @@ describe('transformResponseHighlight()', () => {
           ],
         },
       }
-      const nestedArrayIncludes = { 'library.books': ['cover.title'] }
+      let nestedArrayIncludes = { 'library.books': ['cover.title'] }
       transformResponseHighlight(schema, hit, tags, nestedArrayIncludes)
       expect(hit.highlight).toEqual({
         'library.books': {
@@ -236,7 +236,7 @@ describe('transformResponseHighlight()', () => {
 })
 
 describe('removePathsFromSource()', () => {
-  const hit = {
+  let hit = {
     _source: {
       library: {
         categories: [
@@ -255,13 +255,13 @@ describe('removePathsFromSource()', () => {
   }
 
   it('should not remove fields from source if additional includes is empty', () => {
-    const cloned = _.cloneDeep(hit)
+    let cloned = _.cloneDeep(hit)
     removePathsFromSource(schema, cloned)
     expect(cloned).toEqual(hit)
   })
 
   it('should remove array of scalars', () => {
-    const cloned = _.cloneDeep(hit)
+    let cloned = _.cloneDeep(hit)
     removePathsFromSource(schema, cloned, ['library.categories'])
     expect(cloned).toEqual({
       _source: {
@@ -278,7 +278,7 @@ describe('removePathsFromSource()', () => {
   })
 
   it('should remove array of objects', () => {
-    const cloned = _.cloneDeep(hit)
+    let cloned = _.cloneDeep(hit)
     removePathsFromSource(schema, cloned, ['library.books'])
     expect(cloned).toEqual({
       _source: {
@@ -294,7 +294,7 @@ describe('removePathsFromSource()', () => {
   })
 
   it('should remove nested field in array of objects', () => {
-    const cloned = _.cloneDeep(hit)
+    let cloned = _.cloneDeep(hit)
     removePathsFromSource(schema, cloned, ['library.books.author'])
     expect(cloned).toEqual({
       _source: {
@@ -316,7 +316,7 @@ describe('removePathsFromSource()', () => {
   })
 
   it('should remove array of objects when all its nested fields are removed', () => {
-    const cloned = _.cloneDeep(hit)
+    let cloned = _.cloneDeep(hit)
     removePathsFromSource(schema, cloned, [
       'library.books.title',
       'library.books.author',
@@ -337,7 +337,7 @@ describe('removePathsFromSource()', () => {
 
 describe('mergeHighlightsOnSource()', () => {
   it('should merge onto source', () => {
-    const hit = {
+    let hit = {
       _source: {
         library: {
           name: 'Imperial College London Abdus Salam Library',
@@ -376,7 +376,7 @@ describe('mergeHighlightsOnSource()', () => {
 
   describe('arrays of strings', () => {
     it('should merge onto source', () => {
-      const hit = {
+      let hit = {
         _source: {
           library: {
             categories: [
@@ -414,7 +414,7 @@ describe('mergeHighlightsOnSource()', () => {
     })
 
     it('should merge onto source when source array is missing', () => {
-      const hit = {
+      let hit = {
         _source: {},
         highlight: {
           'library.categories': {
@@ -445,7 +445,7 @@ describe('mergeHighlightsOnSource()', () => {
 
   describe('arrays of objects', () => {
     it('should merge onto source', () => {
-      const hit = {
+      let hit = {
         _source: {
           library: {
             // prettier-ignore
@@ -534,7 +534,7 @@ describe('mergeHighlightsOnSource()', () => {
     })
 
     it('should merge onto source when source array is missing', () => {
-      const hit = {
+      let hit = {
         _source: {},
         highlight: {
           'library.books': {

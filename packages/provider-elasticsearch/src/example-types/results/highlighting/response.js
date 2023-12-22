@@ -1,10 +1,6 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import {
-  removePrefix,
-  areArraysEqual,
-  groupByIndexed,
-} from '../../../utils/futil.js'
+import { isArraysEqual, groupByIndexed } from '../../../utils/futil.js'
 import {
   stripTags,
   mergeHighlights,
@@ -15,39 +11,47 @@ import {
   getArrayOfObjectsPathsMap,
 } from './util.js'
 
-const lastWordRegex = /\.(\w+)$/
+let lastWordRegex = /\.(\w+)$/
 
 /*
  * Group highlight results by their multifield. For example `city` and
  * `city.subfield` will be grouped under `city`.
  */
-const groupByMultiField = _.curry((schema, highlight) =>
+let groupByMultiField = _.curry((schema, highlight) =>
   groupByIndexed((v, path) => {
-    const [multi, sub] = path.split(lastWordRegex)
-    return schema.fields[multi]?.elasticsearch?.fields?.[sub] ? multi : path
+    let [multi, sub] = path.split(lastWordRegex)
+    return schema.fields[multi]?.elasticsearch?.mapping?.fields?.[sub]
+      ? multi
+      : path
   }, highlight)
 )
 
-export const transformResponseHighlight = (
+/**
+ * Mutate hit `highlight`:
+ * 1. Fragments for text fields get merged.
+ * 2. Fragments for large (blob) text fields get concatenated.
+ * 3. Fragments for arrays get ordered based on the source array
+ */
+export let transformResponseHighlight = (
   schema,
   hit,
   tags,
   nestedArrayIncludes = {}
 ) => {
-  const arrayOfObjectsPaths = _.keys(getArrayOfObjectsPathsMap(schema))
+  let arrayOfObjectsPaths = _.keys(getArrayOfObjectsPathsMap(schema))
 
-  const getIndexedArrayObject = (arr, fragments, arrayPath, itemPath) => {
-    const fragmentsMap = _.groupBy(stripTags(tags), fragments)
+  let getIndexedArrayObject = (arr, fragments, arrayPath, itemPath) => {
+    let fragmentsMap = _.groupBy(stripTags(tags), fragments)
     return F.reduceIndexed(
       (acc, item, index) => {
-        const fragments = fragmentsMap[itemPath ? _.get(itemPath, item) : item]
+        let fragments = fragmentsMap[itemPath ? _.get(itemPath, item) : item]
         if (fragments) {
           F.setOn(
             F.dotJoin([`${index}`, itemPath]),
             mergeHighlights(tags, ...fragments),
             acc
           )
-          for (const itemPath of nestedArrayIncludes[arrayPath] ?? []) {
+          for (let itemPath of nestedArrayIncludes[arrayPath] ?? []) {
             F.updateOn(
               F.dotJoin([`${index}`, itemPath]),
               (highlight) => highlight ?? _.get(itemPath, item),
@@ -62,22 +66,22 @@ export const transformResponseHighlight = (
     )
   }
 
-  const getArrayPath = (path) =>
+  let getArrayPath = (path) =>
     isArrayOfScalarsField(schema.fields[path])
       ? path
       : findByPrefix(path, arrayOfObjectsPaths)
 
-  hit.highlight = _.flow(
+  let highlight = _.flow(
     groupByMultiField(schema),
     _.mapValues(_.flatten),
     F.reduceIndexed((acc, fragments, path) => {
-      const arrayPath = getArrayPath(path)
+      let arrayPath = getArrayPath(path)
       if (arrayPath) {
         acc[arrayPath] = getIndexedArrayObject(
           acc[arrayPath] ?? {},
           fragments,
           arrayPath,
-          removePrefix(`${arrayPath}.`, path)
+          path.slice(arrayPath.length + 1)
         )
       } else if (isBlobField(schema.fields[path])) {
         acc[path] = fragments
@@ -87,45 +91,50 @@ export const transformResponseHighlight = (
       return acc
     }, {})
   )(hit.highlight)
+
+  if (!_.isEmpty(highlight)) hit.highlight = highlight
 }
 
 /**
  * Remove each path in `paths` from `hit._source`.
  */
-export const removePathsFromSource = (schema, hit, paths) => {
+export let removePathsFromSource = (schema, hit, paths) => {
   // Nothing to do
   if (_.isEmpty(paths)) return
 
   // "aoo" stands for "array of objects", because I was tired of typing it out
   // over and over again.
-  const aooMap = getArrayOfObjectsPathsMap(schema)
-  const allAooPaths = _.keys(aooMap)
-  const getAooPath = (path) => findByPrefix(path, allAooPaths)
-  const [aooPaths, otherPaths] = _.partition(getAooPath, paths)
+  let aooMap = getArrayOfObjectsPathsMap(schema)
+  let allAooPaths = _.keys(aooMap)
+  let getAooPath = (path) => findByPrefix(path, allAooPaths)
+  let [aooPaths, otherPaths] = _.partition(getAooPath, paths)
 
-  const toRemove = {
+  let toRemove = {
     ...F.arrayToObject(_.identity, _.constant(true), otherPaths),
     ...F.mapValuesIndexed((paths, aooPath) => {
-      const removeEntireArray =
+      let removeEntireArray =
         // All nested fields in array of objects should be removed
-        areArraysEqual(paths, aooMap[aooPath]) ||
+        isArraysEqual(paths, aooMap[aooPath]) ||
         // Or... the path for the array of objects field should be removed
         _.includes(aooPath, paths)
-      return removeEntireArray || _.map(removePrefix(`${aooPath}.`), paths)
+      return (
+        removeEntireArray ||
+        _.map((path) => path.slice(aooPath.length + 1), paths)
+      )
     }, _.groupBy(getAooPath, aooPaths)),
   }
 
-  const removePathsFromArray = (paths) => (arr) =>
+  let removePathsFromArray = (paths) => (arr) =>
     _.reduce(
       (acc, item) => {
-        for (const path of paths) F.unsetOn(path, item)
+        for (let path of paths) F.unsetOn(path, item)
         return _.isEmpty(item) ? acc : F.push(item, acc)
       },
       [],
       arr
     )
 
-  for (const [path, value] of _.toPairs(toRemove)) {
+  for (let [path, value] of _.toPairs(toRemove)) {
     if (value === true) {
       F.unsetOn(path, hit._source)
     } else {
@@ -146,10 +155,10 @@ export const removePathsFromSource = (schema, hit, paths) => {
  * `_.merge`. Query 100 records with arrays of thousands of elements each and
  * convince yourself.
  */
-export const mergeHighlightsOnSource = (schema, hit) => {
-  for (const path in hit.highlight) {
-    const fragments = hit.highlight[path]
-    const field = schema.fields[path]
+export let mergeHighlightsOnSource = (schema, hit) => {
+  for (let path in hit.highlight) {
+    let fragments = hit.highlight[path]
+    let field = schema.fields[path]
 
     // Set highlight fragments on source.
     if (!isArrayField(field)) {
@@ -160,7 +169,7 @@ export const mergeHighlightsOnSource = (schema, hit) => {
     // Array fragments get transformed into an object where keys are array
     // indexes from the source array so this function can stay performant.
     hit.highlight[path] = _.values(fragments)
-    const sourceArray = _.get(path, hit._source)
+    let sourceArray = _.get(path, hit._source)
 
     // There is no source array so just set highlight fragments on source.
     if (!sourceArray) {
@@ -169,7 +178,7 @@ export const mergeHighlightsOnSource = (schema, hit) => {
     }
 
     // Set each fragment on the correct index in the source array.
-    for (const index in fragments) {
+    for (let index in fragments) {
       if (isArrayOfScalarsField(field)) {
         sourceArray[index] = fragments[index]
       } else {

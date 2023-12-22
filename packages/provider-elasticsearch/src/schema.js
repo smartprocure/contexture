@@ -37,7 +37,7 @@ let fromEsIndexMapping = (mapping) => {
               field,
               label: _.startCase(field),
               elasticsearch: F.compactObject({
-                ...mapping,
+                mapping,
                 dataType: mapping.type,
                 // Find the child notAnalyzedField to set up facet autocomplete vs word
                 notAnalyzedField: _.findKey(

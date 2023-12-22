@@ -1,10 +1,10 @@
 import { mergeHighlights } from './util.js'
 
-const tags = { pre: '<em>', post: '</em>' }
+let tags = { pre: '<em>', post: '</em>' }
 
 describe('mergeHighlights()', () => {
   it('should merge highlights that do not overlap', () => {
-    const actual = mergeHighlights(
+    let actual = mergeHighlights(
       tags,
       'The <em>quick</em> brown fox jumps over the lazy dog',
       'The quick brown <em>fox jumps</em> over the lazy dog'
@@ -15,7 +15,7 @@ describe('mergeHighlights()', () => {
   })
 
   it('should merge highlights that overlap', () => {
-    const actual = mergeHighlights(
+    let actual = mergeHighlights(
       tags,
       '<em>The quick</em> brown <em>fox jumps</em> over the lazy dog',
       'The quick brown fox <em>jumps over</em> the lazy dog'
@@ -26,7 +26,7 @@ describe('mergeHighlights()', () => {
   })
 
   it('should merge highlights that are contained within another', () => {
-    const actual = mergeHighlights(
+    let actual = mergeHighlights(
       tags,
       'The quick brown fox <em>jumps</em> over the lazy dog',
       'The quick brown <em>fox jumps over</em> the lazy dog'
@@ -37,7 +37,7 @@ describe('mergeHighlights()', () => {
   })
 
   it('should merge highlights at the end of the string', () => {
-    const actual = mergeHighlights(
+    let actual = mergeHighlights(
       tags,
       'The quick brown fox <em>jumps</em> over the lazy dog',
       'The quick brown fox jumps over the lazy <em>dog</em>'

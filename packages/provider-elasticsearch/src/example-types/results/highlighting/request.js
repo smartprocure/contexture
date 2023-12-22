@@ -2,7 +2,6 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import { minimatch } from 'minimatch'
 import { CartesianProduct } from 'js-combinatorics'
-import { areArraysEqual } from '../../../utils/futil.js'
 import {
   isLeafField,
   isBlobField,
@@ -16,10 +15,10 @@ import {
  * example if `friends` is an array of people, it gets expanded into
  * `[friends.name, friends.height, ...]`
  */
-const expandGlobs = (schema, globs) => {
-  const fieldsNames = _.keys(schema.fields)
+let expandGlobs = (schema, globs) => {
+  let fieldsNames = _.keys(schema.fields)
 
-  const expandGlob = (glob) =>
+  let expandGlob = (glob) =>
     isLeafField(schema.fields[glob])
       ? [glob]
       : minimatch.match(fieldsNames, `${glob}*`)
@@ -37,10 +36,10 @@ const expandGlobs = (schema, globs) => {
  *
  * Returns added paths.
  */
-export const addPathsToRequestSource = (schema, source, paths) => {
+export let addPathsToRequestSource = (schema, source = {}, pathsToAdd = []) => {
   // There's nothing to add.
-  if (_.isEmpty(paths) || _.isEmpty(F.omitBlank(source))) {
-    return []
+  if (_.isEmpty(pathsToAdd) || _.isEmpty(F.omitBlank(source))) {
+    return source
   }
 
   // A source array is just includes.
@@ -48,90 +47,85 @@ export const addPathsToRequestSource = (schema, source, paths) => {
     source = { includes: source }
   }
 
+  let result = _.cloneDeep(source)
+
   // With wildcards expanded.
-  const expanded = {
+  let expanded = {
     includes: expandGlobs(schema, source.includes),
     excludes: expandGlobs(schema, source.excludes),
   }
 
-  // To understand this, visualize a Venn diagram with three intersecting sets
-  // one for each of includes, excludes, and paths.
-  const pathsToAdd = _.union(
-    // Any path we "unexclude" is technically "added".
-    _.intersection(paths, expanded.excludes),
-    // Also added are paths that were not originally included.
-    _.isEmpty(source.includes) ? [] : _.difference(paths, expanded.includes)
-  )
-
-  // There's nothing to add.
-  if (_.isEmpty(pathsToAdd)) {
-    return []
+  // Any path we "unexclude" is technically "added".
+  let excludedFromExcludes = _.intersection(pathsToAdd, expanded.excludes)
+  if (!_.isEmpty(excludedFromExcludes)) {
+    result.excludes = _.difference(expanded.excludes, excludedFromExcludes)
   }
 
-  const withAddedPaths = F.omitBlank({
-    includes: _.union(pathsToAdd, expanded.includes),
-    excludes: _.difference(expanded.excludes, pathsToAdd),
-  })
-
-  const shouldAddPaths = (key) =>
-    !areArraysEqual(expanded[key], withAddedPaths[key])
-
-  if (!_.isEmpty(source.includes) && shouldAddPaths('includes')) {
-    source.includes = withAddedPaths.includes
+  // Also added are paths that were not originally included.
+  let addedToIncludes = _.isEmpty(expanded.includes)
+    ? []
+    : _.difference(pathsToAdd, expanded.includes)
+  if (!_.isEmpty(addedToIncludes)) {
+    result.includes = _.union(expanded.includes, addedToIncludes)
   }
 
-  if (shouldAddPaths('excludes')) {
-    source.excludes = withAddedPaths.excludes
-  }
+  let addedPaths = _.union(addedToIncludes, excludedFromExcludes)
 
-  return pathsToAdd
+  return F.omitBlank({ ...result, addedPaths })
 }
 
 /*
  * Names of all subfields that can be highlighted.
  */
-const getHighlightSubFieldsNames = (schema) =>
+let getHighlightSubFieldsNames = (schema) =>
   _.keys(_.pickBy('highlight', schema.elasticsearch?.subFields))
 
 /*
  * Paths of all fields groups and their subfields that can be highlighted.
  */
-export const getHighlightFieldsGroupsPaths = _.memoize((schema) => {
-  const subFieldsNames = getHighlightSubFieldsNames(schema)
+export let getHighlightFieldsGroupsPaths = _.memoize((schema) => {
+  let subFieldsNames = getHighlightSubFieldsNames(schema)
   return _.flatMap((field) => {
-    const copy_to = field.elasticsearch?.copy_to
-    if (_.isEmpty(copy_to)) return copy_to ?? []
-    const product = new CartesianProduct(copy_to, subFieldsNames)
-    return [...(copy_to ?? []), ..._.map(_.join('.'), [...product])]
+    let copy_to = field.elasticsearch?.mapping?.copy_to
+    if (_.isEmpty(copy_to)) return []
+    let subFieldTuples = [...new CartesianProduct(copy_to, subFieldsNames)]
+    let product = [...copy_to, ..._.map(_.join('.'), subFieldTuples)]
+    return product
   }, schema.fields)
 }, _.get('elasticsearch.index'))
 
-const isFieldsGroupPath = (schema, path) =>
-  !!findByPrefix(path, getHighlightFieldsGroupsPaths(schema))
+let isFieldsGroupPath = _.curry((schema, path) =>
+  _.find(_.eq(path), getHighlightFieldsGroupsPaths(schema))
+)
 
 /*
  * Object of all fields and their subfields that can be highlighted.
  */
-export const getAllHighlightFields = _.memoize((schema) => {
-  const subFieldsNames = getHighlightSubFieldsNames(schema)
+export let getAllHighlightFields = _.memoize((schema) => {
+  let subFieldsNames = getHighlightSubFieldsNames(schema)
   return F.reduceIndexed(
     (acc, field, path) => {
       if (!isLeafField(field) || isFieldsGroupPath(schema, path)) {
         return acc
       }
       acc[path] = field
-      const subFields = _.pick(subFieldsNames, field.elasticsearch.fields)
-      for (const name in subFields) {
-        acc[`${path}.${name}`] = {
-          elasticsearch: {
-            ...subFields[name],
-            meta: field.elasticsearch.meta,
-            copy_to: _.map(
-              (path) => `${path}.${name}`,
-              field.elasticsearch.copy_to
-            ),
-          },
-        }
+      let subFields = _.pick(
+        subFieldsNames,
+        field.elasticsearch?.mapping?.fields
+      )
+      for (let name in subFields) {
+        acc[`${path}.${name}`] = F.omitBlank({
+          subType: field.subType,
+          elasticsearch: F.omitBlank({
+            mapping: F.omitBlank({
+              ...subFields[name],
+              copy_to: _.map(
+                (path) => `${path}.${name}`,
+                field.elasticsearch.mapping?.copy_to
+              ),
+            }),
+          }),
+        })
       }
       return acc
     },
@@ -140,30 +134,39 @@ export const getAllHighlightFields = _.memoize((schema) => {
   )
 }, _.get('elasticsearch.index'))
 
+let collectKeysAndValues = (f, coll) =>
+  F.reduceTree()(
+    (acc, val, key) =>
+      f(val) ? F.push(val, acc) : f(key) ? F.push(key, acc) : acc,
+    [],
+    coll
+  )
+
+let blobConfiguration = {
+  fragment_size: 250,
+  number_of_fragments: 3,
+}
+
 /*
  * Get configuration for highlight fields to send in the elastic request.
  */
-export const getRequestHighlightFields = (schema, node) => {
-  const fieldGroupsInQuery = F.reduceTree()(
-    (acc, val, key) =>
-      isFieldsGroupPath(schema, val)
-        ? F.push(val, acc)
-        : isFieldsGroupPath(schema, key)
-        ? F.push(key, acc)
-        : acc,
-    [],
+export let getRequestHighlightFields = (schema, node) => {
+  let fieldGroupsInQuery = collectKeysAndValues(
+    isFieldsGroupPath(schema),
     node._meta?.relevantFilters
   )
 
-  const queryStr = JSON.stringify(node._meta?.relevantFilters)
+  // Stringifying once and then replacing paths and parsing the query again is
+  // more performant than walking the query.
+  let queryStr = JSON.stringify(node._meta?.relevantFilters)
 
-  const getHighlightQuery = (field, path) => {
-    const pathsToReplace = _.intersection(
+  let getHighlightQuery = (field, path) => {
+    let pathsToReplace = _.intersection(
       fieldGroupsInQuery,
-      field.elasticsearch?.copy_to
+      field.elasticsearch?.mapping?.copy_to
     )
     if (!_.isEmpty(pathsToReplace)) {
-      const regexp = new RegExp(_.join('|', pathsToReplace), 'g')
+      let regexp = new RegExp(_.join('|', pathsToReplace), 'g')
       return JSON.parse(_.replace(regexp, path, queryStr))
     }
   }
@@ -171,8 +174,7 @@ export const getRequestHighlightFields = (schema, node) => {
   return F.mapValuesIndexed(
     (field, path) =>
       F.omitBlank({
-        fragment_size: isBlobField(field) ? 250 : null,
-        number_of_fragments: isBlobField(field) ? 3 : null,
+        ...(isBlobField(field) && blobConfiguration),
         highlight_query: getHighlightQuery(field, path),
       }),
     getAllHighlightFields(schema)

@@ -6,10 +6,10 @@ type Path = string
 
 interface HighlightConfig {
   /**
-   * Whether to send highlighting configuration to elastic and merge
+   * Whether to not send highlighting configuration to elastic and merge
    * highlighting results onto source. Defaults to `false`.
    */
-  enable?: boolean
+  disable?: boolean
   /**
    * Nested paths in arrays of objects that should be copied from source into
    * highlighted results.

@@ -1,12 +1,12 @@
 # Highlighting
 
-Our approach to highlighting is designed to be as out of the box as possible, without too many configuration options. See `./type.d.ts` for more details on the API.
+Our approach to highlighting is designed to be as out of the box as possible, without too many configuration options. See [./type.d.ts](./type.d.ts) for more details on the API.
 
 ## 1. Request
 
 ### Fields included in `_source`
 
-For the most part, we pass the `include` and `exclude` properties on the results node verbatim to elastic. We do however include paths for fields in arrays of objects as-needed (e.g. if not already included). This is strictly an implementation detail that allows us to correlate highlighted results for arrays of objects to the array items they belong to. Fields that were not originally included in the node are removed from the response since it would be surprising for users to get values for fields they did not request.
+For the most part, we pass the results node `include` and `exclude` properties verbatim to elastic. We do however include paths for fields in arrays of objects as-needed (e.g. if not already included). This is strictly an implementation detail that allows us to correlate highlighted results for arrays of objects to the array items they belong to. Fields that were not originally included in the results node are removed from the response since it would be surprising for users to get values for fields they did not request.
 
 ### Fields sent for highlighting
 
@@ -34,10 +34,12 @@ Whitelisted sub-fields are sent for highlighting, since they could be present in
     // `state` will be sent for highlighting.
     "state": {
       "elasticsearch": {
-        "fields": {
-          "keyword": {},
-          // `state.subfield` will be sent for highlighting.
-          "subfield": {}
+        "mapping": {
+          "fields": {
+            "keyword": {},
+            // `state.subfield` will be sent for highlighting.
+            "subfield": {}
+          }
         }
       }
     }
@@ -65,7 +67,9 @@ Fields groups are not sent for highlighting because we assume users want to high
     // `state` will be sent for highlighting.
     "state": {
       "elasticsearch": {
-        "copy_to": ["address"]
+        "mapping": {
+          "copy_to": ["address"]
+        }
       }
     }
   }
@@ -135,7 +139,7 @@ In order to fix this, we make use of elastic's [highlight_query](https://www.ela
 
 #### 3. Text blobs
 
-In the spirit of keeping our API simple, we generate opinionated highlighting configuration for large text blobs to improve highlighting performance. More often than not, it makes sense to only display highlighted fragments instead of the whole blob for these types of fields. Since elastic does not have a "blob" or "large text" type, we've adopted the convention of specifying a field's "subType" using elastic's [meta property](https://www.elastic.co/guide/en/elasticsearch/reference/8.11/mapping-field-meta.html):
+In the spirit of keeping our API simple, we generate opinionated highlighting configuration for large text blobs to improve highlighting performance. More often than not, it makes sense to only display highlighted fragments instead of the whole blob for these types of fields. Since elastic does not have a "blob" or "large text" type, we've adopted the convention of specifying a field's "subType" in the schema:
 
 <details>
 
@@ -145,11 +149,7 @@ In the spirit of keeping our API simple, we generate opinionated highlighting co
 {
   "fields": {
     "donQuixoteText": {
-      "elasticsearch": {
-        "meta": {
-          "subType": "blob"
-        }
-      }
+      "subType": "blob"
     }
   }
 }
@@ -210,7 +210,7 @@ will be transformed into
 
 #### 3. Array fields
 
-Elastic doesn't have a concept of array fields, so we rely again on the `subType` convention used for text blobs to identify them
+Elastic doesn't have a concept of array fields, so we rely on the `subType` convention used for text blobs to identify them
 
 <details>
 
@@ -220,11 +220,7 @@ Elastic doesn't have a concept of array fields, so we rely again on the `subType
 {
   "fields": {
     "library.books": {
-      "elasticsearch": {
-        "meta": {
-          "subType": "array"
-        }
-      }
+      "subType": "array"
     }
   }
 }
@@ -241,7 +237,7 @@ which allows us to order highlighted array items based on the source array
 ```javascript
 import assert from 'node:assert'
 
-const hit = {
+let hit = {
   _source: {
     names: ['John', 'Smith', 'Jane', 'Austen'],
   },
@@ -251,9 +247,9 @@ const hit = {
 }
 
 // `fn` is just for illustration purposes
-const actual = fn(hit.highlight.names, hit._source.names)
+let actual = fn(hit.highlight.names, hit._source.names)
 
-const expected = {
+let expected = {
   1: '<em>Smith</em>',
   3: '<em>Austen</em>',
 }
@@ -274,7 +270,7 @@ Arrays of objects are equally ordered. Additionally, their structure follows the
 ```javascript
 import assert from 'node:assert'
 
-const hit = {
+let hit = {
   _source: {
     friends: [
       { name: 'John', age: 34 },
@@ -289,9 +285,9 @@ const hit = {
 }
 
 // `fn` is just for illustration purposes
-const actual = fn(hit.highlight['friends.name'], hit._source.friends)
+let actual = fn(hit.highlight['friends.name'], hit._source.friends)
 
-const expected = {
+let expected = {
   1: { name: '<em>Smith</em>' },
   3: { name: '<em>Austen</em>' },
 }
@@ -301,7 +297,13 @@ assert.deepEqual(actual, expected)
 
 </details>
 
-`nestedArrayIncludes` are also handled in this step. Assumming the example above and `nestedArrayIncludes = { friends: ["age"] }`, the highlighted results become
+`nestedArrayIncludes` are handled when ordering the array of objects. Assumming the example above and
+
+```javascript
+let nestedArrayIncludes = { friends: ['age'] }
+```
+
+the highlighted results become
 
 ```javascript
 {
