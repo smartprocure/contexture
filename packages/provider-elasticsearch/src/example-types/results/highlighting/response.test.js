@@ -164,8 +164,8 @@ describe('transformResponseHighlight()', () => {
           ],
         },
       }
-      const arrayIncludes = { 'library.books': ['cover.author'] }
-      transformResponseHighlight(schema, hit, tags, arrayIncludes)
+      const nestedArrayIncludes = { 'library.books': ['cover.author'] }
+      transformResponseHighlight(schema, hit, tags, nestedArrayIncludes)
       expect(hit.highlight).toEqual({
         'library.books': {
           0: {
@@ -208,8 +208,8 @@ describe('transformResponseHighlight()', () => {
           ],
         },
       }
-      const arrayIncludes = { 'library.books': ['cover.title'] }
-      transformResponseHighlight(schema, hit, tags, arrayIncludes)
+      const nestedArrayIncludes = { 'library.books': ['cover.title'] }
+      transformResponseHighlight(schema, hit, tags, nestedArrayIncludes)
       expect(hit.highlight).toEqual({
         'library.books': {
           0: {

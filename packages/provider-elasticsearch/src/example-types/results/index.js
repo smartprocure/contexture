@@ -1,6 +1,6 @@
 import F from 'futil'
 import { getField } from '../../utils/fields.js'
-import { wrapSearch } from './highlighting/search.js'
+import { searchWithHighlights } from './highlighting/search.js'
 
 export default {
   validContext: () => true,
@@ -12,7 +12,9 @@ export default {
       ? getField(schema, node.sortField)
       : '_score'
 
-    search = node.highlight?.enable ? wrapSearch(node, search, schema) : search
+    search = node.highlight?.enable
+      ? searchWithHighlights(node, search, schema)
+      : search
 
     const response = await search(
       F.omitBlank({

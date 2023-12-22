@@ -32,7 +32,7 @@ export const transformResponseHighlight = (
   schema,
   hit,
   tags,
-  arrayIncludes = {}
+  nestedArrayIncludes = {}
 ) => {
   const arrayOfObjectsPaths = _.keys(getArrayOfObjectsPathsMap(schema))
 
@@ -47,7 +47,7 @@ export const transformResponseHighlight = (
             mergeHighlights(tags, ...fragments),
             acc
           )
-          for (const itemPath of arrayIncludes[arrayPath] ?? []) {
+          for (const itemPath of nestedArrayIncludes[arrayPath] ?? []) {
             F.updateOn(
               F.dotJoin([`${index}`, itemPath]),
               (highlight) => highlight ?? _.get(itemPath, item),
@@ -89,25 +89,30 @@ export const transformResponseHighlight = (
   )(hit.highlight)
 }
 
+/**
+ * Remove each path in `paths` from `hit._source`.
+ */
 export const removePathsFromSource = (schema, hit, paths) => {
   // Nothing to do
   if (_.isEmpty(paths)) return
 
-  // "aoo" stands for "array of objects", because I was tired of typing all of
-  // that out every time.
+  // "aoo" stands for "array of objects", because I was tired of typing it out
+  // over and over again.
   const aooMap = getArrayOfObjectsPathsMap(schema)
-  const aooPaths = _.keys(aooMap)
-  const getAooPath = (path) => findByPrefix(path, aooPaths)
-  const [arrayPaths, normalPaths] = _.partition(getAooPath, paths)
+  const allAooPaths = _.keys(aooMap)
+  const getAooPath = (path) => findByPrefix(path, allAooPaths)
+  const [aooPaths, otherPaths] = _.partition(getAooPath, paths)
+
   const toRemove = {
-    ...F.arrayToObject(_.identity, _.constant(true), normalPaths),
-    ...F.mapValuesIndexed(
-      (paths, aooPath) =>
-        areArraysEqual(paths, aooMap[aooPath]) || _.includes(aooPath, paths)
-          ? true
-          : _.map(removePrefix(`${aooPath}.`), paths),
-      _.groupBy(getAooPath, arrayPaths)
-    ),
+    ...F.arrayToObject(_.identity, _.constant(true), otherPaths),
+    ...F.mapValuesIndexed((paths, aooPath) => {
+      const removeEntireArray =
+        // All nested fields in array of objects should be removed
+        areArraysEqual(paths, aooMap[aooPath]) ||
+        // Or... the path for the array of objects field should be removed
+        _.includes(aooPath, paths)
+      return removeEntireArray || _.map(removePrefix(`${aooPath}.`), paths)
+    }, _.groupBy(getAooPath, aooPaths)),
   }
 
   const removePathsFromArray = (paths) => (arr) =>

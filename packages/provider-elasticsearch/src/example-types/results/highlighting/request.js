@@ -96,15 +96,13 @@ const getHighlightSubFieldsNames = (schema) =>
 /*
  * Paths of all fields groups and their subfields that can be highlighted.
  */
-const getHighlightFieldsGroupsPaths = _.memoize((schema) => {
+export const getHighlightFieldsGroupsPaths = _.memoize((schema) => {
   const subFieldsNames = getHighlightSubFieldsNames(schema)
   return _.flatMap((field) => {
     const copy_to = field.elasticsearch?.copy_to
-    if (!_.isEmpty(copy_to)) {
-      const product = new CartesianProduct(copy_to, subFieldsNames)
-      return [...copy_to, ..._.map(_.join('.'), Array.from(product))]
-    }
-    return copy_to ?? []
+    if (_.isEmpty(copy_to)) return copy_to ?? []
+    const product = new CartesianProduct(copy_to, subFieldsNames)
+    return [...(copy_to ?? []), ..._.map(_.join('.'), [...product])]
   }, schema.fields)
 }, _.get('elasticsearch.index'))
 
@@ -114,7 +112,7 @@ const isFieldsGroupPath = (schema, path) =>
 /*
  * Object of all fields and their subfields that can be highlighted.
  */
-const getAllHighlightFields = _.memoize((schema) => {
+export const getAllHighlightFields = _.memoize((schema) => {
   const subFieldsNames = getHighlightSubFieldsNames(schema)
   return F.reduceIndexed(
     (acc, field, path) => {
@@ -157,7 +155,7 @@ export const getRequestHighlightFields = (schema, node) => {
     node._meta?.relevantFilters
   )
 
-  const querystr = JSON.stringify(node._meta?.relevantFilters)
+  const queryStr = JSON.stringify(node._meta?.relevantFilters)
 
   const getHighlightQuery = (field, path) => {
     const pathsToReplace = _.intersection(
@@ -166,7 +164,7 @@ export const getRequestHighlightFields = (schema, node) => {
     )
     if (!_.isEmpty(pathsToReplace)) {
       const regexp = new RegExp(_.join('|', pathsToReplace), 'g')
-      return JSON.parse(_.replace(regexp, path, querystr))
+      return JSON.parse(_.replace(regexp, path, queryStr))
     }
   }
 

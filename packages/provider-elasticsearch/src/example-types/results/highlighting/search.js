@@ -15,15 +15,14 @@ const tags = {
   post: '</b>',
 }
 
-export const wrapSearch = (node, search, schema) => async (body) => {
-  body._source ??= {}
-  const addedPaths = addPathsToRequestSource(
-    schema,
-    body._source,
-    // Paths for all fields we'd like to retrieve no matter what.
-    // Currently only paths for fields in arrays of objects.
-    _.flatten(_.values(getArrayOfObjectsPathsMap(schema)))
-  )
+export const searchWithHighlights = (node, search, schema) => async (body) => {
+  // Paths for fields to always include regardless of whether the user included
+  // them. They will be removed from the response hits so there's no harm done.
+  const pathsToAdd = _.flatten(_.values(getArrayOfObjectsPathsMap(schema)))
+
+  // body._source is mutated here
+  const addedPaths = addPathsToRequestSource(schema, body._source, pathsToAdd)
+
   const response = await search({
     ...body,
     highlight: {
@@ -33,10 +32,13 @@ export const wrapSearch = (node, search, schema) => async (body) => {
       fields: getRequestHighlightFields(schema, node),
     },
   })
+
   for (const hit of response.hits.hits) {
-    transformResponseHighlight(schema, hit, tags, node.highlight.arrayIncludes)
+    const nestedArrayIncludes = node.highlight.nestedArrayIncludes
+    transformResponseHighlight(schema, hit, tags, nestedArrayIncludes)
     removePathsFromSource(schema, hit, addedPaths)
     mergeHighlightsOnSource(schema, hit)
   }
+
   return response
 }

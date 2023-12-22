@@ -1,24 +1,16 @@
-# Included fields
-
-TODO: Talk about include/exclude and how highlighting gets affected by it
-
-If fields inside arrays of objects are specified in `node.include` (after wildcards are expanded), they will be also included in the highlighted results for the array of objects regardless of whether they are excluded from source.
-
 # Highlighting
 
 Our approach to highlighting is designed to be as out of the box as possible, without too many configuration options. See `./type.d.ts` for more details on the API.
 
-There are three pieces involved in highlighting:
-
-1. Building out highlight configuration to send with an elastic request.
-2. Transforming highlighted fragments in the elastic response into a structure similar to that of `_source`.
-3. Merging such structure into a hit's `_source`.
-
 ## 1. Request
+
+### Fields included in `_source`
+
+For the most part, we pass the `include` and `exclude` properties on the results node verbatim to elastic. We do however include paths for fields in arrays of objects as-needed (e.g. if not already included). This is strictly an implementation detail that allows us to correlate highlighted results for arrays of objects to the array items they belong to. Fields that were not originally included in the node are removed from the response since it would be surprising for users to get values for fields they did not request.
 
 ### Fields sent for highlighting
 
-We assume that users want to highlight all the fields present in the query. The most logical approach is to extract relevant fields from the query and send them for highlighting, but for simplicity's sake we send every field in the schema, with some caveats.
+We assume that users want to highlight all the fields present in the query. The most logical approach is to extract relevant fields from the query and send them for highlighting, but for simplicity's sake we send every field in the schema, with the following caveats.
 
 #### 1. Sub-fields
 
@@ -34,8 +26,8 @@ Whitelisted sub-fields are sent for highlighting, since they could be present in
     "subFields": {
       // `{field}.keyword` will *not* be sent for highlighting.
       "keyword": { "highlight": false },
-      // `{field}.exact` will be sent for highlighting.
-      "exact": { "highlight": true }
+      // `{field}.subfield` will be sent for highlighting.
+      "subfield": { "highlight": true }
     }
   },
   "fields": {
@@ -44,8 +36,8 @@ Whitelisted sub-fields are sent for highlighting, since they could be present in
       "elasticsearch": {
         "fields": {
           "keyword": {},
-          // `state.exact` will be sent for highlighting.
-          "exact": {}
+          // `state.subfield` will be sent for highlighting.
+          "subfield": {}
         }
       }
     }
@@ -167,9 +159,9 @@ In the spirit of keeping our API simple, we generate opinionated highlighting co
 
 ## 2. Response
 
-Currently the only supported behavior is to merge highlighted fragments into `_source` (we may provide an option to opt-out in the future). For this approach to work, fragments must contain the entire field value, so we set [number_of_fragments](https://www.elastic.co/guide/en/elasticsearch/reference/current/highlighting.html#highlighting-settings) to `0` in the request. The exception being blob text fields which set `number_of_fragments` to something `> 0` since they're too big to highlight in their entirety.
+Currently the only supported behavior is to merge highlighted fragments into `_source` (we may provide an option to opt-out in the future). For this approach to work, fragments must contain the entire field value, so we set [number_of_fragments](https://www.elastic.co/guide/en/elasticsearch/reference/current/highlighting.html#highlighting-settings) to `0` in the request. The exception being blob text fields which set `number_of_fragments` to a number `> 0` since they're too big to highlight in their entirety.
 
-Assumming `exact` to be a sub-field of `details`, the following rules apply when transforming the highlight response:
+Assumming `subfield` to be a sub-field of `details`, the following rules apply when transforming the highlight response:
 
 #### 1. Text fields
 
@@ -178,7 +170,7 @@ The first fragments of each field (which should contain the entire field value b
 ```json
 {
   "details": ["The <em>lazy</em> fox"],
-  "details.exact": ["<em>The</em> lazy fox"]
+  "details.subfield": ["<em>The</em> lazy fox"]
 }
 ```
 
@@ -199,7 +191,7 @@ Blob text fields fragments are concatenated because that's the only sensible thi
 ```json
 {
   "details": ["The <em>lazy</em> fox", "jumped <em>over</em>"],
-  "details.exact": ["<em>The</em> lazy fox", "<em>jumped</em> over"]
+  "details.subfield": ["<em>The</em> lazy fox", "<em>jumped</em> over"]
 }
 ```
 
@@ -227,7 +219,7 @@ Elastic doesn't have a concept of array fields, so we rely again on the `subType
 ```jsonc
 {
   "fields": {
-    "gloriousArrayField": {
+    "library.books": {
       "elasticsearch": {
         "meta": {
           "subType": "array"
@@ -240,7 +232,7 @@ Elastic doesn't have a concept of array fields, so we rely again on the `subType
 
 </details>
 
-which allows us to order highlighted array items based on the source array (as long as the source array is present in the response)
+which allows us to order highlighted array items based on the source array
 
 <details>
 
@@ -261,7 +253,10 @@ const hit = {
 // `fn` is just for illustration purposes
 const actual = fn(hit.highlight.names, hit._source.names)
 
-const expected = [undefined, '<em>Smith</em>', undefined, '<em>Austen</em>']
+const expected = {
+  1: '<em>Smith</em>',
+  3: '<em>Austen</em>',
+}
 
 assert.deepEqual(actual, expected)
 ```
@@ -270,7 +265,7 @@ assert.deepEqual(actual, expected)
 
 Ideally elastic's response would include enough information to deduce the array index for each highlighted fragment but unfortunately this is still [an open issue](https://github.com/elastic/elasticsearch/issues/7416).
 
-Arrays of objects are equally ordered. Additionally, their structure is made to follow the source array's structure
+Arrays of objects are equally ordered. Additionally, their structure follows the source array's structure
 
 <details>
 
@@ -281,35 +276,36 @@ import assert from 'node:assert'
 
 const hit = {
   _source: {
-    people: [
-      { name: 'John' },
-      { name: 'Smith' },
-      { name: 'Jane' },
-      { name: 'Austen' },
+    friends: [
+      { name: 'John', age: 34 },
+      { name: 'Smith', age: 21 },
+      { name: 'Jane', age: 83 },
+      { name: 'Austen', age: 3 },
     ],
   },
   highlight: {
-    'people.name': ['<em>Austen</em>', '<em>Smith</em>'],
+    'friends.name': ['<em>Austen</em>', '<em>Smith</em>'],
   },
 }
 
 // `fn` is just for illustration purposes
-const actual = fn(hit.highlight['people.name'], hit._source.people)
+const actual = fn(hit.highlight['friends.name'], hit._source.friends)
 
-const expected = [
-  undefined,
-  { name: '<em>Smith</em>' },
-  undefined,
-  { name: '<em>Austen</em>' },
-]
+const expected = {
+  1: { name: '<em>Smith</em>' },
+  3: { name: '<em>Austen</em>' },
+}
 
 assert.deepEqual(actual, expected)
 ```
 
 </details>
 
-## 3. Source Merging
+`nestedArrayIncludes` are also handled in this step. Assumming the example above and `nestedArrayIncludes = { friends: ["age"] }`, the highlighted results become
 
-Merging highlighted results into `_source` is done via a straightforward lodash's `merge`. Highlighted fields not present in `_source` still get merged onto it.
-
-Arrays get special treatment when `filterSourceArrays` is set: non-highlighted items are discarded.
+```javascript
+{
+  1: { name: '<em>Smith</em>', age: 21 },
+  3: { name: '<em>Austen</em>', age: 3 },
+}
+```

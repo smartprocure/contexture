@@ -18,8 +18,10 @@ export const isArrayOfScalarsField = (field) =>
 export const isArrayOfObjectsField = (field) =>
   isArrayField(field) && !isLeafField(field)
 
-// Object keys are paths of arrays of objects fields in the schema and values
-// are lists of paths for fields under each array field.
+/**
+ * Object where keys are paths for fields that are arrays of objects and values
+ * are all the paths under them.
+ */
 export const getArrayOfObjectsPathsMap = _.memoize((schema) => {
   const fieldsPaths = _.keys(schema.fields)
   return F.reduceIndexed(

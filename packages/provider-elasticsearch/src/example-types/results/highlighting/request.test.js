@@ -4,6 +4,14 @@ import {
   getRequestHighlightFields,
 } from './request.js'
 
+describe('getHighlightFieldsGroupsPaths', () => {
+  it('todo', () => {})
+})
+
+describe('getAllHighlightFields', () => {
+  it('todo', () => {})
+})
+
 describe('addPathsToRequestSource()', () => {
   describe('paths with no wildcards', () => {
     it('should not add path when source is empty', () => {
