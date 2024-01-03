@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.11
+
+### Patch Changes
+
+- 4cb255ce: Allow user to override \_checkbox field in CheckableResultsTable
+
 ## 2.58.10
 
 ### Patch Changes

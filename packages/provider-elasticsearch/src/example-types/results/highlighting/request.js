@@ -2,12 +2,7 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import { minimatch } from 'minimatch'
 import { CartesianProduct } from 'js-combinatorics'
-import {
-  isLeafField,
-  isBlobField,
-  isArrayOfObjectsField,
-  findByPrefix,
-} from './util.js'
+import { isLeafField, isBlobField, isArrayOfObjectsField } from './util.js'
 
 /*
  * Expand schema paths with wildcards into a list of paths without wildcards.

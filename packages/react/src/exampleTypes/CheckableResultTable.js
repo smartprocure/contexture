@@ -38,25 +38,36 @@ let CheckableResultTable = ({
 }) => (
   <ResultTable
     fields={{
-      _checkbox: {
-        hideMenu: true,
-        label: () => (
-          <Label
-            {...{ node, selected: [selectedValues, onChange], getValue, theme }}
-          />
-        ),
-        display: (x, y) => {
-          let value = _.iteratee(getValue)(y)
-          return (
-            !_.isNil(value) && (
-              <theme.Checkbox
-                {...F.domLens.checkboxValues(value, [selectedValues, onChange])}
-              />
+      _checkbox: _.merge(
+        {
+          hideMenu: true,
+          label: () => (
+            <Label
+              {...{
+                node,
+                selected: [selectedValues, onChange],
+                getValue,
+                theme,
+              }}
+            />
+          ),
+          display: (x, y) => {
+            let value = _.iteratee(getValue)(y)
+            return (
+              !_.isNil(value) && (
+                <theme.Checkbox
+                  {...F.domLens.checkboxValues(value, [
+                    selectedValues,
+                    onChange,
+                  ])}
+                />
+              )
             )
-          )
+          },
         },
-      },
-      ...fields,
+        fields._checkbox
+      ),
+      ..._.omit('_checkbox', fields),
     }}
     {...props}
   />
