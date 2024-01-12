@@ -125,8 +125,8 @@ export let FacetCheckboxList = contexturifyWithoutLoader(
       _.partition((x) => _.includes(x.name, node.values)),
       _.flatten,
       F.mapIndexed(({ name, label, count }, i) => {
-        let lens = tree.lens(node.path, 'values');
-        const displayName = display(name, label);
+        let lens = tree.lens(node.path, 'values')
+        const displayName = display(name, label)
         return (
           <label
             // not using unique keys for smart DOM reordering
@@ -135,7 +135,9 @@ export let FacetCheckboxList = contexturifyWithoutLoader(
             key={i}
             style={commonStyle}
             // display() can return a React node, so we need to use the string version
-            title={`${typeof displayName === 'string' ? displayName : name} : ${formatCount(count)}`}
+            title={`${
+              typeof displayName === 'string' ? displayName : name
+            } : ${formatCount(count)}`}
           >
             <Checkbox {...F.domLens.checkboxValues(name, lens)} />
             <div style={{ flex: 2, padding: '0 5px' }}>
