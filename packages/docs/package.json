@@ -1,0 +1,25 @@
+{
+  "name": "docs",
+  "type": "module",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartprocure/contexture.git"
+  },
+  "bugs": {
+    "url": "https://github.com/smartprocure/contexture/issues"
+  },
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/docs",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.15.1",
+    "astro": "^4.0.1",
+    "sharp": "^0.32.5"
+  }
+}
