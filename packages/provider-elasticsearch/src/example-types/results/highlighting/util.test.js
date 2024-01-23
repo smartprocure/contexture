@@ -1,4 +1,3 @@
-import { schema } from './testSchema.js'
 import { mergeHighlights } from './util.js'
 
 let tags = { pre: '<em>', post: '</em>' }
