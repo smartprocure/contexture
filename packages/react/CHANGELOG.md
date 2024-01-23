@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.59.0
+
+### Minor Changes
+
+- e004eda2: Revamp elasticsearch highlighting API and implementation
+
 ## 2.58.12
 
 ### Patch Changes

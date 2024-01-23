@@ -8820,7 +8820,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture-elasticsearch@^1.22.3, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
+"contexture-elasticsearch@^1.26.0, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
   version: 0.0.0-use.local
   resolution: "contexture-elasticsearch@workspace:packages/provider-elasticsearch"
   dependencies:
@@ -8906,7 +8906,7 @@ __metadata:
     chromatic: ^6.23.0
     contexture: ^0.12.19
     contexture-client: ^2.53.4
-    contexture-elasticsearch: ^1.22.3
+    contexture-elasticsearch: ^1.26.0
     elasticsearch-browser: ^14.2.2
     emoji-datasource: ^5.0.1
     eslint-plugin-react: ^7.32.0
