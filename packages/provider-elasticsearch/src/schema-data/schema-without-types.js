@@ -10,11 +10,13 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
             },
           },
         },
@@ -27,11 +29,13 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
             },
           },
         },
@@ -53,11 +57,13 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
             },
           },
         },
@@ -70,11 +76,13 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
             },
           },
         },
