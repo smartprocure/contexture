@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.12
+
+### Patch Changes
+
+- 51d68776: Fix title in Facet component's label should render string and not React node
+
 ## 2.58.11
 
 ### Patch Changes
