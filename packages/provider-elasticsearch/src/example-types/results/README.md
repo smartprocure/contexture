@@ -297,10 +297,10 @@ assert.deepEqual(actual, expected)
 
 </details>
 
-`nestedArrayIncludes` are handled when ordering the array of objects. Assumming the example above and
+The paths specified in `copySourcePaths` are handled when ordering the array of objects. Assumming the example above and
 
 ```javascript
-let nestedArrayIncludes = { friends: ['age'] }
+let copySourcePaths = ['friends.age']
 ```
 
 the highlighted results become

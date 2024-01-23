@@ -11,17 +11,16 @@ interface HighlightConfig {
    */
   disable?: boolean
   /**
-   * Nested paths in arrays of objects that should be copied from source into
-   * highlighted results.
+   * Paths that should be copied from source into the highlighted results.
    *
-   * For example `{ "library.books": ["cover.author"] }` will make it so
-   * `cover.author` is copied over from the source array to the highlighted
-   * results for the `library.books` array. The motivation being that sometimes
-   * arrays are large and it's expensive to include the whole thing in the
-   * hits source but some of the array items fields are needed to correctly
-   * display the array.
+   * In the case of arrays of objects, nested paths get copied to every
+   * highlighted item in the array. For example, assumming `library.books` to
+   * be an array of objects and `cover.author` a nested path inside it,
+   * setting `copySourcePaths` to `["library.books.cover.author"]` will copy
+   * `cover.author` from the source array to every item in the highlighted
+   * results for `library.books`.
    */
-  nestedArrayIncludes?: Record<Path, Array<Path>>
+  copySourcePaths?: Record<Path, Array<Path>>
 }
 
 interface Node {
