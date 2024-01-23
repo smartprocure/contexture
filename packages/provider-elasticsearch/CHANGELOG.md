@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.26.0
+
+### Minor Changes
+
+- e004eda2: Revamp elasticsearch highlighting API and implementation
+
 ## 1.25.6
 
 ### Patch Changes

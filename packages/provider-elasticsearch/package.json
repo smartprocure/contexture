@@ -1,6 +1,6 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "1.25.6",
+  "version": "1.26.0",
   "description": "ElasticSearch Provider for Contexture",
   "type": "module",
   "exports": {
