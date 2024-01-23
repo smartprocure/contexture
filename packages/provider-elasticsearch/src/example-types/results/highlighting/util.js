@@ -1,8 +1,6 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 
-export let findByPrefix = (str, arr) => _.find((k) => _.startsWith(k, str), arr)
-
 export let isLeafField = (field) =>
   !!field?.elasticsearch?.dataType || !!field?.elasticsearch?.mapping?.type
 
@@ -17,23 +15,42 @@ export let isArrayOfScalarsField = (field) =>
 export let isArrayOfObjectsField = (field) =>
   isArrayField(field) && !isLeafField(field)
 
+export let stripParentPath = _.curry((parentPath, path) =>
+  _.startsWith(`${parentPath}.`, path)
+    ? path.slice(parentPath.length + 1)
+    : undefined
+)
+
+export let findByPrefixIn = _.curry((arr, str) =>
+  _.find((k) => _.startsWith(k, str), arr)
+)
+
 /**
  * Object where keys are paths for fields that are arrays of objects and values
  * are all the paths under them.
  */
 export let getArrayOfObjectsPathsMap = _.memoize((schema) => {
-  let fieldsPaths = _.keys(schema.fields)
-  return F.reduceIndexed(
-    (acc, field, arrayPath) => {
-      if (isArrayOfObjectsField(field)) {
-        acc[arrayPath] = _.filter(_.startsWith(`${arrayPath}.`), fieldsPaths)
-      }
-      return acc
-    },
-    {},
-    schema.fields
-  )
+  let paths = _.keys(schema.fields)
+  return _.flow(
+    _.pickBy(isArrayOfObjectsField),
+    F.mapValuesIndexed((_field, arrayPath) =>
+      F.compactMap(stripParentPath(arrayPath), paths)
+    )
+  )(schema.fields)
 }, _.get('elasticsearch.index'))
+
+/**
+ * Group nested paths under their parent array of objects path.
+ */
+export let getNestedPathsMap = (schema, paths) => {
+  let allPaths = _.keys(getArrayOfObjectsPathsMap(schema))
+  return _.flow(
+    _.groupBy((path) => findByPrefixIn(allPaths, path) ?? path),
+    F.mapValuesIndexed((nested, path) =>
+      F.compactMap(stripParentPath(path), nested)
+    )
+  )(paths)
+}
 
 export let stripTags = _.curry((tags, str) =>
   str.replaceAll(tags.pre, '').replaceAll(tags.post, '')
@@ -89,7 +106,7 @@ let highlightFromRanges = (pre, post, ranges, str) => {
     : highlighted
 }
 
-export let mergeHighlights = (tags, ...strs) => {
+export let mergeHighlights = _.curry((tags, strs) => {
   // This may look unnecessary but merging highlights is not cheap and many
   // times is not even needed
   if (strs.length <= 1) return _.head(strs)
@@ -100,4 +117,4 @@ export let mergeHighlights = (tags, ...strs) => {
     ranges,
     stripTags(tags, _.head(strs))
   )
-}
+})

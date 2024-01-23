@@ -6,7 +6,7 @@ export let schema = {
     },
   },
   fields: {
-    fieldsGroup: {
+    groupField: {
       elasticsearch: {
         dataType: 'text',
         mapping: {
@@ -35,11 +35,11 @@ export let schema = {
       elasticsearch: {
         dataType: 'text',
         mapping: {
-          copy_to: ['fieldsGroup'],
+          copy_to: ['groupField'],
           fields: {
             subfield: {
               type: 'text',
-              copy_to: ['fieldsGroup.subfield'],
+              copy_to: ['groupField.subfield'],
             },
           },
         },

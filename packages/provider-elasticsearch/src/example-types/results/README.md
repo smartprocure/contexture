@@ -49,9 +49,9 @@ Whitelisted sub-fields are sent for highlighting, since they could be present in
 
 </details>
 
-#### 2. Fields groups
+#### 2. Group fields
 
-Fields groups are not sent for highlighting because we assume users want to highlight fields that were copied over instead of the fields groups themselves:
+Group fields are not sent for highlighting because we assume users want to highlight fields that were copied over instead of the group fields themselves:
 
 <details>
 
@@ -60,7 +60,7 @@ Fields groups are not sent for highlighting because we assume users want to high
 ```jsonc
 {
   "fields": {
-    // `address` won't be sent for highlighting since it's a field group.
+    // `address` won't be sent for highlighting since it's a group field.
     "address": {
       "elasticsearch": {}
     },

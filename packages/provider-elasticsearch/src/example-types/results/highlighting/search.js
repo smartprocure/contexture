@@ -8,7 +8,7 @@ import {
 import {
   mergeHighlightsOnSource,
   removePathsFromSource,
-  transformResponseHighlight,
+  getResponseHighlight,
 } from './response.js'
 
 let tags = {
@@ -19,7 +19,13 @@ let tags = {
 export let searchWithHighlights = (node, search, schema) => async (body) => {
   // Paths for fields to always include regardless of whether the user included
   // them. They will be removed from the response hits so there's no harm done.
-  let pathsToAdd = _.flatten(_.values(getArrayOfObjectsPathsMap(schema)))
+  let pathsToAdd = _.flatten(
+    F.mapIndexed(
+      (paths, arrayPath) => _.map((path) => `${arrayPath}.${path}`, paths),
+      getArrayOfObjectsPathsMap(schema)
+    )
+  )
+
   let { addedPaths, ...source } = addPathsToRequestSource(
     schema,
     body._source,
@@ -38,8 +44,8 @@ export let searchWithHighlights = (node, search, schema) => async (body) => {
   })
 
   for (let hit of response.hits.hits) {
-    let nestedArrayIncludes = node.highlight?.nestedArrayIncludes
-    transformResponseHighlight(schema, hit, tags, nestedArrayIncludes)
+    let copySourcePaths = node.highlight?.copySourcePaths
+    hit.highlight = getResponseHighlight(schema, hit, tags, copySourcePaths)
     removePathsFromSource(schema, hit, addedPaths)
     mergeHighlightsOnSource(schema, hit)
   }

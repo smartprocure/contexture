@@ -76,9 +76,9 @@ let getHighlightSubFieldsNames = (schema) =>
   _.keys(_.pickBy('highlight', schema.elasticsearch?.subFields))
 
 /*
- * Paths of all fields groups and their subfields that can be highlighted.
+ * Paths of all group fields and their subfields that can be highlighted.
  */
-export let getHighlightFieldsGroupsPaths = _.memoize((schema) => {
+export let getHighlightGroupFieldsPaths = _.memoize((schema) => {
   let subFieldsNames = getHighlightSubFieldsNames(schema)
   return _.flatMap((field) => {
     let copy_to = field.elasticsearch?.mapping?.copy_to
@@ -89,8 +89,8 @@ export let getHighlightFieldsGroupsPaths = _.memoize((schema) => {
   }, schema.fields)
 }, _.get('elasticsearch.index'))
 
-let isFieldsGroupPath = _.curry((schema, path) =>
-  _.find(_.eq(path), getHighlightFieldsGroupsPaths(schema))
+let isGroupFieldPath = _.curry((schema, path) =>
+  _.find(_.eq(path), getHighlightGroupFieldsPaths(schema))
 )
 
 /*
@@ -100,7 +100,7 @@ export let getAllHighlightFields = _.memoize((schema) => {
   let subFieldsNames = getHighlightSubFieldsNames(schema)
   return F.reduceIndexed(
     (acc, field, path) => {
-      if (!isLeafField(field) || isFieldsGroupPath(schema, path)) {
+      if (!isLeafField(field) || isGroupFieldPath(schema, path)) {
         return acc
       }
       acc[path] = field
@@ -146,8 +146,8 @@ let blobConfiguration = {
  * Get configuration for highlight fields to send in the elastic request.
  */
 export let getRequestHighlightFields = (schema, node) => {
-  let fieldGroupsInQuery = collectKeysAndValues(
-    isFieldsGroupPath(schema),
+  let groupFieldsInQuery = collectKeysAndValues(
+    isGroupFieldPath(schema),
     node._meta?.relevantFilters
   )
 
@@ -157,7 +157,7 @@ export let getRequestHighlightFields = (schema, node) => {
 
   let getHighlightQuery = (field, path) => {
     let pathsToReplace = _.intersection(
-      fieldGroupsInQuery,
+      groupFieldsInQuery,
       field.elasticsearch?.mapping?.copy_to
     )
     if (!_.isEmpty(pathsToReplace)) {

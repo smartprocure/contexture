@@ -3,12 +3,120 @@ import { schema } from './testSchema.js'
 import {
   mergeHighlightsOnSource,
   removePathsFromSource,
-  transformResponseHighlight,
+  getResponseHighlight,
+  groupByArrayOfObjectsFields,
+  getArrayOfScalarsFragments,
+  getArrayOfObjectsFragments,
 } from './response.js'
 
 let tags = { pre: '<em>', post: '</em>' }
 
-describe('transformResponseHighlight()', () => {
+describe('groupByArrayOfObjectsFields', () => {
+  it('should group array of objects fields but not array of scalars field', () => {
+    let highlight = {
+      'library.categories': [
+        'Alternative <em>Medicine</em>',
+        '<em>Ethnic</em> & Cultural',
+      ],
+      'library.books.cover.title': [
+        'Nineteen <em>Eighty-Four</em>',
+        '<em>The</em> Great Gatsby',
+      ],
+      'library.books.cover.author': [
+        '<em>George</em> Orwell',
+        'James <em>Joyce</em>',
+      ],
+    }
+    expect(groupByArrayOfObjectsFields(schema, highlight)).toEqual({
+      'library.categories': [
+        'Alternative <em>Medicine</em>',
+        '<em>Ethnic</em> & Cultural',
+      ],
+      'library.books': {
+        'cover.title': [
+          'Nineteen <em>Eighty-Four</em>',
+          '<em>The</em> Great Gatsby',
+        ],
+        'cover.author': ['<em>George</em> Orwell', 'James <em>Joyce</em>'],
+      },
+    })
+  })
+})
+
+describe('getIndexedAndMergedFragments', () => {
+  it('should index and merge arrays of strings fragments', () => {
+    let source = [
+      'Ethnic & Cultural',
+      'Computer Science',
+      'Alternative Medicine',
+    ]
+    let fragments = [
+      'Alternative <em>Medicine</em>',
+      '<em>Ethnic</em> & Cultural',
+      '<em>Alternative</em> Medicine',
+      'Ethnic & <em>Cultural</em>',
+    ]
+    expect(getArrayOfScalarsFragments(tags, source, fragments)).toEqual({
+      0: '<em>Ethnic</em> & <em>Cultural</em>',
+      2: '<em>Alternative</em> <em>Medicine</em>',
+    })
+  })
+
+  it('should index and merge arrays of objects fragments', () => {
+    let source = [
+      { cover: { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald' } },
+      { cover: { title: 'The Grapes of Wrath', author: 'John Steinbeck' } },
+      { cover: { title: 'Nineteen Eighty-Four', author: 'George Orwell' } },
+      { cover: { title: 'Ulysses', author: 'James Joyce' } },
+    ]
+    let fragments = [
+      'Nineteen <em>Eighty-Four</em>',
+      '<em>The</em> Great Gatsby',
+      '<em>Nineteen</em> Eighty-Four',
+      'The Great <em>Gatsby</em>',
+    ]
+    expect(
+      getArrayOfScalarsFragments(tags, source, fragments, 'cover.title')
+    ).toEqual({
+      0: '<em>The</em> Great <em>Gatsby</em>',
+      2: '<em>Nineteen</em> <em>Eighty-Four</em>',
+    })
+  })
+})
+
+describe('getArrayOfObjectsFragments()', () => {
+  it('should return indexed and merged fragments', () => {
+    let source = [
+      { cover: { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald' } },
+      { cover: { title: 'The Grapes of Wrath', author: 'John Steinbeck' } },
+      { cover: { title: 'Nineteen Eighty-Four', author: 'George Orwell' } },
+      { cover: { title: 'Ulysses', author: 'James Joyce' } },
+    ]
+    let fragments = {
+      'cover.title': [
+        'Nineteen <em>Eighty-Four</em>',
+        '<em>The</em> Great Gatsby',
+      ],
+      'cover.author': ['<em>George</em> Orwell', 'James <em>Joyce</em>'],
+    }
+    expect(getArrayOfObjectsFragments(tags, source, fragments)).toEqual({
+      0: {
+        cover: { title: '<em>The</em> Great Gatsby' },
+      },
+      2: {
+        cover: {
+          title: 'Nineteen <em>Eighty-Four</em>',
+          author: '<em>George</em> Orwell',
+        },
+      },
+      3: {
+        cover: { author: 'James <em>Joyce</em>' },
+      },
+    })
+  })
+})
+
+describe('getResponseHighlight()', () => {
   describe('text fields', () => {
     it('should merge fragments', () => {
       let hit = {
@@ -21,8 +129,7 @@ describe('transformResponseHighlight()', () => {
           ],
         },
       }
-      transformResponseHighlight(schema, hit, tags)
-      expect(hit.highlight).toEqual({
+      expect(getResponseHighlight(schema, hit, tags)).toEqual({
         'library.name':
           '<em>Imperial</em> College <em>London Abdus Salam</em> Library',
       })
@@ -43,8 +150,7 @@ describe('transformResponseHighlight()', () => {
           ],
         },
       }
-      transformResponseHighlight(schema, hit, tags)
-      expect(hit.highlight).toEqual({
+      expect(getResponseHighlight(schema, hit, tags)).toEqual({
         'library.about': [
           'The <em>Abdus Salam Library</em> is',
           'is the <em>largest</em> of',
@@ -78,8 +184,7 @@ describe('transformResponseHighlight()', () => {
           ],
         },
       }
-      transformResponseHighlight(schema, hit, tags)
-      expect(hit.highlight).toEqual({
+      expect(getResponseHighlight(schema, hit, tags)).toEqual({
         'library.categories': {
           0: '<em>Ethnic</em> & <em>Cultural</em>',
           2: '<em>Alternative</em> <em>Medicine</em>',
@@ -121,8 +226,7 @@ describe('transformResponseHighlight()', () => {
           ],
         },
       }
-      transformResponseHighlight(schema, hit, tags)
-      expect(hit.highlight).toEqual({
+      expect(getResponseHighlight(schema, hit, tags)).toEqual({
         'library.books': {
           0: {
             cover: {
@@ -164,9 +268,8 @@ describe('transformResponseHighlight()', () => {
           ],
         },
       }
-      let nestedArrayIncludes = { 'library.books': ['cover.author'] }
-      transformResponseHighlight(schema, hit, tags, nestedArrayIncludes)
-      expect(hit.highlight).toEqual({
+      let copySourcePaths = ['library.books.cover.author']
+      expect(getResponseHighlight(schema, hit, tags, copySourcePaths)).toEqual({
         'library.books': {
           0: {
             cover: {
@@ -208,9 +311,8 @@ describe('transformResponseHighlight()', () => {
           ],
         },
       }
-      let nestedArrayIncludes = { 'library.books': ['cover.title'] }
-      transformResponseHighlight(schema, hit, tags, nestedArrayIncludes)
-      expect(hit.highlight).toEqual({
+      let copySourcePaths = ['library.books.cover.title']
+      expect(getResponseHighlight(schema, hit, tags, copySourcePaths)).toEqual({
         'library.books': {
           0: {
             cover: {

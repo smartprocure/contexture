@@ -1,7 +1,7 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 
-export const isArraysEqual = _.flow(_.xor, _.isEmpty)
+export const areArraysEqual = _.flow(_.xor, _.isEmpty)
 
 export let unsetOnTree = _.curry((prop, tree) =>
   _.compact(F.treeToArrayBy()(F.popProperty(prop), tree))

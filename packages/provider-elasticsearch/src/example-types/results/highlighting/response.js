@@ -1,13 +1,16 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import { isArraysEqual, groupByIndexed } from '../../../utils/futil.js'
+import { groupByIndexed } from '../../../utils/futil.js'
 import {
   stripTags,
   mergeHighlights,
   isBlobField,
   isArrayField,
   isArrayOfScalarsField,
-  findByPrefix,
+  findByPrefixIn,
+  isArrayOfObjectsField,
+  getNestedPathsMap,
+  stripParentPath,
   getArrayOfObjectsPathsMap,
 } from './util.js'
 
@@ -27,121 +30,139 @@ let groupByMultiField = _.curry((schema, highlight) =>
 )
 
 /**
- * Mutate hit `highlight`:
+ * Group nested fields under their parent array of objects path.
+ */
+export let groupByArrayOfObjectsFields = _.curry((schema, highlight) => {
+  let arrayOfObjectsPaths = _.keys(getArrayOfObjectsPathsMap(schema))
+  return F.reduceIndexed(
+    (acc, fragments, path) => {
+      let arrayPath = findByPrefixIn(arrayOfObjectsPaths, path)
+      if (arrayPath) {
+        let nestedPath = stripParentPath(arrayPath, path)
+        return _.update([arrayPath], _.set([nestedPath], fragments), acc)
+      }
+      return _.set([path], fragments, acc)
+    },
+    {},
+    highlight
+  )
+})
+
+/**
+ * Convert an array of fragments to an object where keys are corresponding
+ * indexes in source array and values are fragments.
+ */
+export let getIndexedFragments = (tags, source, fragments, nestedPath) => {
+  let fragmentsMap = _.groupBy(stripTags(tags), fragments)
+  return F.reduceIndexed(
+    (acc, item, index) => {
+      let value = F.getOrReturn(nestedPath, item)
+      return _.has(value, fragmentsMap)
+        ? F.setOn(index, fragmentsMap[value], acc)
+        : acc
+    },
+    {},
+    source
+  )
+}
+
+let getIndexedAndMergedFragments = (tags, source, fragments, nestedPath) =>
+  _.mapValues(
+    mergeHighlights(tags),
+    getIndexedFragments(tags, source, fragments, nestedPath)
+  )
+
+export let getArrayOfScalarsFragments = getIndexedAndMergedFragments
+
+/**
+ * Ex: `{ "cover.title": [...] }` -> `{ 0: { cover: { title: [...] } } }`
+ *
+ * See tests for more details.
+ */
+export let getArrayOfObjectsFragments = (tags, source, fragmentsMap) =>
+  _.mergeAll(
+    F.mapIndexed(
+      (fragments, nestedPath) =>
+        _.mapValues(
+          (merged) => _.set(nestedPath, merged, {}),
+          getIndexedAndMergedFragments(tags, source, fragments, nestedPath)
+        ),
+      fragmentsMap
+    )
+  )
+
+/**
+ * Get hit `highlight`:
  * 1. Fragments for text fields get merged.
  * 2. Fragments for large (blob) text fields get concatenated.
  * 3. Fragments for arrays get ordered based on the source array
  */
-export let transformResponseHighlight = (
-  schema,
-  hit,
-  tags,
-  nestedArrayIncludes = {}
-) => {
-  let arrayOfObjectsPaths = _.keys(getArrayOfObjectsPathsMap(schema))
-
-  let getIndexedArrayObject = (arr, fragments, arrayPath, itemPath) => {
-    let fragmentsMap = _.groupBy(stripTags(tags), fragments)
-    return F.reduceIndexed(
-      (acc, item, index) => {
-        let fragments = fragmentsMap[itemPath ? _.get(itemPath, item) : item]
-        if (fragments) {
-          F.setOn(
-            F.dotJoin([`${index}`, itemPath]),
-            mergeHighlights(tags, ...fragments),
-            acc
-          )
-          for (let itemPath of nestedArrayIncludes[arrayPath] ?? []) {
-            F.updateOn(
-              F.dotJoin([`${index}`, itemPath]),
-              (highlight) => highlight ?? _.get(itemPath, item),
-              acc
-            )
-          }
-        }
-        return acc
-      },
-      arr,
-      _.get(arrayPath, hit._source)
-    )
-  }
-
-  let getArrayPath = (path) =>
-    isArrayOfScalarsField(schema.fields[path])
-      ? path
-      : findByPrefix(path, arrayOfObjectsPaths)
-
-  let highlight = _.flow(
+export let getResponseHighlight = (schema, hit, tags, copySourcePaths) => {
+  let pathsMap = getNestedPathsMap(schema, copySourcePaths)
+  return _.flow(
     groupByMultiField(schema),
     _.mapValues(_.flatten),
-    F.reduceIndexed((acc, fragments, path) => {
-      let arrayPath = getArrayPath(path)
-      if (arrayPath) {
-        acc[arrayPath] = getIndexedArrayObject(
-          acc[arrayPath] ?? {},
-          fragments,
-          arrayPath,
-          path.slice(arrayPath.length + 1)
-        )
-      } else if (isBlobField(schema.fields[path])) {
-        acc[path] = fragments
-      } else {
-        acc[path] = mergeHighlights(tags, ...fragments)
-      }
-      return acc
-    }, {})
-  )(hit.highlight)
+    groupByArrayOfObjectsFields(schema),
+    F.mapValuesIndexed((fragments, path) => {
+      let field = schema.fields[path]
 
-  if (!_.isEmpty(highlight)) hit.highlight = highlight
+      if (isBlobField(field)) {
+        return fragments
+      }
+
+      if (isArrayOfScalarsField(field)) {
+        let sourceArray = _.get(path, hit._source)
+        return getArrayOfScalarsFragments(tags, sourceArray, fragments)
+      }
+
+      if (isArrayOfObjectsField(field)) {
+        let sourceArray = _.get(path, hit._source)
+        let result = getArrayOfObjectsFragments(tags, sourceArray, fragments)
+        let copyPaths = pathsMap[path]
+        if (_.isEmpty(copyPaths)) return result
+        return F.mapValuesIndexed(
+          (to, index) => _.merge(_.pick(copyPaths, sourceArray[index]), to),
+          result
+        )
+      }
+
+      return mergeHighlights(tags, fragments)
+    })
+  )(hit.highlight)
 }
 
 /**
  * Remove each path in `paths` from `hit._source`.
+ *
+ * This function is more complicated than a simple `filterTree` because it
+ * needs to be performant since it runs on every hit and may potentially have to
+ * recurse into large source values.
  */
 export let removePathsFromSource = (schema, hit, paths) => {
-  // Nothing to do
   if (_.isEmpty(paths)) return
 
-  // "aoo" stands for "array of objects", because I was tired of typing it out
-  // over and over again.
-  let aooMap = getArrayOfObjectsPathsMap(schema)
-  let allAooPaths = _.keys(aooMap)
-  let getAooPath = (path) => findByPrefix(path, allAooPaths)
-  let [aooPaths, otherPaths] = _.partition(getAooPath, paths)
+  let unsetAllPaths = _.curry((paths, obj) => {
+    for (let path of paths) F.unsetOn(path, obj)
+    return obj
+  })
 
-  let toRemove = {
-    ...F.arrayToObject(_.identity, _.constant(true), otherPaths),
-    ...F.mapValuesIndexed((paths, aooPath) => {
-      let removeEntireArray =
-        // All nested fields in array of objects should be removed
-        isArraysEqual(paths, aooMap[aooPath]) ||
-        // Or... the path for the array of objects field should be removed
-        _.includes(aooPath, paths)
-      return (
-        removeEntireArray ||
-        _.map((path) => path.slice(aooPath.length + 1), paths)
-      )
-    }, _.groupBy(getAooPath, aooPaths)),
-  }
+  let allNestedPaths = getArrayOfObjectsPathsMap(schema)
 
-  let removePathsFromArray = (paths) => (arr) =>
-    _.reduce(
-      (acc, item) => {
-        for (let path of paths) F.unsetOn(path, item)
-        return _.isEmpty(item) ? acc : F.push(item, acc)
-      },
-      [],
-      arr
-    )
+  for (let [path, nested] of _.toPairs(getNestedPathsMap(schema, paths))) {
+    let shouldRemovePath =
+      _.isEmpty(nested) || _.isEqual(nested, allNestedPaths[path])
 
-  for (let [path, value] of _.toPairs(toRemove)) {
-    if (value === true) {
+    if (!shouldRemovePath) {
+      // Remove paths from each item in the array.
+      F.updateOn(path, _.map(unsetAllPaths(nested)), hit._source)
+      // Remove empty array items.
+      F.updateOn(path, _.remove(_.isEmpty), hit._source)
+      // If the array itself is empty, remove it.
+      shouldRemovePath = _.isEmpty(_.get(path, hit._source))
+    }
+
+    if (shouldRemovePath) {
       F.unsetOn(path, hit._source)
-    } else {
-      F.updateOn(path, removePathsFromArray(value), hit._source)
-      if (_.isEmpty(_.get(path, hit._source))) {
-        F.unsetOn(path, hit._source)
-      }
     }
   }
 }
@@ -149,11 +170,8 @@ export let removePathsFromSource = (schema, hit, paths) => {
 /*
  * Merge elastic hit highlights onto hit source.
  *
- * As a clever developer, you will notice that the following function is a dirty
- * and unholy version `_.merge`. So before you refactor it to use exactly that,
- * consider that this implementation is about 100x faster than (immutable)
- * `_.merge`. Query 100 records with arrays of thousands of elements each and
- * convince yourself.
+ * On 100 hits each with an array of about 10,000 items this implementation is
+ * ~100x faster than a mutating lodash `_.merge`.
  */
 export let mergeHighlightsOnSource = (schema, hit) => {
   for (let path in hit.highlight) {

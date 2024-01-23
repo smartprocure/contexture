@@ -2,12 +2,12 @@ import { schema } from './testSchema.js'
 import {
   addPathsToRequestSource,
   getAllHighlightFields,
-  getHighlightFieldsGroupsPaths,
+  getHighlightGroupFieldsPaths,
   getRequestHighlightFields,
 } from './request.js'
 
-describe('getHighlightFieldsGroupsPaths', () => {
-  it('should return all combinations of fields groups and sub-fields', () => {
+describe('getHighlightGroupFieldsPaths', () => {
+  it('should return all combinations of group fields and sub-fields', () => {
     let schema = {
       elasticsearch: {
         subFields: {
@@ -17,7 +17,7 @@ describe('getHighlightFieldsGroupsPaths', () => {
         },
       },
       fields: {
-        fieldsGroup1: {
+        groupField1: {
           elasticsearch: {
             dataType: 'text',
             mapping: {
@@ -25,7 +25,7 @@ describe('getHighlightFieldsGroupsPaths', () => {
             },
           },
         },
-        fieldsGroup2: {
+        groupField2: {
           elasticsearch: {
             dataType: 'text',
             mapping: {
@@ -37,19 +37,19 @@ describe('getHighlightFieldsGroupsPaths', () => {
           elasticsearch: {
             dataType: 'text',
             mapping: {
-              copy_to: ['fieldsGroup1', 'fieldsGroup2'],
+              copy_to: ['groupField1', 'groupField2'],
             },
           },
         },
       },
     }
-    expect(getHighlightFieldsGroupsPaths(schema)).toEqual([
-      'fieldsGroup1',
-      'fieldsGroup2',
-      'fieldsGroup1.subfield1',
-      'fieldsGroup2.subfield1',
-      'fieldsGroup1.subfield2',
-      'fieldsGroup2.subfield2',
+    expect(getHighlightGroupFieldsPaths(schema)).toEqual([
+      'groupField1',
+      'groupField2',
+      'groupField1.subfield1',
+      'groupField2.subfield1',
+      'groupField1.subfield2',
+      'groupField2.subfield2',
     ])
   })
 })
@@ -389,7 +389,7 @@ describe('getRequestHighlightFields()', () => {
     })
   })
 
-  it('should generate highlight_query with fields groups replaced', () => {
+  it('should generate highlight_query with group fields replaced', () => {
     let schema = {
       fields: {
         address: {
@@ -435,7 +435,7 @@ describe('getRequestHighlightFields()', () => {
     })
   })
 
-  it('should generate highlight_query with fields groups replaced for sub fields', () => {
+  it('should generate highlight_query with group fields replaced for sub fields', () => {
     let schema = {
       elasticsearch: {
         subFields: {
