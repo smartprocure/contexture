@@ -20,10 +20,9 @@ This provider takes a config object as a parameter:
 
 Schemas with with an elasticsearch provider can specify any or all of the following properties:
 
-| Option      | Type     | Description                                                                                                                                                                                       | Required |
-| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `index`     | `string` | Which ES index to use when querying                                                                                                                                                               | x        |
-| `highlight` | `object` | Used by `results` to determine what fields to highlight, and whether or not they are `inline` (copied over inline on to the source) or `additional` (in a list of additional fields that matched) |          |
+| Option  | Type     | Description                         | Required |
+| ------- | -------- | ----------------------------------- | -------- |
+| `index` | `string` | Which ES index to use when querying | x        |
 
 ### Example Schema for SomeType in SomeIndex
 

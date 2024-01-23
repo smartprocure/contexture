@@ -11,6 +11,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'actors',
         label: 'Actors',
@@ -21,6 +30,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'awards',
         label: 'Awards',
@@ -31,6 +49,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'countries',
         label: 'Countries',
@@ -41,6 +68,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'directors',
         label: 'Directors',
@@ -51,6 +87,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'genres',
         label: 'Genres',
@@ -61,6 +106,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'imdbId',
         label: 'Imdb Id',
@@ -70,6 +124,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'float',
+          mapping: { type: 'float' },
         },
         field: 'imdbRating',
         label: 'Imdb Rating',
@@ -79,6 +134,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'long',
+          mapping: { type: 'long' },
         },
         field: 'imdbVotes',
         label: 'Imdb Votes',
@@ -89,6 +145,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'languages',
         label: 'Languages',
@@ -98,6 +163,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'long',
+          mapping: { type: 'long' },
         },
         field: 'metaScore',
         label: 'Meta Score',
@@ -108,6 +174,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'plot',
         label: 'Plot',
@@ -118,6 +193,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'poster',
         label: 'Poster',
@@ -128,6 +212,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'rated',
         label: 'Rated',
@@ -137,6 +230,7 @@ export default {
         typeOptions: ['date', 'exists'],
         elasticsearch: {
           dataType: 'date',
+          mapping: { type: 'date' },
         },
         field: 'released',
         label: 'Released',
@@ -146,6 +240,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'long',
+          mapping: { type: 'long' },
         },
         field: 'runtimeMinutes',
         label: 'Runtime Minutes',
@@ -156,6 +251,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'title',
         label: 'Title',
@@ -166,6 +270,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'type',
         label: 'Type',
@@ -176,6 +289,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'writers',
         label: 'Writers',
@@ -185,6 +307,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'long',
+          mapping: { type: 'long' },
         },
         field: 'year',
         label: 'Year',
@@ -194,6 +317,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'long',
+          mapping: { type: 'long' },
         },
         field: 'yearEnded',
         label: 'Year Ended',
@@ -213,6 +337,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'actors',
         label: 'Actors',
@@ -223,6 +356,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'awards',
         label: 'Awards',
@@ -233,6 +375,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'countries',
         label: 'Countries',
@@ -243,6 +394,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'directors',
         label: 'Directors',
@@ -253,6 +413,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'genres',
         label: 'Genres',
@@ -263,6 +432,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'imdbId',
         label: 'Imdb Id',
@@ -272,6 +450,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'float',
+          mapping: { type: 'float' },
         },
         field: 'imdbRating',
         label: 'Imdb Rating',
@@ -281,6 +460,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'long',
+          mapping: { type: 'long' },
         },
         field: 'imdbVotes',
         label: 'Imdb Votes',
@@ -291,6 +471,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'languages',
         label: 'Languages',
@@ -300,6 +489,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'long',
+          mapping: { type: 'long' },
         },
         field: 'metaScore',
         label: 'Meta Score',
@@ -310,6 +500,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'plot',
         label: 'Plot',
@@ -320,6 +519,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'poster',
         label: 'Poster',
@@ -330,6 +538,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'rated',
         label: 'Rated',
@@ -339,6 +556,7 @@ export default {
         typeOptions: ['date', 'exists'],
         elasticsearch: {
           dataType: 'date',
+          mapping: { type: 'date' },
         },
         field: 'released',
         label: 'Released',
@@ -348,6 +566,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'long',
+          mapping: { type: 'long' },
         },
         field: 'runtimeMinutes',
         label: 'Runtime Minutes',
@@ -358,6 +577,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'title',
         label: 'Title',
@@ -368,6 +596,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'type',
         label: 'Type',
@@ -378,6 +615,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'writers',
         label: 'Writers',
@@ -387,6 +633,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'long',
+          mapping: { type: 'long' },
         },
         field: 'year',
         label: 'Year',
@@ -396,6 +643,7 @@ export default {
         typeOptions: ['number', 'exists'],
         elasticsearch: {
           dataType: 'long',
+          mapping: { type: 'long' },
         },
         field: 'yearEnded',
         label: 'Year Ended',

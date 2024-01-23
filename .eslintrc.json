@@ -1,6 +1,6 @@
 {
   "extends": ["eslint:recommended", "plugin:import/recommended"],
-  "ignorePatterns": ["dist", "node_modules"],
+  "ignorePatterns": ["dist", "node_modules", "*.ts"],
   "parserOptions": {
     "ecmaVersion": "2022",
     "sourceType": "module"

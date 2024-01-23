@@ -10,6 +10,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'actors',
         label: 'Actors',
@@ -20,6 +29,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'awards',
         label: 'Awards',
@@ -39,6 +57,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'actors',
         label: 'Actors',
@@ -49,6 +76,15 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          mapping: {
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+                ignore_above: 256,
+              },
+            },
+          },
         },
         field: 'awards',
         label: 'Awards',

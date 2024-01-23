@@ -39,6 +39,7 @@
     "futil": "^1.76.0",
     "js-combinatorics": "^2.1.1",
     "lodash": "^4.17.4",
+    "minimatch": "^9.0.3",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.28",
     "unidecode": "^0.1.8"

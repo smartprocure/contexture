@@ -33,13 +33,17 @@ let fromEsIndexMapping = (mapping) => {
           'fields',
           _.flow(
             flatten,
-            F.mapValuesIndexed(({ type, fields }, field) => ({
+            F.mapValuesIndexed((mapping, field) => ({
               field,
               label: _.startCase(field),
               elasticsearch: F.compactObject({
-                dataType: type,
+                mapping,
+                dataType: mapping.type,
                 // Find the child notAnalyzedField to set up facet autocomplete vs word
-                notAnalyzedField: _.findKey({ type: 'keyword' }, fields),
+                notAnalyzedField: _.findKey(
+                  { type: 'keyword' },
+                  mapping.fields
+                ),
               }),
             }))
           )

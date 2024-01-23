@@ -24,10 +24,6 @@ export let schemas = {
     elasticsearch: {
       index: 'movies',
       type: 'movie',
-      highlight: {
-        inline: ['title'],
-        additional: 'writers',
-      },
     },
     modeMap: {
       word: '',

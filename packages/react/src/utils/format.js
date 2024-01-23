@@ -24,14 +24,14 @@ export let addBlankRows = (rows, pageSize, key) => {
 // preserving spaces and `|` for fields with data concatenation
 let blank = _.memoize(_.replace(/[^ |]/gi, '█'))
 
-let toBlankText = (display, data, record) => {
+let toBlankText = (display, data, record, props) => {
   // running display to detect output type
-  let rendered = display(data, record)
+  let rendered = display(data, record, props)
   if (typeof rendered === 'object') {
     // rendered is React child
     try {
       // rendering again, but with blank data
-      return display(blank(data), record)
+      return display(blank(data), record, props)
     } catch {
       // fall back to plain text if blank data broke React component
       return blank(_.toString(data).slice(40))
@@ -43,7 +43,7 @@ let toBlankText = (display, data, record) => {
   }
 }
 
-export let blankResult = (display) => (data, record) =>
+export let blankResult = (display) => (data, record, props) =>
   (
     <span
       style={{
@@ -52,6 +52,6 @@ export let blankResult = (display) => (data, record) =>
         opacity: 0.2,
       }}
     >
-      {toBlankText(display, data, record)}
+      {toBlankText(display, data, record, props)}
     </span>
   )

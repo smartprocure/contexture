@@ -7,7 +7,6 @@ import { applyDefaults, inferSchema } from '../../utils/schema.js'
 import { newNodeFromField } from '../../utils/search.js'
 import Header from './Header.js'
 import TableBody from './TableBody.js'
-import HighlightedColumnHeader from './HighlightedColumnHeader.js'
 import ResultTableFooter from './ResultTableFooter.js'
 import { withTheme } from '../../utils/theme.js'
 
@@ -153,12 +152,12 @@ let ResultTable = ({
               ),
               visibleFields
             )}
-            <HighlightedColumnHeader node={node} />
           </Tr>
         </Thead>
         <TableBody
           {...{
             node,
+            tree,
             fields,
             visibleFields,
             hiddenFields,
