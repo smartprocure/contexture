@@ -1,5 +1,5 @@
 import mongoId from './mongoId.js'
-import { ObjectId } from 'bson'
+import { ObjectId } from 'mongodb'
 
 describe('mongoId', () => {
   describe('mongoId.hasValue', () => {
