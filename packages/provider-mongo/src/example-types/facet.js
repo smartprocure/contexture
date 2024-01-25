@@ -1,6 +1,6 @@
 import F from 'futil'
 import _ from 'lodash/fp.js'
-import { ObjectId } from 'bson'
+import { ObjectId } from 'mongodb'
 
 let projectStageFromLabelFields = (node) => ({
   $project: {

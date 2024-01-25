@@ -1,5 +1,5 @@
 import _ from 'lodash/fp.js'
-import { ObjectId } from 'bson'
+import { ObjectId } from 'mongodb'
 
 export default {
   hasValue: (node) => node.values || node.value,

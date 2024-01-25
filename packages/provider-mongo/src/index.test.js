@@ -1,6 +1,6 @@
 import _ from 'lodash/fp.js'
 import Contexture from 'contexture'
-import { ObjectId } from 'bson'
+import { ObjectId } from 'mongodb'
 import {
   mongoConnect,
   mongoDisconnect,
