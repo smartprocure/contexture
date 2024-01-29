@@ -1,6 +1,6 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import { getArrayOfObjectsPathsMap } from './util.js'
+import { getArrayOfObjectsPathsMap, getNestedPathsMap } from './util.js'
 import {
   addPathsToRequestSource,
   getRequestHighlightFields,
@@ -43,9 +43,13 @@ export let searchWithHighlights = (node, search, schema) => async (body) => {
     },
   })
 
+  const nestedPathsMap = getNestedPathsMap(
+    schema,
+    node.highlight?.copySourcePaths
+  )
+
   for (let hit of response.hits.hits) {
-    let copySourcePaths = node.highlight?.copySourcePaths
-    hit.highlight = getResponseHighlight(schema, hit, tags, copySourcePaths)
+    hit.highlight = getResponseHighlight(schema, hit, tags, nestedPathsMap)
     removePathsFromSource(schema, hit, addedPaths)
     mergeHighlightsOnSource(schema, hit)
   }

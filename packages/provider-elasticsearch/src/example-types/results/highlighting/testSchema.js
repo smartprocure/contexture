@@ -1,10 +1,4 @@
 export let schema = {
-  elasticsearch: {
-    subFields: {
-      keyword: { highlight: false },
-      subfield: { highlight: true },
-    },
-  },
   fields: {
     groupField: {
       elasticsearch: {

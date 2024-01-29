@@ -1,19 +1,19 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 
-export let isLeafField = (field) =>
-  !!field?.elasticsearch?.dataType || !!field?.elasticsearch?.mapping?.type
+export let getFieldType = (field) =>
+  field?.elasticsearch?.dataType || field?.elasticsearch?.mapping?.type
 
 export let isBlobField = (field) =>
-  field?.subType === 'blob' && isLeafField(field)
+  field?.subType === 'blob' && !!getFieldType(field)
 
 export let isArrayField = (field) => field?.subType === 'array'
 
 export let isArrayOfScalarsField = (field) =>
-  isArrayField(field) && isLeafField(field)
+  isArrayField(field) && !!getFieldType(field)
 
 export let isArrayOfObjectsField = (field) =>
-  isArrayField(field) && !isLeafField(field)
+  isArrayField(field) && !getFieldType(field)
 
 export let stripParentPath = _.curry((parentPath, path) =>
   _.startsWith(`${parentPath}.`, path)

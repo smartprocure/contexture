@@ -32,21 +32,21 @@ let groupByMultiField = _.curry((schema, highlight) =>
 /**
  * Group nested fields under their parent array of objects path.
  */
-export let groupByArrayOfObjectsFields = _.curry((schema, highlight) => {
-  let arrayOfObjectsPaths = _.keys(getArrayOfObjectsPathsMap(schema))
-  return F.reduceIndexed(
-    (acc, fragments, path) => {
-      let arrayPath = findByPrefixIn(arrayOfObjectsPaths, path)
-      if (arrayPath) {
-        let nestedPath = stripParentPath(arrayPath, path)
-        return _.update([arrayPath], _.set([nestedPath], fragments), acc)
-      }
-      return _.set([path], fragments, acc)
-    },
-    {},
-    highlight
-  )
-})
+export let groupByArrayOfObjectsFields = _.curry(
+  (arrayOfObjectsPaths, highlight) =>
+    F.reduceIndexed(
+      (acc, fragments, path) => {
+        let arrayPath = findByPrefixIn(arrayOfObjectsPaths, path)
+        if (arrayPath) {
+          let nestedPath = stripParentPath(arrayPath, path)
+          return _.update([arrayPath], _.set([nestedPath], fragments), acc)
+        }
+        return _.set([path], fragments, acc)
+      },
+      {},
+      highlight
+    )
+)
 
 /**
  * Convert an array of fragments to an object where keys are corresponding
@@ -97,12 +97,11 @@ export let getArrayOfObjectsFragments = (tags, source, fragmentsMap) =>
  * 2. Fragments for large (blob) text fields get concatenated.
  * 3. Fragments for arrays get ordered based on the source array
  */
-export let getResponseHighlight = (schema, hit, tags, copySourcePaths) => {
-  let pathsMap = getNestedPathsMap(schema, copySourcePaths)
-  return _.flow(
+export let getResponseHighlight = (schema, hit, tags, nestedPathsMap) =>
+  _.flow(
     groupByMultiField(schema),
     _.mapValues(_.flatten),
-    groupByArrayOfObjectsFields(schema),
+    groupByArrayOfObjectsFields(_.keys(getArrayOfObjectsPathsMap(schema))),
     F.mapValuesIndexed((fragments, path) => {
       let field = schema.fields[path]
 
@@ -118,7 +117,7 @@ export let getResponseHighlight = (schema, hit, tags, copySourcePaths) => {
       if (isArrayOfObjectsField(field)) {
         let sourceArray = _.get(path, hit._source)
         let result = getArrayOfObjectsFragments(tags, sourceArray, fragments)
-        let copyPaths = pathsMap[path]
+        let copyPaths = nestedPathsMap?.[path]
         if (_.isEmpty(copyPaths)) return result
         return F.mapValuesIndexed(
           (to, index) => _.merge(_.pick(copyPaths, sourceArray[index]), to),
@@ -129,7 +128,6 @@ export let getResponseHighlight = (schema, hit, tags, copySourcePaths) => {
       return mergeHighlights(tags, fragments)
     })
   )(hit.highlight)
-}
 
 /**
  * Remove each path in `paths` from `hit._source`.

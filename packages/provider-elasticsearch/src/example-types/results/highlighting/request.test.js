@@ -2,72 +2,28 @@ import { schema } from './testSchema.js'
 import {
   addPathsToRequestSource,
   getAllHighlightFields,
-  getHighlightGroupFieldsPaths,
   getRequestHighlightFields,
 } from './request.js'
 
-describe('getHighlightGroupFieldsPaths', () => {
-  it('should return all combinations of group fields and sub-fields', () => {
-    let schema = {
-      elasticsearch: {
-        subFields: {
-          keyword: { highlight: false },
-          subfield1: { highlight: true },
-          subfield2: { highlight: true },
-        },
-      },
-      fields: {
-        groupField1: {
-          elasticsearch: {
-            dataType: 'text',
-            mapping: {
-              fields: { keyword: {}, subfield1: {}, subfield2: {} },
-            },
-          },
-        },
-        groupField2: {
-          elasticsearch: {
-            dataType: 'text',
-            mapping: {
-              fields: { keyword: {}, subfield1: {}, subfield2: {} },
-            },
-          },
-        },
-        state: {
-          elasticsearch: {
-            dataType: 'text',
-            mapping: {
-              copy_to: ['groupField1', 'groupField2'],
-            },
-          },
-        },
-      },
-    }
-    expect(getHighlightGroupFieldsPaths(schema)).toEqual([
-      'groupField1',
-      'groupField2',
-      'groupField1.subfield1',
-      'groupField2.subfield1',
-      'groupField1.subfield2',
-      'groupField2.subfield2',
-    ])
-  })
-})
-
 describe('getAllHighlightFields', () => {
-  it('should include subfields that can be highlighted', () => {
+  it('should only include text fields and subfields', () => {
     let schema = {
-      elasticsearch: {
-        subFields: {
-          keyword: { highlight: false },
-          subfield: { highlight: true },
-        },
-      },
       fields: {
         state: {
+          subType: 'blob',
           elasticsearch: {
             dataType: 'text',
-            mapping: { fields: { keyword: {}, subfield: {} } },
+            mapping: {
+              fields: {
+                keyword: { type: 'keyword' },
+                subfield: { type: 'text' },
+              },
+            },
+          },
+        },
+        location: {
+          elasticsearch: {
+            dataType: 'geo_point',
           },
         },
       },
@@ -75,20 +31,37 @@ describe('getAllHighlightFields', () => {
     let actual = getAllHighlightFields(schema)
     expect(actual).toEqual({
       state: {
+        subType: 'blob',
         elasticsearch: {
           dataType: 'text',
-          mapping: { fields: { keyword: {}, subfield: {} } },
+          mapping: {
+            fields: {
+              keyword: { type: 'keyword' },
+              subfield: { type: 'text' },
+            },
+          },
         },
       },
-      'state.subfield': {},
+      'state.subfield': {
+        subType: 'blob',
+        elasticsearch: {
+          mapping: {
+            type: 'text',
+          },
+        },
+      },
     })
   })
 
   it('should exclude groups fields', () => {
     let schema = {
       fields: {
-        all: { elasticsearch: { dataType: 'text' } },
-        address: { elasticsearch: { dataType: 'text' } },
+        all: {
+          elasticsearch: { dataType: 'text' },
+        },
+        address: {
+          elasticsearch: { dataType: 'text' },
+        },
         state: {
           elasticsearch: {
             dataType: 'text',
@@ -317,25 +290,29 @@ describe('getRequestHighlightFields()', () => {
     })
   })
 
-  it('should include whitelisted sub fields', () => {
+  it('should include text sub fields', () => {
     let schema = {
-      elasticsearch: {
-        subFields: {
-          keyword: { highlight: false },
-          subfield: { highlight: true },
-        },
-      },
       fields: {
         state: {
           elasticsearch: {
             dataType: 'text',
-            mapping: { fields: { keyword: {}, subfield: {} } },
+            mapping: {
+              fields: {
+                keyword: { type: 'keyword' },
+                subfield: { type: 'text' },
+              },
+            },
           },
         },
         'city.street': {
           elasticsearch: {
             dataType: 'text',
-            mapping: { fields: { keyword: {}, subfield: {} } },
+            mapping: {
+              fields: {
+                keyword: { type: 'keyword' },
+                subfield: { type: 'text' },
+              },
+            },
           },
         },
       },
@@ -352,13 +329,6 @@ describe('getRequestHighlightFields()', () => {
 
   it('should generate configuration for blob text fields', () => {
     let schema = {
-      elasticsearch: {
-        subFields: {
-          subfield: {
-            highlight: true,
-          },
-        },
-      },
       fields: {
         state: {
           subType: 'blob',
@@ -437,15 +407,15 @@ describe('getRequestHighlightFields()', () => {
 
   it('should generate highlight_query with group fields replaced for sub fields', () => {
     let schema = {
-      elasticsearch: {
-        subFields: {
-          subfield: { highlight: true },
-        },
-      },
       fields: {
         address: {
           elasticsearch: {
             dataType: 'text',
+            mapping: {
+              fields: {
+                subfield: { type: 'text' },
+              },
+            },
           },
         },
         state: {
