@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.26.18
+
+### Patch Changes
+
+- 7a4c7720: Use mongodb for creating ObjectIds
+
 ## 0.26.17
 
 ### Patch Changes
