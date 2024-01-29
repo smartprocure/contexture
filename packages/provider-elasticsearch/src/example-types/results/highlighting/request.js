@@ -69,9 +69,10 @@ export let addPathsToRequestSource = (schema, source = {}, pathsToAdd = []) => {
 }
 
 /**
- * Map a field's subfields to a structure that looks like a top-level field.
+ * Returns field's subfields, each mapped to a structure similar to a top level
+ * field.
  */
-let createTopLevelSubFields = (field) =>
+let getFieldSubFields = (field) =>
   F.mapValuesIndexed(
     (subField, subFieldName) =>
       F.omitBlank({
@@ -99,7 +100,7 @@ let getSchemaSubFields = (schema) =>
     (acc, field, path) =>
       F.mergeOn(
         acc,
-        _.mapKeys((k) => `${path}.${k}`, createTopLevelSubFields(field))
+        _.mapKeys((k) => `${path}.${k}`, getFieldSubFields(field))
       ),
     {},
     schema.fields

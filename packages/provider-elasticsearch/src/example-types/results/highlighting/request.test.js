@@ -56,12 +56,8 @@ describe('getAllHighlightFields', () => {
   it('should exclude groups fields', () => {
     let schema = {
       fields: {
-        all: {
-          elasticsearch: { dataType: 'text' },
-        },
-        address: {
-          elasticsearch: { dataType: 'text' },
-        },
+        all: { elasticsearch: { dataType: 'text' } },
+        address: { elasticsearch: { dataType: 'text' } },
         state: {
           elasticsearch: {
             dataType: 'text',
