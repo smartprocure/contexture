@@ -27,19 +27,22 @@ describe('groupByArrayOfObjectsFields', () => {
         'James <em>Joyce</em>',
       ],
     }
-    expect(groupByArrayOfObjectsFields(schema, highlight)).toEqual({
-      'library.categories': [
-        'Alternative <em>Medicine</em>',
-        '<em>Ethnic</em> & Cultural',
-      ],
-      'library.books': {
-        'cover.title': [
-          'Nineteen <em>Eighty-Four</em>',
-          '<em>The</em> Great Gatsby',
+    let arrayOfObjectsPaths = ['library.books']
+    expect(groupByArrayOfObjectsFields(arrayOfObjectsPaths, highlight)).toEqual(
+      {
+        'library.categories': [
+          'Alternative <em>Medicine</em>',
+          '<em>Ethnic</em> & Cultural',
         ],
-        'cover.author': ['<em>George</em> Orwell', 'James <em>Joyce</em>'],
-      },
-    })
+        'library.books': {
+          'cover.title': [
+            'Nineteen <em>Eighty-Four</em>',
+            '<em>The</em> Great Gatsby',
+          ],
+          'cover.author': ['<em>George</em> Orwell', 'James <em>Joyce</em>'],
+        },
+      }
+    )
   })
 })
 
@@ -268,8 +271,8 @@ describe('getResponseHighlight()', () => {
           ],
         },
       }
-      let copySourcePaths = ['library.books.cover.author']
-      expect(getResponseHighlight(schema, hit, tags, copySourcePaths)).toEqual({
+      let nestedPathsMap = { 'library.books': ['cover.author'] }
+      expect(getResponseHighlight(schema, hit, tags, nestedPathsMap)).toEqual({
         'library.books': {
           0: {
             cover: {
@@ -311,8 +314,8 @@ describe('getResponseHighlight()', () => {
           ],
         },
       }
-      let copySourcePaths = ['library.books.cover.title']
-      expect(getResponseHighlight(schema, hit, tags, copySourcePaths)).toEqual({
+      let nestedPathsMap = { 'library.books': ['cover.title'] }
+      expect(getResponseHighlight(schema, hit, tags, nestedPathsMap)).toEqual({
         'library.books': {
           0: {
             cover: {

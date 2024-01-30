@@ -14,7 +14,7 @@ We assume that users want to highlight all the fields present in the query. The 
 
 #### 1. Sub-fields
 
-Whitelisted sub-fields are sent for highlighting, since they could be present in the query:
+All sub-fields of type `text` are sent for highlighting, since they could be present in the query:
 
 <details>
 
@@ -22,23 +22,16 @@ Whitelisted sub-fields are sent for highlighting, since they could be present in
 
 ```jsonc
 {
-  "elasticsearch": {
-    "subFields": {
-      // `{field}.keyword` will *not* be sent for highlighting.
-      "keyword": { "highlight": false },
-      // `{field}.subfield` will be sent for highlighting.
-      "subfield": { "highlight": true }
-    }
-  },
   "fields": {
     // `state` will be sent for highlighting.
     "state": {
       "elasticsearch": {
         "mapping": {
           "fields": {
-            "keyword": {},
+            // `state.keyword` will not be sent for highlighting.
+            "keyword": { "type": "keyword" },
             // `state.subfield` will be sent for highlighting.
-            "subfield": {}
+            "subfield": { "type": "text" }
           }
         }
       }

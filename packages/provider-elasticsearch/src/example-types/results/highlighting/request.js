@@ -1,8 +1,7 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import { minimatch } from 'minimatch'
-import { CartesianProduct } from 'js-combinatorics'
-import { isLeafField, isBlobField, isArrayOfObjectsField } from './util.js'
+import { getFieldType, isBlobField, isArrayOfObjectsField } from './util.js'
 
 /*
  * Expand schema paths with wildcards into a list of paths without wildcards.
@@ -14,7 +13,7 @@ let expandGlobs = (schema, globs) => {
   let fieldsNames = _.keys(schema.fields)
 
   let expandGlob = (glob) =>
-    isLeafField(schema.fields[glob])
+    getFieldType(schema.fields[glob])
       ? [glob]
       : minimatch.match(fieldsNames, `${glob}*`)
 
@@ -29,7 +28,7 @@ let expandGlobs = (schema, globs) => {
  * Add given paths to source with includes/excludes lists. Paths get added to
  * source.includes and removed from source.excludes as necessary.
  *
- * Returns added paths.
+ * Returns object with source includes, excludes, and added paths.
  */
 export let addPathsToRequestSource = (schema, source = {}, pathsToAdd = []) => {
   // There's nothing to add.
@@ -69,64 +68,81 @@ export let addPathsToRequestSource = (schema, source = {}, pathsToAdd = []) => {
   return F.omitBlank({ ...result, addedPaths })
 }
 
-/*
- * Names of all subfields that can be highlighted.
+/**
+ * Returns field's subfields, each mapped to a structure similar to a top level
+ * field.
  */
-let getHighlightSubFieldsNames = (schema) =>
-  _.keys(_.pickBy('highlight', schema.elasticsearch?.subFields))
-
-/*
- * Paths of all group fields and their subfields that can be highlighted.
- */
-export let getHighlightGroupFieldsPaths = _.memoize((schema) => {
-  let subFieldsNames = getHighlightSubFieldsNames(schema)
-  return _.flatMap((field) => {
-    let copy_to = field.elasticsearch?.mapping?.copy_to
-    if (_.isEmpty(copy_to)) return []
-    let subFieldTuples = [...new CartesianProduct(copy_to, subFieldsNames)]
-    let product = [...copy_to, ..._.map(_.join('.'), subFieldTuples)]
-    return product
-  }, schema.fields)
-}, _.get('elasticsearch.index'))
-
-let isGroupFieldPath = _.curry((schema, path) =>
-  _.find(_.eq(path), getHighlightGroupFieldsPaths(schema))
-)
-
-/*
- * Object of all fields and their subfields that can be highlighted.
- */
-export let getAllHighlightFields = _.memoize((schema) => {
-  let subFieldsNames = getHighlightSubFieldsNames(schema)
-  return F.reduceIndexed(
-    (acc, field, path) => {
-      if (!isLeafField(field) || isGroupFieldPath(schema, path)) {
-        return acc
-      }
-      acc[path] = field
-      let subFields = _.pick(
-        subFieldsNames,
-        field.elasticsearch?.mapping?.fields
-      )
-      for (let name in subFields) {
-        acc[`${path}.${name}`] = F.omitBlank({
-          subType: field.subType,
-          elasticsearch: F.omitBlank({
-            mapping: F.omitBlank({
-              ...subFields[name],
-              copy_to: _.map(
-                (path) => `${path}.${name}`,
-                field.elasticsearch.mapping?.copy_to
-              ),
-            }),
+let getFieldSubFields = (field) =>
+  F.mapValuesIndexed(
+    (subField, subFieldName) =>
+      F.omitBlank({
+        // Reuse the parent multi-field `subType` so that we can generate the
+        // correct highlighting configuration.
+        subType: field.subType,
+        elasticsearch: F.omitBlank({
+          mapping: F.omitBlank({
+            ...subField,
+            copy_to: _.map(
+              (path) => `${path}.${subFieldName}`,
+              field.elasticsearch.mapping?.copy_to
+            ),
           }),
-        })
-      }
-      return acc
-    },
+        }),
+      }),
+    field.elasticsearch?.mapping?.fields
+  )
+
+/**
+ * Returns object of all subfields in a schema.
+ */
+let getSchemaSubFields = (schema) =>
+  F.reduceIndexed(
+    (acc, field, path) =>
+      F.mergeOn(
+        acc,
+        _.mapKeys((k) => `${path}.${k}`, getFieldSubFields(field))
+      ),
     {},
     schema.fields
   )
+
+/**
+ * Returns object of all group fields and their subfields in a schema.
+ */
+let getSchemaGroupFields = _.memoize((schema) => {
+  let groupFields = _.pick(
+    _.uniq(
+      _.flatMap(
+        (field) => field.elasticsearch?.mapping?.copy_to ?? [],
+        schema.fields
+      )
+    ),
+    schema.fields
+  )
+  return {
+    ...groupFields,
+    ...getSchemaSubFields({ fields: groupFields }),
+  }
+}, _.get('elasticsearch.index'))
+
+/*
+ * Return object of all fields and their subfields that can be highlighted.
+ */
+export let getAllHighlightFields = _.memoize((schema) => {
+  let groupFields = getSchemaGroupFields(schema)
+
+  let canHighlightField = (field, path) =>
+    // Only highlight text fields.
+    getFieldType(field) === 'text' &&
+    // Omit group fields from highlighting. We assume users want to
+    // highlight fields that were copied over instead of the group fields
+    // themselves.
+    !_.has(path, groupFields)
+
+  return F.pickByIndexed(canHighlightField, {
+    ...schema.fields,
+    ...getSchemaSubFields(schema),
+  })
 }, _.get('elasticsearch.index'))
 
 let collectKeysAndValues = (f, coll) =>
@@ -146,8 +162,10 @@ let blobConfiguration = {
  * Get configuration for highlight fields to send in the elastic request.
  */
 export let getRequestHighlightFields = (schema, node) => {
+  let groupFields = getSchemaGroupFields(schema)
+
   let groupFieldsInQuery = collectKeysAndValues(
-    isGroupFieldPath(schema),
+    F.getIn(groupFields),
     node._meta?.relevantFilters
   )
 
