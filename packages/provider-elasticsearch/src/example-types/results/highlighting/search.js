@@ -49,7 +49,9 @@ export let searchWithHighlights = (node, search, schema) => async (body) => {
   )
 
   for (let hit of response.hits.hits) {
-    hit.highlight = getResponseHighlight(schema, hit, tags, nestedPathsMap)
+    if (hit.highlight) {
+      hit.highlight = getResponseHighlight(schema, hit, tags, nestedPathsMap)
+    }
     removePathsFromSource(schema, hit, addedPaths)
     mergeHighlightsOnSource(schema, hit)
   }
