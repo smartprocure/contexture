@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.27.1
+
+### Patch Changes
+
+- bb727452: Do not set empty highlights on hit if there are none.
+
 ## 1.27.0
 
 ### Minor Changes
