@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.59.1
+
+### Patch Changes
+
+- b0f4c7e9: Bump futil and add changeset
+- Updated dependencies [b0f4c7e9]
+  - contexture@0.12.20
+
 ## 2.59.0
 
 ### Minor Changes
