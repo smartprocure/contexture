@@ -95,16 +95,19 @@ let getFieldSubFields = (field) =>
 /**
  * Returns object of all subfields in a schema.
  */
-let getSchemaSubFields = (schema) =>
-  F.reduceIndexed(
-    (acc, field, path) =>
-      F.mergeOn(
-        acc,
-        _.mapKeys((k) => `${path}.${k}`, getFieldSubFields(field))
-      ),
-    {},
-    schema.fields
-  )
+let getSchemaSubFields = _.memoize(
+  (schema) =>
+    F.reduceIndexed(
+      (acc, field, path) => {
+        let subFields = getFieldSubFields(field)
+        for (let k in subFields) acc[`${path}.${k}`] = subFields[k]
+        return acc
+      },
+      {},
+      schema.fields
+    ),
+  _.get('elasticsearch.index')
+)
 
 /**
  * Returns object of all group fields and their subfields in a schema.
@@ -148,7 +151,7 @@ export let getAllHighlightFields = _.memoize((schema) => {
 let collectKeysAndValues = (f, coll) =>
   F.reduceTree()(
     (acc, val, key) =>
-      f(val) ? F.push(val, acc) : f(key) ? F.push(key, acc) : acc,
+      f(val) ? F.pushOn(acc, val) : f(key) ? F.pushOn(acc, key) : acc,
     [],
     coll
   )
