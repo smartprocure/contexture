@@ -7803,7 +7803,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "contexture-client@workspace:packages/client"
   dependencies:
-    futil: ^1.76.2
+    futil: ^1.76.3
     lodash: ^4.17.15
     mobx: ^4.3.1
   languageName: unknown
@@ -7818,7 +7818,7 @@ __metadata:
     agentkeepalive: ^4.1.4
     contexture: ^0.12.19
     debug: ^4.3.1
-    futil: ^1.76.2
+    futil: ^1.76.3
     js-combinatorics: ^2.1.1
     json-stable-stringify: ^1.0.1
     lodash: ^4.17.4
@@ -7834,7 +7834,7 @@ __metadata:
   resolution: "contexture-export@workspace:packages/export"
   dependencies:
     contexture-client: ^2.53.4
-    futil: ^1.76.2
+    futil: ^1.76.3
     lodash: ^4.17.21
     minimal-csv-formatter: ^1.0.15
   languageName: unknown
@@ -7847,7 +7847,7 @@ __metadata:
     "@elastic/datemath": ^2.3.0
     contexture: ^0.12.19
     debug: ^4.3.1
-    futil: ^1.76.2
+    futil: ^1.76.3
     lodash: ^4.17.4
     moment: ^2.18.1
     moment-timezone: ^0.5.28
@@ -7900,7 +7900,7 @@ __metadata:
     emoji-datasource: ^5.0.1
     eslint-plugin-react: ^7.32.0
     eslint-plugin-storybook: ^0.6.14
-    futil: ^1.76.2
+    futil: ^1.76.3
     lodash: ^4.17.15
     material-ui-chip-input: ^1.0.0
     mobx: ^4.3.1
@@ -7936,7 +7936,7 @@ __metadata:
   dependencies:
     "@elastic/datemath": ^5.0.3
     date-fns: ^2.11.1
-    futil: ^1.76.2
+    futil: ^1.76.3
     lodash: ^4.17.21
     mockdate: ^3.0.5
     moment: ^2.24.0
@@ -10121,13 +10121,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"futil@npm:^1.76.2":
-  version: 1.76.2
-  resolution: "futil@npm:1.76.2"
+"futil@npm:^1.76.3":
+  version: 1.76.3
+  resolution: "futil@npm:1.76.3"
   dependencies:
     "@babel/polyfill": ^7.0.0
     lodash: ^4.17.4
-  checksum: 3d10bf6bd6fa57763edd889fddc49a85477b1fa7c6b5085ad46644b426a758c758b928f58565ce7e968d6cb3ab83b9102cb174988db6751183874ad39e739d37
+  checksum: 9f881d35d733c9bf0d8e8b32ffa65a96e55ab43871ea23ffed4ed66b7236daea5e5f3046791d94dc3ea79da095a2a2570a5740b73360f8f8d057ae9c85c8e80d
   languageName: node
   linkType: hard
 
