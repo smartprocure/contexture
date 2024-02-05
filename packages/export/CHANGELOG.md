@@ -1,5 +1,13 @@
 ﻿# Changelog
 
+## 1.1.2
+
+### Patch Changes
+
+- b0f4c7e9: Bump futil and add changeset
+- Updated dependencies [b0f4c7e9]
+  - contexture-client@2.53.6
+
 ## 1.1.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.27.2
+
+### Patch Changes
+
+- b0f4c7e9: Bump futil and add changeset
+
 ## 1.27.1
 
 ### Patch Changes

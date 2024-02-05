@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.26.19
+
+### Patch Changes
+
+- b0f4c7e9: Bump futil and add changeset
+
 ## 0.26.18
 
 ### Patch Changes
