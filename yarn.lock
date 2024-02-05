@@ -1723,6 +1723,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/polyfill@npm:^7.0.0":
+  version: 7.12.1
+  resolution: "@babel/polyfill@npm:7.12.1"
+  dependencies:
+    core-js: ^2.6.5
+    regenerator-runtime: ^0.13.4
+  checksum: 3f59a9d85a41b390b044a1be13e11ae6d8efbfcf4e07217964585c7cef337b828eecfc5e164083227189146d2b6efc1affae8f59c831438eb40b848ab6fe5f39
+  languageName: node
+  linkType: hard
+
 "@babel/preset-env@npm:^7.22.20, @babel/preset-env@npm:^7.22.9":
   version: 7.22.20
   resolution: "@babel/preset-env@npm:7.22.20"
@@ -7793,7 +7803,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "contexture-client@workspace:packages/client"
   dependencies:
-    futil: ^1.76.0
+    futil: ^1.76.2
     lodash: ^4.17.15
     mobx: ^4.3.1
   languageName: unknown
@@ -7808,7 +7818,7 @@ __metadata:
     agentkeepalive: ^4.1.4
     contexture: ^0.12.19
     debug: ^4.3.1
-    futil: ^1.76.0
+    futil: ^1.76.2
     js-combinatorics: ^2.1.1
     json-stable-stringify: ^1.0.1
     lodash: ^4.17.4
@@ -7824,7 +7834,7 @@ __metadata:
   resolution: "contexture-export@workspace:packages/export"
   dependencies:
     contexture-client: ^2.53.4
-    futil: ^1.76.0
+    futil: ^1.76.2
     lodash: ^4.17.21
     minimal-csv-formatter: ^1.0.15
   languageName: unknown
@@ -7837,7 +7847,7 @@ __metadata:
     "@elastic/datemath": ^2.3.0
     contexture: ^0.12.19
     debug: ^4.3.1
-    futil: ^1.76.0
+    futil: ^1.76.2
     lodash: ^4.17.4
     moment: ^2.18.1
     moment-timezone: ^0.5.28
@@ -7890,7 +7900,7 @@ __metadata:
     emoji-datasource: ^5.0.1
     eslint-plugin-react: ^7.32.0
     eslint-plugin-storybook: ^0.6.14
-    futil: ^1.76.0
+    futil: ^1.76.2
     lodash: ^4.17.15
     material-ui-chip-input: ^1.0.0
     mobx: ^4.3.1
@@ -7926,7 +7936,7 @@ __metadata:
   dependencies:
     "@elastic/datemath": ^5.0.3
     date-fns: ^2.11.1
-    futil: ^1.76.0
+    futil: ^1.76.2
     lodash: ^4.17.21
     mockdate: ^3.0.5
     moment: ^2.24.0
@@ -7978,7 +7988,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^2.4.0, core-js@npm:^2.5.0":
+"core-js@npm:^2.4.0, core-js@npm:^2.5.0, core-js@npm:^2.6.5":
   version: 2.6.12
   resolution: "core-js@npm:2.6.12"
   checksum: 44fa9934a85f8c78d61e0c8b7b22436330471ffe59ec5076fe7f324d6e8cf7f824b14b1c81ca73608b13bdb0fef035bd820989bf059767ad6fa13123bb8bd016
@@ -10111,13 +10121,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"futil@npm:^1.76.0":
-  version: 1.76.0
-  resolution: "futil@npm:1.76.0"
+"futil@npm:^1.76.2":
+  version: 1.76.2
+  resolution: "futil@npm:1.76.2"
   dependencies:
-    babel-polyfill: ^6.23.0
+    "@babel/polyfill": ^7.0.0
     lodash: ^4.17.4
-  checksum: a095c7ff767f5a2e1160c104067e9c170ef121dc829d29ed723890bc3abac2a8524d99c5953cd3a3caee44d966d68c8ab05c32bb2fcbf8fcd2f6725154a009b3
+  checksum: 3d10bf6bd6fa57763edd889fddc49a85477b1fa7c6b5085ad46644b426a758c758b928f58565ce7e968d6cb3ab83b9102cb174988db6751183874ad39e739d37
   languageName: node
   linkType: hard
 
@@ -15054,7 +15064,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:^0.13.11, regenerator-runtime@npm:^0.13.9":
+"regenerator-runtime@npm:^0.13.11, regenerator-runtime@npm:^0.13.4, regenerator-runtime@npm:^0.13.9":
   version: 0.13.11
   resolution: "regenerator-runtime@npm:0.13.11"
   checksum: 27481628d22a1c4e3ff551096a683b424242a216fee44685467307f14d58020af1e19660bf2e26064de946bad7eff28950eae9f8209d55723e2d9351e632bbb4
