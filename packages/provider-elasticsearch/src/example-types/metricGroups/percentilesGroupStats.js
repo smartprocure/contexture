@@ -4,10 +4,13 @@ import { pickSafeNumbers } from '../../utils/futil.js'
 import { groupStats } from './groupStatUtils.js'
 
 // [1, 2, 3] -> [{to: 1}, {from: 1, to: 2}, {from: 2, to: 3}, {from: 3}]
-let boundariesToRanges = _.flow(
-  F.mapIndexed((to, i, list) => F.compactObject({ from: list[i - 1], to })),
-  (arr) => F.pushOn(arr, { from: _.last(arr).to })
-)
+let boundariesToRanges = (boundaries) => {
+  let ranges = F.mapIndexed(
+    (to, i, list) => F.compactObject({ from: list[i - 1], to }),
+    boundaries
+  )
+  return [...ranges, { from: _.last(ranges)?.to }]
+}
 
 let drilldownToRange = (drilldown) => {
   let [gte, lt] = _.split('-', drilldown)

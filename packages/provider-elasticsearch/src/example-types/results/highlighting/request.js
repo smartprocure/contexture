@@ -95,19 +95,16 @@ let getFieldSubFields = (field) =>
 /**
  * Returns object of all subfields in a schema.
  */
-let getSchemaSubFields = _.memoize(
-  (schema) =>
-    F.reduceIndexed(
-      (acc, field, path) => {
-        let subFields = getFieldSubFields(field)
-        for (let k in subFields) acc[`${path}.${k}`] = subFields[k]
-        return acc
-      },
-      {},
-      schema.fields
-    ),
-  _.get('elasticsearch.index')
-)
+let getSchemaSubFields = _.memoize((schema) => {
+  let acc = {}
+  for (let path in schema.fields) {
+    let subFields = getFieldSubFields(schema.fields[path])
+    for (let k in subFields) {
+      acc[`${path}.${k}`] = subFields[k]
+    }
+  }
+  return acc
+}, _.get('elasticsearch.index'))
 
 /**
  * Returns object of all group fields and their subfields in a schema.
@@ -148,13 +145,14 @@ export let getAllHighlightFields = _.memoize((schema) => {
   })
 }, _.get('elasticsearch.index'))
 
-let collectKeysAndValues = (f, coll) =>
-  F.reduceTree()(
-    (acc, val, key) =>
-      f(val) ? F.pushOn(acc, val) : f(key) ? F.pushOn(acc, key) : acc,
-    [],
-    coll
-  )
+let collectKeysAndValues = (predicate, coll) => {
+  let acc = []
+  F.walk()((val, key) => {
+    if (predicate(val)) acc.push(val)
+    else if (predicate(key)) acc.push(key)
+  })(coll)
+  return acc
+}
 
 let blobConfiguration = {
   fragment_size: 250,
