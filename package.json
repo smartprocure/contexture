@@ -9,7 +9,8 @@
     "foreach": "yarn workspaces foreach --no-private --parallel --verbose",
     "version": "yarn changeset version && yarn install --mode=update-lockfile",
     "publish": "yarn foreach npm publish --tolerate-republish",
-    "postinstall": "yarn foreach run prepack"
+    "postinstall": "yarn foreach run prepack",
+    "test": "NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-vm-modules yarn jest ."
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
