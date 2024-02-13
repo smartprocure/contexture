@@ -251,7 +251,7 @@ describe('getRequestHighlightFields()', () => {
         'city.street': { elasticsearch: { dataType: 'text' } },
       },
     }
-    let node = {}
+    let node = { highlight: { highlightOtherMatches: true } }
     let actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
       state: {},
@@ -278,7 +278,7 @@ describe('getRequestHighlightFields()', () => {
         },
       },
     }
-    let node = {}
+    let node = { highlight: { highlightOtherMatches: true } }
     let actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
       state: {},
@@ -313,7 +313,7 @@ describe('getRequestHighlightFields()', () => {
         },
       },
     }
-    let node = {}
+    let node = { highlight: { highlightOtherMatches: true } }
     let actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
       state: {},
@@ -341,7 +341,7 @@ describe('getRequestHighlightFields()', () => {
         },
       },
     }
-    let node = {}
+    let node = { highlight: { highlightOtherMatches: true } }
     let actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
       state: {
@@ -389,6 +389,7 @@ describe('getRequestHighlightFields()', () => {
       _meta: {
         relevantFilters: query('address'),
       },
+      highlight: { highlightOtherMatches: true },
     }
     let actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
@@ -450,6 +451,7 @@ describe('getRequestHighlightFields()', () => {
       _meta: {
         relevantFilters: query('address.subfield'),
       },
+      highlight: { highlightOtherMatches: true },
     }
     let actual = getRequestHighlightFields(schema, node)
     expect(actual).toEqual({
