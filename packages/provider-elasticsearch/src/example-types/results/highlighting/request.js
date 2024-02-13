@@ -95,7 +95,7 @@ let getFieldSubFields = (field) =>
 /**
  * Returns object of all subfields in a schema.
  */
-let getSchemaSubFields = _.memoize((schema) => {
+let getSchemaSubFields = (schema) => {
   let acc = {}
   for (let path in schema.fields) {
     let subFields = getFieldSubFields(schema.fields[path])
@@ -104,12 +104,12 @@ let getSchemaSubFields = _.memoize((schema) => {
     }
   }
   return acc
-}, _.get('elasticsearch.index'))
+}
 
 /**
  * Returns object of all group fields and their subfields in a schema.
  */
-let getSchemaGroupFields = _.memoize((schema) => {
+let getSchemaGroupFields = (schema) => {
   let groupFields = _.pick(
     _.uniq(
       _.flatMap(
@@ -123,12 +123,12 @@ let getSchemaGroupFields = _.memoize((schema) => {
     ...groupFields,
     ...getSchemaSubFields({ fields: groupFields }),
   }
-}, _.get('elasticsearch.index'))
+}
 
 /*
  * Return object of all fields and their subfields that can be highlighted.
  */
-export let getAllHighlightFields = _.memoize((schema) => {
+export let getAllHighlightFields = (schema) => {
   let groupFields = getSchemaGroupFields(schema)
 
   let canHighlightField = (field, path) =>
@@ -143,7 +143,7 @@ export let getAllHighlightFields = _.memoize((schema) => {
     ...schema.fields,
     ...getSchemaSubFields(schema),
   })
-}, _.get('elasticsearch.index'))
+}
 
 let collectKeysAndValues = (predicate, coll) => {
   let acc = []
@@ -191,6 +191,13 @@ export let getRequestHighlightFields = (schema, node) => {
         ...(isBlobField(field) && blobConfiguration),
         highlight_query: getHighlightQuery(field, path),
       }),
-    getAllHighlightFields(schema)
+    // TODO: `highlightOtherMatches` is an undocumented configuration value that we
+    // are currently using to work around performance issues when highlighting
+    // fields not included in the node.
+    getAllHighlightFields(
+      node.highlight?.highlightOtherMatches
+        ? schema
+        : { ...schema, fields: _.pick(node.include, schema.fields) }
+    )
   )
 }
