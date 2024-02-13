@@ -109,7 +109,7 @@ let getSchemaSubFields = (schema) => {
 /**
  * Returns object of all group fields and their subfields in a schema.
  */
-let getSchemaGroupFields = (schema) => {
+let getSchemaGroupFields = _.memoize((schema) => {
   let groupFields = _.pick(
     _.uniq(
       _.flatMap(
@@ -123,12 +123,12 @@ let getSchemaGroupFields = (schema) => {
     ...groupFields,
     ...getSchemaSubFields({ fields: groupFields }),
   }
-}
+}, _.get('elasticsearch.index'))
 
 /*
  * Return object of all fields and their subfields that can be highlighted.
  */
-export let getAllHighlightFields = (schema) => {
+export let getAllHighlightFields = _.memoize((schema) => {
   let groupFields = getSchemaGroupFields(schema)
 
   let canHighlightField = (field, path) =>
@@ -143,7 +143,7 @@ export let getAllHighlightFields = (schema) => {
     ...schema.fields,
     ...getSchemaSubFields(schema),
   })
-}
+}, _.get('elasticsearch.index'))
 
 let collectKeysAndValues = (predicate, coll) => {
   let acc = []
@@ -185,19 +185,27 @@ export let getRequestHighlightFields = (schema, node) => {
     }
   }
 
+  let highlightFields = getAllHighlightFields(schema)
+
+  // TODO: `highlightOtherMatches` is an undocumented configuration value that we
+  // are currently using to work around performance issues when highlighting
+  // fields not included in the node.
+  if (!node.highlight?.highlightOtherMatches) {
+    let subFields = getSchemaSubFields({
+      fields: _.pick(node.include, schema.fields),
+    })
+    highlightFields = _.pick(
+      _.uniq([...node.include, ..._.keys(subFields)]),
+      highlightFields
+    )
+  }
+
   return F.mapValuesIndexed(
     (field, path) =>
       F.omitBlank({
         ...(isBlobField(field) && blobConfiguration),
         highlight_query: getHighlightQuery(field, path),
       }),
-    // TODO: `highlightOtherMatches` is an undocumented configuration value that we
-    // are currently using to work around performance issues when highlighting
-    // fields not included in the node.
-    getAllHighlightFields(
-      node.highlight?.highlightOtherMatches
-        ? schema
-        : { ...schema, fields: _.pick(node.include, schema.fields) }
-    )
+    highlightFields
   )
 }
