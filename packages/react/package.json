@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.59.1",
+  "version": "2.59.2",
   "description": "React components for building contexture interfaces",
   "type": "module",
   "exports": {
@@ -58,8 +58,8 @@
     "@storybook/react-webpack5": "^7.4.5",
     "@storybook/storybook-deployer": "^2.8.16",
     "chromatic": "^6.23.0",
-    "contexture-client": "^2.53.6",
-    "contexture-elasticsearch": "^1.27.2",
+    "contexture-client": "^2.53.7",
+    "contexture-elasticsearch": "^1.27.3",
     "elasticsearch-browser": "^14.2.2",
     "emoji-datasource": "^5.0.1",
     "eslint-plugin-react": "^7.32.0",
@@ -79,7 +79,7 @@
   },
   "dependencies": {
     "@chakra-ui/react-use-outside-click": "^2.1.0",
-    "contexture": "^0.12.20",
+    "contexture": "^0.12.21",
     "futil": "^1.76.4",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.59.2
+
+### Patch Changes
+
+- 5b45757d: Add temporary "highlightOtherMatches" flag (default false) to work around performance problems
+- Updated dependencies [5b45757d]
+  - contexture@0.12.21
+
 ## 2.59.1
 
 ### Patch Changes
