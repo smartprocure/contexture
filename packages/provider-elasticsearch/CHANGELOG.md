@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.27.3
+
+### Patch Changes
+
+- 5b45757d: Add temporary "highlightOtherMatches" flag (default false) to work around performance problems
+- 1237b3ab: Low-hanging perf improvements in elasticsearch highlighting
+
 ## 1.27.2
 
 ### Patch Changes

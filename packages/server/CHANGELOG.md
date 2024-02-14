@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.21
+
+### Patch Changes
+
+- 5b45757d: Add temporary "highlightOtherMatches" flag (default false) to work around performance problems
+
 ## 0.12.20
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 ﻿# Changelog
 
+## 1.1.3
+
+### Patch Changes
+
+- 5b45757d: Add temporary "highlightOtherMatches" flag (default false) to work around performance problems
+- Updated dependencies [5b45757d]
+  - contexture-client@2.53.7
+
 ## 1.1.2
 
 ### Patch Changes
