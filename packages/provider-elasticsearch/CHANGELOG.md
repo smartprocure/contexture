@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.27.4
+
+### Patch Changes
+
+- 05130fea: Fix error when there are no results node includes
+
 ## 1.27.3
 
 ### Patch Changes
