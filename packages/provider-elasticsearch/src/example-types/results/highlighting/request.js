@@ -190,7 +190,7 @@ export let getRequestHighlightFields = (schema, node) => {
   // TODO: `highlightOtherMatches` is an undocumented configuration value that we
   // are currently using to work around performance issues when highlighting
   // fields not included in the node.
-  if (!node.highlight?.highlightOtherMatches) {
+  if (!node.highlight?.highlightOtherMatches && _.isArray(node.include)) {
     let subFields = getSchemaSubFields({
       fields: _.pick(node.include, schema.fields),
     })
