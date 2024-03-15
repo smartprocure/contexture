@@ -43,3 +43,8 @@ export let splitTagOnComma = _.flow(
 export let alphaNumericRegEx =
   // eslint-disable-next-line no-control-regex
   /[^\x00-\x2C\x2E-\x2F\x3a-\x40\x5b-\x60\x7b-\x7f]+/g
+
+// Same as above but allowing dots
+export let alphaNumericRegExWithDots =
+  // eslint-disable-next-line no-control-regex
+  /[^\x00-\x2C\x2F\x3a-\x40\x5b-\x60\x7b-\x7f]+/g
