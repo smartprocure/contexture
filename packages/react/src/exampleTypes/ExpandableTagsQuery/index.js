@@ -136,7 +136,7 @@ let TagsWrapper = observer(
     popoverOffsetY,
     theme: { Icon, TagsInput, Tag, Popover },
     joinOptions,
-    // Allow tag keywords to contain dots in them if user is searching for exact
+    // Allow tag keywords to contain dots in them if the user is searching for exact
     // words instead of their variations.
     wordsMatchPattern = node.exact
       ? alphaNumericRegExWithDots
