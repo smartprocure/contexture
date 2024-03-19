@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.59.3
+
+### Patch Changes
+
+- 16869b8a: Allow dots in keywords tags
+
+  It is very common for users to search for keywords with dots in them when matching on exact words
+
 ## 2.59.2
 
 ### Patch Changes
