@@ -4,11 +4,7 @@ import { observable } from '../utils/mobx.js'
 import { observer, inject } from 'mobx-react'
 import Flex from './Flex.js'
 import DefaultTag from './Tag.js'
-import {
-  sanitizeTagWords,
-  splitTagOnComma,
-  alphaNumericRegEx,
-} from './utils.js'
+import { sanitizeTagWords, splitTagOnComma, wordRegex } from './utils.js'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
@@ -28,7 +24,7 @@ let TagsInput = forwardRef(
       onTagClick = _.noop,
       maxWordsPerTag = 100,
       maxCharsPerTagWord = 100,
-      wordsMatchPattern = alphaNumericRegEx,
+      wordsMatchPattern = wordRegex,
       sanitizeTags = true,
       Tag = DefaultTag,
       ...props

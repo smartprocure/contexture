@@ -18,10 +18,7 @@ import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
 import { sanitizeTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
 import KeywordGenerations from './KeywordGenerations.js'
-import {
-  alphaNumericRegEx,
-  alphaNumericRegExWithDots,
-} from '../../greyVest/utils.js'
+import { wordRegex, wordRegexWithDot } from '../../greyVest/utils.js'
 
 let innerHeightLimit = 40
 
@@ -138,9 +135,7 @@ let TagsWrapper = observer(
     joinOptions,
     // Allow tag keywords to contain dots in them if user is searching for exact
     // words instead of their variations.
-    wordsMatchPattern = node.exact
-      ? alphaNumericRegExWithDots
-      : alphaNumericRegEx,
+    wordsMatchPattern = node.exact ? wordRegexWithDot : wordRegex,
     sanitizeTags = true,
     splitCommas = true,
     maxTags = 1000,

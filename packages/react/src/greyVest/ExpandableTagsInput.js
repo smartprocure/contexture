@@ -2,11 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
 import { Tag as DefaultTag, Flex } from './index.js'
-import {
-  sanitizeTagWords,
-  splitTagOnComma,
-  alphaNumericRegEx,
-} from './utils.js'
+import { sanitizeTagWords, splitTagOnComma, wordRegex } from './utils.js'
 
 export let Tags = ({
   reverse = false,
@@ -54,7 +50,7 @@ let ExpandableTagsInput = ({
   onInputChange = _.noop,
   maxWordsPerTag = 100,
   maxCharsPerTagWord = 100,
-  wordsMatchPattern = alphaNumericRegEx,
+  wordsMatchPattern = wordRegex,
   onTagClick = _.noop,
   sanitizeTags = true,
   Tag = DefaultTag,
