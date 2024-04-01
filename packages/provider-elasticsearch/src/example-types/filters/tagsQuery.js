@@ -29,11 +29,16 @@ let addQuotesAndDistance = _.curry((tag, text) => {
   return text + (tag.misspellings ? '~1' : '')
 })
 
-// https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters
 let replaceReservedChars = _.flow(
   _.toString,
-  // Replace characters with white space ` `
-  _.replace(/([+\-=&|!(){}[\]^"~*?:\\/<>;,$'])/g, ' ')
+  // Most of these characters are `query_string` reserved characters. See
+  // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters
+  // The characters `;,$'&` are not reserved but they get stripped out by our
+  // analyzers so there's no point in sending them.
+  _.replace(/([&|!(){}[\]^"~*?\\<>;,$'])/g, ' '),
+  // These characters are not stripped out by our analyzers but they are
+  // `query_string` reserved characters so we need to escape them.
+  _.replace(/([+\-=:/])/g, '\\$1')
 )
 
 let tagToQueryString = (tag) => {

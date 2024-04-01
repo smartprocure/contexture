@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
 import { Tag as DefaultTag, Flex } from './index.js'
-import { sanitizeTagWords, splitTagOnComma, wordRegex } from './utils.js'
+import { createTags } from './utils.js'
 
 export let Tags = ({
   reverse = false,
@@ -38,7 +38,7 @@ let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
 let ExpandableTagsInput = ({
   tags,
-  addTags,
+  addTags: setTags,
   removeTag,
   submit = _.noop,
   tagStyle,
@@ -48,29 +48,17 @@ let ExpandableTagsInput = ({
   autoFocus,
   onBlur = _.noop,
   onInputChange = _.noop,
-  maxWordsPerTag = 100,
-  maxCharsPerTagWord = 100,
-  wordsMatchPattern = wordRegex,
   onTagClick = _.noop,
-  sanitizeTags = true,
+  sanitizeTagFn,
   Tag = DefaultTag,
   ...props
 }) => {
-  let sanitizeTagFn = sanitizeTagWords(
-    wordsMatchPattern,
-    maxWordsPerTag,
-    maxCharsPerTagWord
-  )
-
-  addTags = _.flow(
-    _.trim,
-    (tags) => (splitCommas ? splitTagOnComma(tags) : _.castArray(tags)),
-    (tags) => (sanitizeTags ? _.map(sanitizeTagFn, tags) : tags),
-    _.difference(_, tags),
-    addTags
-  )
-
   let [currentInput, setCurrentInput] = React.useState('')
+
+  let addTags = (input) => {
+    let newTags = createTags({ input, splitCommas, sanitizeTagFn })
+    setTags(_.difference(newTags, tags))
+  }
 
   return (
     <div style={style}>

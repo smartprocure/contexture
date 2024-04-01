@@ -18,7 +18,7 @@ import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
 import { sanitizeTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
 import KeywordGenerations from './KeywordGenerations.js'
-import { wordRegex, wordRegexWithDot } from '../../greyVest/utils.js'
+import { sanitizeQueryStringTag } from '../../greyVest/utils.js'
 
 let innerHeightLimit = 40
 
@@ -133,10 +133,6 @@ let TagsWrapper = observer(
     popoverOffsetY,
     theme: { Icon, TagsInput, Tag, Popover },
     joinOptions,
-    // Allow tag keywords to contain dots in them if the user is searching for exact
-    // words instead of their variations.
-    wordsMatchPattern = node.exact ? wordRegexWithDot : wordRegex,
-    sanitizeTags = true,
     splitCommas = true,
     maxTags = 1000,
     hasPopover,
@@ -195,9 +191,8 @@ let TagsWrapper = observer(
           <GridItem height={2} place="center stretch">
             <TagsInput
               splitCommas={splitCommas}
-              sanitizeTags={sanitizeTags}
+              sanitizeTagFn={sanitizeQueryStringTag}
               maxTags={maxTags}
-              wordsMatchPattern={wordsMatchPattern}
               tags={
                 node.tags?.length > 0
                   ? _.map(tagValueField, node.tags)

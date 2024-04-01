@@ -1,10 +1,9 @@
 import React, { forwardRef } from 'react'
 import _ from 'lodash/fp.js'
-import { observable } from '../utils/mobx.js'
-import { observer, inject } from 'mobx-react'
+import { observer } from 'mobx-react'
 import Flex from './Flex.js'
 import DefaultTag from './Tag.js'
-import { sanitizeTagWords, splitTagOnComma, wordRegex } from './utils.js'
+import { createTags } from './utils.js'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
@@ -12,7 +11,7 @@ let TagsInput = forwardRef(
   (
     {
       tags,
-      addTags,
+      addTags: setTags,
       removeTag,
       submit = _.noop,
       tagStyle,
@@ -22,10 +21,7 @@ let TagsInput = forwardRef(
       onBlur = _.noop,
       onInputChange = _.noop,
       onTagClick = _.noop,
-      maxWordsPerTag = 100,
-      maxCharsPerTagWord = 100,
-      wordsMatchPattern = wordRegex,
-      sanitizeTags = true,
+      sanitizeTagFn,
       Tag = DefaultTag,
       ...props
     },
@@ -34,19 +30,10 @@ let TagsInput = forwardRef(
     let containerRef = React.useRef()
     let [currentInput, setCurrentInput] = React.useState('')
 
-    let sanitizeTagFn = sanitizeTagWords(
-      wordsMatchPattern,
-      maxWordsPerTag,
-      maxCharsPerTagWord
-    )
-
-    addTags = _.flow(
-      _.trim,
-      (tags) => (splitCommas ? splitTagOnComma(tags) : _.castArray(tags)),
-      (tags) => (sanitizeTags ? _.map(sanitizeTagFn, tags) : tags),
-      _.difference(_, tags),
-      addTags
-    )
+    let addTags = (input) => {
+      let newTags = createTags({ input, splitCommas, sanitizeTagFn })
+      setTags(_.difference(newTags, tags))
+    }
 
     return (
       <div className={'tags-input'} ref={containerRef} style={{ ...style }}>
@@ -117,20 +104,5 @@ let TagsInput = forwardRef(
     )
   }
 )
-
-// Just uses an internal observable array
-export let MockTagsInput = inject(() => {
-  let tags = observable([])
-  return {
-    tags,
-    addTags(tag) {
-      tags.push(tag)
-    },
-    removeTag(tag) {
-      tags = _.without(tag, tags)
-    },
-  }
-})(TagsInput)
-MockTagsInput.displayName = 'MockTagsInput'
 
 export default observer(TagsInput)
