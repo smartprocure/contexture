@@ -16,7 +16,7 @@ let maxCharsPerTagWord = 100
 //
 // If in doubt, make a request to the `/{index}/analyze` elasticsearch endpoint
 // to see exactly which characters get stripped out of text.
-let wordRegex = /[^|><!(){}[\]^"~*?\\;,$']+/g
+let wordRegex = /[^|!(){}[\]^"~*?\\<>;,$']+/g
 let words = _.words.convert({ fixed: false })
 
 // Convert string to words, take the first maxWordsPerTag, truncate them and convert back to string

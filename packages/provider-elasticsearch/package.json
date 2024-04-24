@@ -36,6 +36,7 @@
   "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/provider-elasticsearch",
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
+    "contexture-util": "workspace:^",
     "debug": "^4.3.1",
     "futil": "^1.76.4",
     "js-combinatorics": "^2.1.1",

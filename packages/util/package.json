@@ -1,0 +1,34 @@
+{
+  "name": "contexture-util",
+  "version": "0.1.0",
+  "description": "Utilities for contexture packages",
+  "type": "module",
+  "packageManager": "yarn@3.3.1",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./*": {
+      "import": "./dist/esm/*",
+      "require": "./dist/cjs/*"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "node ../../scripts/esbuild.js",
+    "test": "NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-vm-modules yarn run -T jest ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartprocure/contexture.git"
+  },
+  "author": "Alejandro Hernandez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smartprocure/contexture/issues"
+  },
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/common"
+}

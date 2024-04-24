@@ -3,6 +3,7 @@ import F from 'futil'
 import { Permutation } from 'js-combinatorics'
 import { stripLegacySubFields } from '../../utils/fields.js'
 import { sanitizeTagInputs } from '../../utils/keywordGenerations.js'
+import { queryStringCharacterBlacklist } from 'contexture-util/exampleTypes/tagsQuery.js'
 
 let maxTagCount = 100
 
@@ -31,14 +32,10 @@ let addQuotesAndDistance = _.curry((tag, text) => {
 
 let replaceReservedChars = _.flow(
   _.toString,
-  // Most of these characters are `query_string` reserved characters. See
-  // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters
-  // The characters `;,$'&` are not reserved but they get stripped out by our
-  // analyzers so there's no point in sending them.
-  _.replace(/([&|!(){}[\]^"~*?\\<>;,$'])/g, ' '),
+  _.replace(new RegExp(`([${queryStringCharacterBlacklist}])`, 'g'), ' '),
   // These characters are not stripped out by our analyzers but they are
   // `query_string` reserved characters so we need to escape them.
-  _.replace(/([+\-=:/])/g, '\\$1')
+  _.replace(/([&+\-=:/])/g, '\\$1')
 )
 
 let tagToQueryString = (tag) => {
