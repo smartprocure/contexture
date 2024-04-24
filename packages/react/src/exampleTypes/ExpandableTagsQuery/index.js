@@ -16,7 +16,7 @@ import {
 } from '../TagsQuery/utils.js'
 import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
-import { sanitizeTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
+import { sanitizeTagInputs } from 'contexture-util/keywordGenerations.js'
 import KeywordGenerations from './KeywordGenerations.js'
 import { sanitizeQueryStringTag } from '../../greyVest/utils.js'
 

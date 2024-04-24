@@ -24,7 +24,6 @@ await fs.rm('dist', { force: true, recursive: true })
 let entryPoints = glob.sync('src/**/*.js', {
   ignore: ['src/**/*.{test,stories}.js', 'src/**/{test,stories}/**/*'],
 })
-console.log(entryPoints)
 
 // Build project
 

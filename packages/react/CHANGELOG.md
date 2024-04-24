@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.59.4
+
+### Patch Changes
+
+- f3e07ee0: Hide scrollbars from individual filters
+
 ## 2.59.3
 
 ### Patch Changes

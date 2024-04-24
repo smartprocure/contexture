@@ -149,6 +149,11 @@ describe('tagsToQueryString', () => {
       )
     ).toEqual('foo OR bar')
   })
+  it('should ignore empty words', () => {
+    expect(
+      tagsToQueryString([{ word: 'foo' }, { word: '' }, { word: 'bar' }], 'any')
+    ).toEqual('foo OR bar')
+  })
 })
 
 describe('hasValue', () => {

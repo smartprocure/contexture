@@ -1,5 +1,7 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
+import { queryStringCharacterBlacklist } from 'contexture-util/exampleTypes/tagsQuery.js'
+import escapeStringRegexp from 'escape-string-regexp'
 
 export let openBinding = (...lens) => ({
   isOpen: F.view(...lens),
@@ -16,12 +18,15 @@ let maxCharsPerTagWord = 100
 //
 // If in doubt, make a request to the `/{index}/analyze` elasticsearch endpoint
 // to see exactly which characters get stripped out of text.
-let wordRegex = /[^|!(){}[\]^"~*?\\<>;,$']+/g
+let wordRegexp = new RegExp(
+  `[^${escapeStringRegexp(queryStringCharacterBlacklist)}]+`,
+  'g'
+)
 let words = _.words.convert({ fixed: false })
 
 // Convert string to words, take the first maxWordsPerTag, truncate them and convert back to string
 export let sanitizeQueryStringTag = _.flow(
-  (string) => words(string, wordRegex),
+  (string) => words(string, wordRegexp),
   _.take(maxWordsPerTag),
   _.map((word) =>
     _.flow(
@@ -48,5 +53,6 @@ export let createTags = ({ input, splitCommas, sanitizeTagFn }) =>
     _.trim,
     splitCommas ? splitTagOnComma : _.identity,
     _.castArray,
-    sanitizeTagFn ? _.map(sanitizeTagFn) : _.identity
+    sanitizeTagFn ? _.map(sanitizeTagFn) : _.identity,
+    _.compact
   )(input)

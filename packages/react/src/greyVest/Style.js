@@ -106,6 +106,13 @@ export default () => (
         overflow-y: auto;
         max-height: 80vh;
         transition: max-height .3s ease-in;
+        /* Gecko-based browsers */
+        scrollbar-width: none;
+      }
+
+      /* WebKit-based browsers */
+      .gv-expandable-body.expanded::-webkit-scrollbar {
+        display: none;
       }
 
       /* Table */

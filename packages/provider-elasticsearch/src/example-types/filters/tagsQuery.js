@@ -2,8 +2,9 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import { Permutation } from 'js-combinatorics'
 import { stripLegacySubFields } from '../../utils/fields.js'
-import { sanitizeTagInputs } from '../../utils/keywordGenerations.js'
+import { sanitizeTagInputs } from 'contexture-util/keywordGenerations.js'
 import { queryStringCharacterBlacklist } from 'contexture-util/exampleTypes/tagsQuery.js'
+import escapeStringRegexp from 'escape-string-regexp'
 
 let maxTagCount = 100
 
@@ -30,9 +31,14 @@ let addQuotesAndDistance = _.curry((tag, text) => {
   return text + (tag.misspellings ? '~1' : '')
 })
 
+let replaceRegexp = new RegExp(
+  `[${escapeStringRegexp(queryStringCharacterBlacklist)}]`,
+  'g'
+)
+
 let replaceReservedChars = _.flow(
   _.toString,
-  _.replace(new RegExp(`([${queryStringCharacterBlacklist}])`, 'g'), ' '),
+  _.replace(replaceRegexp, ' '),
   // These characters are not stripped out by our analyzers but they are
   // `query_string` reserved characters so we need to escape them.
   _.replace(/([&+\-=:/])/g, '\\$1')
@@ -70,7 +76,7 @@ let limitResultsToCertainTags = _.find('onlyShowTheseResults')
 let tagsToQueryString = (tags, join) =>
   _.flow(
     F.when(limitResultsToCertainTags, _.filter('onlyShowTheseResults')),
-    _.map(tagToQueryString),
+    F.compactMap(tagToQueryString),
     joinTags(join)
   )(tags)
 
