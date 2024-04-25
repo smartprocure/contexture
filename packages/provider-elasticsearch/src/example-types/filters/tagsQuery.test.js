@@ -63,8 +63,15 @@ describe('addQuotesAndDistance', () => {
 describe('replaceReservedChars', () => {
   it('should replace reserved characters with empty space', () => {
     expect(
-      replaceReservedChars('foo: [bar] (baz) - 1 ^ 2 <> 3 !$ 4,5')
-    ).toEqual('foo   bar   baz    1   2    3    4 5')
+      replaceReservedChars(
+        'foo| [bar!] (baz) {1} ^ 2 <> 3 !$ 4,5 ~house *lamp;, me'
+      )
+    ).toEqual('foo   bar    baz   1    2    3    4 5  house  lamp   me')
+  })
+  it('should escape reserved characters', () => {
+    expect(replaceReservedChars('foo+ bar- baz= :house /lamp')).toEqual(
+      'foo\\+ bar\\- baz\\= \\:house \\/lamp'
+    )
   })
 })
 
@@ -140,6 +147,11 @@ describe('tagsToQueryString', () => {
         ],
         'any'
       )
+    ).toEqual('foo OR bar')
+  })
+  it('should ignore empty words', () => {
+    expect(
+      tagsToQueryString([{ word: 'foo' }, { word: '' }, { word: 'bar' }], 'any')
     ).toEqual('foo OR bar')
   })
 })
