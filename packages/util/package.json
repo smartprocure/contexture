@@ -1,6 +1,6 @@
 {
   "name": "contexture-util",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Utilities for contexture packages",
   "type": "module",
   "packageManager": "yarn@3.3.1",

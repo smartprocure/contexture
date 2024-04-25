@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.27.5
+
+### Patch Changes
+
+- 3658ef6a: Allow some special characters in TagsQuery component
+- Updated dependencies
+  - contexture-util@0.1.1
+
 ## 1.27.4
 
 ### Patch Changes

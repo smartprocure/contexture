@@ -7809,7 +7809,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture-elasticsearch@^1.27.3, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
+"contexture-elasticsearch@^1.27.5, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
   version: 0.0.0-use.local
   resolution: "contexture-elasticsearch@workspace:packages/provider-elasticsearch"
   dependencies:
@@ -7817,7 +7817,7 @@ __metadata:
     "@elastic/elasticsearch": ^7.11.0
     agentkeepalive: ^4.1.4
     contexture: ^0.12.21
-    contexture-util: ^0.1.0
+    contexture-util: ^0.1.1
     debug: ^4.3.1
     escape-string-regexp: ^5.0.0
     futil: ^1.76.4
@@ -7897,8 +7897,8 @@ __metadata:
     chromatic: ^6.23.0
     contexture: ^0.12.21
     contexture-client: ^2.53.7
-    contexture-elasticsearch: ^1.27.3
-    contexture-util: 0.1.0
+    contexture-elasticsearch: ^1.27.5
+    contexture-util: 0.1.1
     elasticsearch-browser: ^14.2.2
     emoji-datasource: ^5.0.1
     escape-string-regexp: ^5.0.0
@@ -7934,7 +7934,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture-util@0.1.0, contexture-util@^0.1.0, contexture-util@workspace:packages/util":
+"contexture-util@0.1.1, contexture-util@^0.1.1, contexture-util@workspace:packages/util":
   version: 0.0.0-use.local
   resolution: "contexture-util@workspace:packages/util"
   languageName: unknown
