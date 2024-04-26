@@ -2,7 +2,7 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import { Permutation } from 'js-combinatorics'
 import { stripLegacySubFields } from '../../utils/fields.js'
-import { sanitizeTagInputs } from '../../utils/keywordGenerations.js'
+import { sanitizeTagInputs } from 'contexture-util/keywordGenerations.js'
 
 let maxTagCount = 100
 
