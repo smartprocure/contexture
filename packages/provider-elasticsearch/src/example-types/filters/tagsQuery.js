@@ -26,17 +26,17 @@ let combinator = (join, filters) => ({
   },
 })
 let tagMapper = (field, exact) => (tag) => {
-  let queryType = _.includes(' ', tag.text) ? 'match_phrase' : 'match'
+  let queryType = _.includes(' ', tag.word) ? 'match_phrase' : 'match'
   let queryField = stripLegacySubFields(field) + (exact ? '.exact' : '')
 
   let body = {
-    query: tag.text,
+    query: tag.word,
     ...(tag.misspellings && { fuzziness: 1 }), // consider switching to 'AUTO'
     ...(tag.distance && tag.distance !== 'unlimited' && { slop: tag.distance }),
     ...(exact && { analyzer: 'exact' }),
   }
   if (tag.distance === 'unlimited')
-    body.query = tag.text.replace(/\s+/g, ' AND ')
+    body.query = tag.word.replace(/\s+/g, ' AND ')
 
   if (!tag.distance && tag.anyOrder) {
     return combinator(
@@ -47,7 +47,7 @@ let tagMapper = (field, exact) => (tag) => {
             [queryField]: { query, ...(exact && { analyzer: 'exact' }) },
           },
         }),
-        wordPermutations(tag.text)
+        wordPermutations(tag.word)
       )
     )
   }
