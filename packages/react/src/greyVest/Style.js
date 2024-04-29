@@ -139,16 +139,14 @@ export default () => (
         /* Go on top of table content */
         z-index: 2; 
       }
-      
+
       .gv-table th.sticky-column-header {
         /* Go on top of table headers */
         z-index: 3; 
       }
       
 
-      .gv-table th > span {
-        display: flex;
-        align-items: center;
+      .gv-table th > *:first-child {
         box-sizing: border-box;
         padding: ${tableCellPadding}px; 
         min-height: 45px;
