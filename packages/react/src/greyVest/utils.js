@@ -54,5 +54,6 @@ export let createTags = ({ input, splitCommas, sanitizeTagFn }) =>
     splitCommas ? splitTagOnComma : _.identity,
     _.castArray,
     sanitizeTagFn ? _.map(sanitizeTagFn) : _.identity,
+    _.map(_.trim),
     _.compact
   )(input)
