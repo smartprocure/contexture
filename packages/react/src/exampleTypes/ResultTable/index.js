@@ -143,13 +143,11 @@ let ResultTable = ({
                     j
                   ) => (
                     <HeaderCell key={j} colSpan={colspan} {...headerCellProps}>
-                      <span>
-                        {HeaderGroup ? (
-                          <HeaderGroup>{groupName}</HeaderGroup>
-                        ) : (
-                          groupName
-                        )}
-                      </span>
+                      {HeaderGroup ? (
+                        <HeaderGroup>{groupName}</HeaderGroup>
+                      ) : (
+                        groupName
+                      )}
                     </HeaderCell>
                   ),
                   columnGroupRow

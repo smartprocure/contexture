@@ -192,14 +192,14 @@ export default () => (
         z-index: 1; 
       }
       
-      .gv-table th.sticky-column-header + th > span,
+      .gv-table th.sticky-column-header + th > *:only-child,
       .gv-table td.sticky-column + td,
-      .gv-table th:first-child > span ,
+      .gv-table th:first-child > *:only-child ,
       .gv-table td:first-child {
         padding-left: ${2 * tableCellPadding}px; 
       }
       
-      .gv-table th:last-child > span ,
+      .gv-table th:last-child > *:only-child ,
       .gv-table td:last-child {
         padding-right: ${2 * tableCellPadding}px; 
       }
