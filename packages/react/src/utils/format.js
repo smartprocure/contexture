@@ -1,5 +1,4 @@
 import _ from 'lodash/fp.js'
-import F from 'futil'
 import React from 'react'
 
 export let toNumber = (number, ...params) => {
