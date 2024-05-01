@@ -1,6 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp.js'
 import F from 'futil'
+import { displayLabelFn } from './utils/format.js'
 import { setDisplayName } from 'react-recompose'
 import { observer } from 'mobx-react'
 import { Expandable, Flex, Dynamic } from './greyVest/index.js'
@@ -106,6 +107,7 @@ export let Label = _.flow(
   let popover = React.useState(false)
   let modal = React.useState(false)
   let field = _.get('field', node)
+  let labelText = children || _.get([field, 'label'], fields) || field || ''
   return (
     <Flex
       className={`filter-field-label ${
@@ -118,7 +120,7 @@ export let Label = _.flow(
       }}
     >
       <span {...props}>
-        {children || _.get([field, 'label'], fields) || field || ''}
+        {displayLabelFn(labelText, _.get(field, fields), fields)}
       </span>
       {tree && node && (
         <>

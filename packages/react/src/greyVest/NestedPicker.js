@@ -10,6 +10,7 @@ import Flex from './Flex.js'
 import GVTextInput from './TextInput.js'
 import GVTextHighlight from './TextHighlight.js'
 import { isField } from '../utils/fields.js'
+import { displayLabelFn } from '../utils/format.js'
 
 let PickerContext = React.createContext()
 
@@ -69,7 +70,11 @@ let FilteredSection = _.flow(
                 setHoverItem(isHover ? option : null)
               )}
             >
-              <TextHighlight text={option.label} pattern={highlight} />
+              {displayLabelFn(
+                <TextHighlight text={option.label} pattern={highlight} />,
+                option,
+                options
+              )}
             </PickerItem>
           ),
           options
@@ -110,7 +115,7 @@ let Section = _.flow(
                 setHoverItem(isHover ? item : null)
               )}
             >
-              {getItemLabel(item)}
+              {displayLabelFn(getItemLabel(item), item, options)}
             </PickerItem>
           ),
           _.flow(F.unkeyBy('_key'), _.sortBy(getItemLabel))(options)

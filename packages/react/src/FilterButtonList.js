@@ -10,6 +10,7 @@ import styles from './styles/index.js'
 import { newNodeFromField } from './utils/search.js'
 import { unusedOptions } from './FilterAdder.js'
 import { fieldsToOptions } from './utils/fields.js'
+import { displayLabelFn } from './utils/format.js'
 
 let FilterButtonItem = _.flow(
   setDisplayName('FilterButtonItem'),
@@ -43,7 +44,7 @@ let FilterButtonItem = _.flow(
           }}
           theme={{ Button: FilterButton }}
         >
-          {title}
+          {displayLabelFn(title, _.get(node.field, fields), fields)}
         </CheckButton>
         <Modal open={modal}>
           <Flex column className="filter-button-modal">

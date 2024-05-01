@@ -1,4 +1,5 @@
 import _ from 'lodash/fp.js'
+import F from 'futil'
 import React from 'react'
 
 export let toNumber = (number, ...params) => {
@@ -8,6 +9,11 @@ export let toNumber = (number, ...params) => {
   }
   return NaN
 }
+
+export let displayLabelFn = (value, field, record = {}) =>
+  _.isFunction(field?.labelDisplay)
+    ? field.labelDisplay(value, field, record)
+    : value
 
 export let addBlankRows = (rows, pageSize, key) => {
   if (rows.length === 0) return rows
