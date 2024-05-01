@@ -120,7 +120,7 @@ export let Label = _.flow(
       }}
     >
       <span {...props}>
-        {displayLabelFn(labelText, _.get(field, fields), fields)}
+        {displayLabelFn(labelText, fields, { field: _.get(field, fields) })}
       </span>
       {tree && node && (
         <>

@@ -72,8 +72,8 @@ let FilteredSection = _.flow(
             >
               {displayLabelFn(
                 <TextHighlight text={option.label} pattern={highlight} />,
-                option,
-                options
+                options,
+                { field: option, isPicker: true }
               )}
             </PickerItem>
           ),
@@ -115,7 +115,10 @@ let Section = _.flow(
                 setHoverItem(isHover ? item : null)
               )}
             >
-              {displayLabelFn(getItemLabel(item), item, options)}
+              {displayLabelFn(getItemLabel(item), options, {
+                field: item,
+                isPicker: true,
+              })}
             </PickerItem>
           ),
           _.flow(F.unkeyBy('_key'), _.sortBy(getItemLabel))(options)

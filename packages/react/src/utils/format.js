@@ -9,9 +9,9 @@ export let toNumber = (number, ...params) => {
   return NaN
 }
 
-export let displayLabelFn = (value, field, record = {}) =>
-  _.isFunction(field?.labelDisplay)
-    ? field.labelDisplay(value, field, record)
+export let displayLabelFn = (value, record, props) =>
+  _.isFunction(props?.field?.displayLabel)
+    ? props?.field?.displayLabel(value, record, props)
     : value
 
 export let addBlankRows = (rows, pageSize, key) => {

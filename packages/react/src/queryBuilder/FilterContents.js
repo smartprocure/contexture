@@ -13,6 +13,7 @@ import {
   getTypeLabelOptions,
 } from '../utils/search.js'
 import { withTheme } from '../utils/theme.js'
+import { displayLabelFn } from '../utils/format.js'
 
 let FilterContents = ({
   node,
@@ -33,7 +34,13 @@ let FilterContents = ({
   return (
     <Grid columns="auto auto minmax(0, 1fr)" style={style}>
       <ModalPicker
-        label={nodeField ? nodeLabel : 'Pick a Field'}
+        label={
+          nodeField
+            ? displayLabelFn(nodeLabel, fields, {
+                field: _.get(nodeField, fields),
+              })
+            : 'Pick a Field'
+        }
         options={fieldsToOptions(fields)}
         onChange={(addedFields) => {
           addedFields = _.castArray(addedFields)

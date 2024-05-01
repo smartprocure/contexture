@@ -44,7 +44,7 @@ let FilterButtonItem = _.flow(
           }}
           theme={{ Button: FilterButton }}
         >
-          {displayLabelFn(title, _.get(node.field, fields), fields)}
+          {displayLabelFn(title, fields, { field: _.get(node.field, fields) })}
         </CheckButton>
         <Modal open={modal}>
           <Flex column className="filter-button-modal">
