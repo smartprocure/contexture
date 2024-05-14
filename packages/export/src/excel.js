@@ -12,8 +12,6 @@ const convertToExcelCell = (value) => {
 
 let transformLabels = _.map(_.get('label'))
 
-//const pipeline = promisify(stream.pipeline)
-
 export default ({
   stream, // writable stream target stream
   iterableData, // iterator for each page of an array of objects
