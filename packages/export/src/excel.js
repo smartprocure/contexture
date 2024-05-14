@@ -1,23 +1,5 @@
 import _ from 'lodash/fp.js'
 import writeXlsxFile from 'write-excel-file/node'
-import stream from 'stream'
-import { promisify } from 'util'
-import { pipeline } from 'stream/promises'
-
-const isISODate = (dateString) => {
-  // Convert the date to an ISO string
-  try {
-    const date = new Date(dateString)
-    const isoString = date.toISOString()
-    return date.toString() === isoString
-  } catch (e) {
-    return false
-  }
-}
-
-const isNumber = (numberString) => {
-  return !isNaN(Number(numberString))
-}
 
 const convertToExcelCell = (value) => {
   return {
