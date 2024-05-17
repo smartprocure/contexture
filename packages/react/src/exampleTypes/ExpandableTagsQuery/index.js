@@ -142,20 +142,16 @@ let TagsWrapper = observer(
   }) => {
     let TagWithPopover = React.memo(
       observer((props) => {
-        let count = F.cascade(
-          [
-            `context.tags.${props.value}`,
-            `context.keywordGenerations.${props.value}`,
-          ],
-          node,
-          node.forceFilterOnly || node.updating
+        let count =
+          _.get(['context', 'tags', props.value], node) ??
+          _.get(['context', 'keywordGenerations', props.value], node) ??
+          (node.forceFilterOnly || node.updating
             ? undefined
             : F.when(
                 _.isNaN(),
                 undefined,
                 _.get(`context.tags.${props.value}`, node)
-              )
-        )
+              ))
         let tagProps = {
           ...props,
           ...(!_.isNil(count) && {
