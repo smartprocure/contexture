@@ -1,6 +1,13 @@
 import F from 'futil'
 import _ from 'lodash/fp.js'
 
+export const writeStreamData = async (stream, writeStreamData) => {
+  const readStream = await writeStreamData()
+  for await (const chunk of readStream) {
+    stream.write(chunk)
+  }
+}
+
 let Tree = F.tree((x) => x.children)
 export let setFilterOnly = Tree.transform((x) => {
   x.filterOnly = true
