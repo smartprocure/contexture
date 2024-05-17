@@ -35,6 +35,7 @@
     "futil": "^1.76.4",
     "lodash": "^4.17.21",
     "minimal-csv-formatter": "^1.0.15",
+    "read-excel-file": "^5.8.1",
     "write-excel-file": "^2.0.1"
   },
   "packageManager": "yarn@3.3.1"

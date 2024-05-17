@@ -10,6 +10,12 @@ const convertToExcelCell = (value) => {
   }
 }
 
+export const writeStreamData = async (stream, readStream) => {
+  for await (const chunk of readStream) {
+    stream.write(chunk)
+  }
+}
+
 let transformLabels = _.map(_.get('label'))
 
 export default ({
@@ -20,7 +26,8 @@ export default ({
   // and key of the record.
   // [{ key: string(supports lodash dot notation), label: string, display: function(value, {key, record, transform})}...]
   transform,
-  headers = null, // array of strings to use as headers, array or arrays for multi-line headers
+  //TODO: support multi-line headers in excel and csv when implemented
+  headers = null, // array of strings to use as headers
   onWrite = _.noop, // function to intercept writing a page of records
 }) => {
   const excelData = [
@@ -60,9 +67,7 @@ export default ({
         excelData[1]
       )
       const readStream = await writeXlsxFile(excelData, { columns })
-      for await (const chunk of readStream) {
-        stream.write(chunk)
-      }
+      await writeStreamData(stream, readStream)
       await onWrite({ recordsWritten: recordsWritten, isStreamDone: true })
       await stream.end()
     })(),
