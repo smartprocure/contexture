@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.59.7
+
+### Patch Changes
+
+- 763f1f98: Fix tags query tag count when value contains dot
+
 ## 2.59.6
 
 ### Patch Changes
