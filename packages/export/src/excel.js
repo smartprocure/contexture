@@ -1,4 +1,5 @@
 import _ from 'lodash/fp.js'
+import F from 'futil'
 import writeXlsxFile from 'write-excel-file/node'
 
 const convertToExcelCell = (value) => {
@@ -16,6 +17,7 @@ export const writeStreamData = async (stream, writeStreamData) => {
 }
 
 let transformLabels = _.map(_.get('label'))
+let maxColumnWidth = 200
 
 export default ({
   stream, // writable stream target stream
@@ -31,43 +33,53 @@ export default ({
 }) => {
   const excelData = [
     _.map(
-      (value) => ({ value, fontWeight: 'bold' }),
+      (value) => ({ value, fontWeight: 'bold', backgroundColor: '#999999' }),
       headers || transformLabels(transform)
     ),
   ]
 
   let cancel = false
   let recordsWritten = 0
+  let columnWidths = _.map(
+    (column) => ({ width: column.value.length }),
+    excelData[0]
+  )
 
   return {
     promise: (async () => {
       for await (let r of iterableData) {
         if (cancel) break
-        excelData.push(
-          _.map(
-            (t) =>
-              convertToExcelCell(
-                t.display(_.get(t.key, r), {
-                  key: t.key,
-                  record: r,
-                  transform,
-                })
-              ),
-            transform
-          )
+        let row = _.map(
+          (t) =>
+            convertToExcelCell(
+              t.display(_.get(t.key, r), {
+                key: t.key,
+                record: r,
+                transform,
+              })
+            ),
+          transform
         )
+        columnWidths = F.mapIndexed(
+          (value, index) => ({
+            width: Math.min(
+              Math.max(value.width, row[index].value.length),
+              maxColumnWidth
+            ),
+          }),
+          columnWidths
+        )
+        excelData.push(row)
         recordsWritten = recordsWritten + _.getOr(1, 'recordCount', r)
         await onWrite({ recordsWritten })
       }
-      let columns = _.map(
-        (column) => ({
-          width: column.value.length || 50,
-        }),
-        excelData[0]
-      )
       await writeStreamData(
         stream,
-        async () => await writeXlsxFile(excelData, { columns })
+        async () =>
+          await writeXlsxFile(excelData, {
+            columns: columnWidths,
+            stickyRowsCount: 1,
+          })
       )
       await onWrite({ recordsWritten, isStreamDone: true })
       await stream.end()
