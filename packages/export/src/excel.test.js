@@ -1,5 +1,5 @@
 import { PassThrough } from 'stream'
-import { writeStreamData } from './utils.js'
+import { writeStreamData } from './excel.js'
 
 const testData = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
   sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`

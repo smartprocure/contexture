@@ -1,13 +1,18 @@
 import _ from 'lodash/fp.js'
 import writeXlsxFile from 'write-excel-file/node'
-import { writeStreamData } from './utils.js'
 
 const convertToExcelCell = (value) => {
   return {
     type: String,
-    typeof: 'string',
     wrap: true,
     value: `${value}`,
+  }
+}
+
+export const writeStreamData = async (stream, writeStreamData) => {
+  const readStream = await writeStreamData()
+  for await (const chunk of readStream) {
+    stream.write(chunk)
   }
 }
 
@@ -56,8 +61,8 @@ export default ({
         await onWrite({ recordsWritten })
       }
       let columns = _.map(
-        () => ({
-          width: 50,
+        (column) => ({
+          width: column.value.length || 50,
         }),
         excelData[1]
       )
@@ -65,7 +70,7 @@ export default ({
         stream,
         async () => await writeXlsxFile(excelData, { columns })
       )
-      await onWrite({ recordsWritten: recordsWritten, isStreamDone: true })
+      await onWrite({ recordsWritten, isStreamDone: true })
       await stream.end()
     })(),
     cancel() {
