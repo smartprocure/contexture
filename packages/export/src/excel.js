@@ -15,15 +15,9 @@ const convertToExcelCell = (value, index) => {
   }
 }
 
-export const writeStreamData = async (stream, writeStreamData) => {
-  const readStream = await writeStreamData()
-  for await (const chunk of readStream) {
-    stream.write(chunk)
-  }
-}
-
 export default ({
   stream, // writable stream target stream
+  readStreamData = async (data, options) => await writeXlsxFile(data, options),
   iterableData, // iterator for each page of an array of objects
   // order list of which indicates the header label,
   // display function for the field,
@@ -81,14 +75,15 @@ export default ({
         recordsWritten = recordsWritten + _.getOr(1, 'recordCount', r)
         await onWrite({ recordsWritten })
       }
-      await writeStreamData(
-        stream,
-        async () =>
-          await writeXlsxFile(excelData, {
-            columns,
-            stickyRowsCount: 1,
-          })
-      )
+
+      const readStream = await readStreamData(excelData, {
+        columns,
+        stickyRowsCount: 1,
+      })
+      for await (const chunk of readStream) {
+        stream.write(chunk)
+      }
+
       await onWrite({ recordsWritten, isStreamDone: true })
       await stream.end()
     })(),
