@@ -2,10 +2,16 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import writeXlsxFile from 'write-excel-file/node'
 
-const convertToExcelCell = (value) => {
+let transformLabels = _.map(_.get('label'))
+let maxColumnWidth = 200
+let headerBackgroundColor = '#999999'
+let indexColumnBackgroundColor = '#bbbbbb'
+
+const convertToExcelCell = (value, index) => {
   return {
     wrap: true,
     value: value ? `${value}` : ``,
+    ...((index === 0 && { backgroundColor: indexColumnBackgroundColor }) || {}),
   }
 }
 
@@ -15,9 +21,6 @@ export const writeStreamData = async (stream, writeStreamData) => {
     stream.write(chunk)
   }
 }
-
-let transformLabels = _.map(_.get('label'))
-let maxColumnWidth = 200
 
 export default ({
   stream, // writable stream target stream
@@ -33,14 +36,18 @@ export default ({
 }) => {
   const excelData = [
     _.map(
-      (value) => ({ value, fontWeight: 'bold', backgroundColor: '#999999' }),
+      (value) => ({
+        value,
+        fontWeight: 'bold',
+        backgroundColor: headerBackgroundColor,
+      }),
       headers || transformLabels(transform)
     ),
   ]
 
   let cancel = false
   let recordsWritten = 0
-  let columnWidths = _.map(
+  let columns = _.map(
     (column) => ({ width: column.value.length }),
     excelData[0]
   )
@@ -49,25 +56,26 @@ export default ({
     promise: (async () => {
       for await (let r of iterableData) {
         if (cancel) break
-        let row = _.map(
-          (t) =>
+        let row = F.mapIndexed(
+          (data, index) =>
             convertToExcelCell(
-              t.display(_.get(t.key, r), {
-                key: t.key,
+              data.display(_.get(data.key, r), {
+                key: data.key,
                 record: r,
                 transform,
-              })
+              }),
+              index
             ),
           transform
         )
-        columnWidths = F.mapIndexed(
+        columns = F.mapIndexed(
           (value, index) => ({
             width: Math.min(
               Math.max(value.width, row[index].value.length),
               maxColumnWidth
             ),
           }),
-          columnWidths
+          columns
         )
         excelData.push(row)
         recordsWritten = recordsWritten + _.getOr(1, 'recordCount', r)
@@ -77,7 +85,7 @@ export default ({
         stream,
         async () =>
           await writeXlsxFile(excelData, {
-            columns: columnWidths,
+            columns,
             stickyRowsCount: 1,
           })
       )
