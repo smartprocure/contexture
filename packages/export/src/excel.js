@@ -3,9 +3,8 @@ import writeXlsxFile from 'write-excel-file/node'
 
 const convertToExcelCell = (value) => {
   return {
-    type: String,
     wrap: true,
-    value: `${value}`,
+    value: value ? `${value}` : ``,
   }
 }
 
@@ -64,7 +63,7 @@ export default ({
         (column) => ({
           width: column.value.length || 50,
         }),
-        excelData[1]
+        excelData[0]
       )
       await writeStreamData(
         stream,
