@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 1.2.0
+
+### Minor Changes
+
+- f0e5c73a: Enable Excel Export Option
+
 ## 1.1.3
 
 ### Patch Changes
