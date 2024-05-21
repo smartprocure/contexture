@@ -11,7 +11,8 @@ export default ({
   // and key of the record.
   // [{ key: string(supports lodash dot notation), label: string, display: function(value, {key, record, transform})}...]
   transform,
-  headers = null, // array of strings to use as headers, array or arrays for multi-line headers
+  //TODO: support multi-line headers in excel and csv when implemented
+  headers = null, // array of strings to use as headers
   onWrite = _.noop, // function to intercept writing a page of records
 }) => {
   stream.write(csv(headers || transformLabels(transform)))
@@ -39,6 +40,7 @@ export default ({
         recordsWritten = recordsWritten + _.getOr(1, 'recordCount', r)
         await onWrite({ recordsWritten, record: r })
       }
+      await onWrite({ recordsWritten, isStreamDone: true })
       await stream.end()
     })(),
     cancel() {
