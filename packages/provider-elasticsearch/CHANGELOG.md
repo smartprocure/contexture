@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.27.6
+
+### Patch Changes
+
+- a6bbf8d2: More correct merging of highlights
+
+  Fix issue where highlighting will behave wrongly when the text being highlighted contains substrings that match the highlighting tags.
+
 ## 1.27.5
 
 ### Patch Changes
