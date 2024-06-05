@@ -53,7 +53,7 @@ export let getNestedPathsMap = (schema, paths) => {
 }
 
 export let stripTags = _.curry((tags, str) =>
-  str.replaceAll(tags.pre, '').replaceAll(tags.post, '')
+  str.replaceAll(getRangesRegexp(tags), '$1')
 )
 
 let getRangesRegexp = _.memoize(
