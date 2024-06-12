@@ -108,7 +108,7 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     // If body has timed_out set to true, log that partial results were returned,
     // if partial is turned off an error will be thrown instead.
     // https://www.elastic.co/guide/en/elasticsearch/guide/current/_search_options.html#_timeout_2
-    if (body.timed_out)
+    if (body?.timed_out)
       logger &&
         logger.warn(
           `Returned partial search results, took ${body.took}ms
