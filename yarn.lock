@@ -7901,7 +7901,7 @@ __metadata:
     "@elastic/datemath": ^2.3.0
     "@elastic/elasticsearch": ^7.11.0
     agentkeepalive: ^4.1.4
-    contexture: ^0.12.21
+    contexture: ^0.12.22
     contexture-util: ^0.1.1
     debug: ^4.3.1
     escape-string-regexp: ^5.0.0
@@ -8026,7 +8026,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture@^0.12.21, contexture@workspace:packages/server":
+"contexture@^0.12.21, contexture@^0.12.22, contexture@workspace:packages/server":
   version: 0.0.0-use.local
   resolution: "contexture@workspace:packages/server"
   dependencies:

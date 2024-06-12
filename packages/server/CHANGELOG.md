@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.22
+
+### Patch Changes
+
+- 11186dcd: Bubble up original errors
+
 ## 0.12.21
 
 ### Patch Changes
