@@ -110,7 +110,7 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     // https://www.elastic.co/guide/en/elasticsearch/guide/current/_search_options.html#_timeout_2
     if (body?.timed_out)
       logger &&
-        logger.warn(
+        logger(
           `Returned partial search results, took ${body.took}ms
              Timeout Threshold: ${
                configOptions.timeout ||
