@@ -47,7 +47,12 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
   async runSearch({ requestOptions = {} } = {}, node, schema, filters, aggs) {
     let hoistedFromFilters = hoistOnTree(filters)
     let hoistedFromAggs = hoistOnTree(aggs)
-    let { searchWrapper, configOptions = {}, logger } = config
+    let {
+      searchWrapper,
+      configOptions = {},
+      logger,
+      clusterDefaultTimeout,
+    } = config
     let { scroll, scrollId } = node
     let request = scrollId
       ? // If we have scrollId then keep scrolling, no query needed
@@ -95,23 +100,30 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
 
     let metaObj = { request, requestOptions }
 
-      node._meta.requests.push(metaObj)
-      let count = counter.inc()
-      debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
-      let { body } = await search(request, requestOptions)
-      if (body.timed_out) {
+    node._meta.requests.push(metaObj)
+    let count = counter.inc()
+    debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
+    let { body } = await search(request, requestOptions)
+
+    // If body has timed_out set to true, log that partial results were returned,
+    // if partial is turned off an error will be thrown instead.
+    // https://www.elastic.co/guide/en/elasticsearch/guide/current/_search_options.html#_timeout_2
+    if (body.timed_out)
+      logger &&
         logger.warn(
           `Returned partial search results, took ${body.took}ms
-             Timeout Threshold: ${configOptions.timeout || 30}ms`
+             Timeout Threshold: ${
+               configOptions.timeout ||
+               clusterDefaultTimeout ||
+               // Could grab from cluster settings if not provided with a query
+               // but would add overhead so N/A presented if not available from call site.
+               'N/A'
+             }`
         )
-        console.error(`Contexture: Returned partial search results, took ${
-          body.took
-        }ms
-        Contexture: Timeout Threshold: ${configOptions.timeout || 30}ms`)
-      }
-      metaObj.response = body
-      debug('(%s) Response: %O', count, body)
-      // Log Request
+
+    metaObj.response = body
+    debug('(%s) Response: %O', count, body)
+    // Log Request
 
     return metaObj.response
   },
