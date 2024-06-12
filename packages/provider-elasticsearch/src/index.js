@@ -47,16 +47,18 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
   async runSearch({ requestOptions = {} } = {}, node, schema, filters, aggs) {
     let hoistedFromFilters = hoistOnTree(filters)
     let hoistedFromAggs = hoistOnTree(aggs)
-    let { searchWrapper } = config
+    let { searchWrapper, configOptions = {}, logger } = config
     let { scroll, scrollId } = node
     let request = scrollId
       ? // If we have scrollId then keep scrolling, no query needed
         {
+          ...configOptions,
           scroll: scroll === true ? '60m' : hoistedFromFilters,
           body: { scroll_id: scrollId },
         }
       : // Deterministic ordering of JSON keys for request cache optimization
         {
+          ...configOptions,
           index: schema.elasticsearch.index,
           // Scroll support (used for bulk export)
           ...(scroll && { scroll: scroll === true ? '2m' : scroll }),
@@ -93,13 +95,23 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
 
     let metaObj = { request, requestOptions }
 
-    // Log Request
-    node._meta.requests.push(metaObj)
-    let count = counter.inc()
-    debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
-    let { body } = await search(request, requestOptions)
-    metaObj.response = body
-    debug('(%s) Response: %O', count, body)
+      node._meta.requests.push(metaObj)
+      let count = counter.inc()
+      debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
+      let { body } = await search(request, requestOptions)
+      if (body.timed_out) {
+        logger.warn(
+          `Returned partial search results, took ${body.took}ms
+             Timeout Threshold: ${configOptions.timeout || 30}ms`
+        )
+        console.error(`Contexture: Returned partial search results, took ${
+          body.took
+        }ms
+        Contexture: Timeout Threshold: ${configOptions.timeout || 30}ms`)
+      }
+      metaObj.response = body
+      debug('(%s) Response: %O', count, body)
+      // Log Request
 
     return metaObj.response
   },
