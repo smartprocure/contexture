@@ -93,23 +93,13 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
 
     let metaObj = { request, requestOptions }
 
-    try {
-      // Log Request
-      node._meta.requests.push(metaObj)
-      let count = counter.inc()
-      debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
-      let { body } = await search(request, requestOptions)
-      metaObj.response = body
-      debug('(%s) Response: %O', count, body)
-    } catch (e) {
-      console.error({ e })
-      metaObj.response = e
-      node.error = e.meta.body.error
-      throw {
-        message: `${e}`,
-        ...e.meta.body.error,
-      }
-    }
+    // Log Request
+    node._meta.requests.push(metaObj)
+    let count = counter.inc()
+    debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
+    let { body } = await search(request, requestOptions)
+    metaObj.response = body
+    debug('(%s) Response: %O', count, body)
 
     return metaObj.response
   },
