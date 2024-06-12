@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.27.7
+
+### Patch Changes
+
+- 11186dcd: Bubble up original errors
+
 ## 1.27.6
 
 ### Patch Changes
