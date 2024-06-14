@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.28.0
+
+### Minor Changes
+
+- f1d42dde: Enable control of Elastic partial results config and ability to log partial results
+
 ## 1.27.7
 
 ### Patch Changes
