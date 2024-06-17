@@ -1,6 +1,9 @@
 import F from 'futil'
 import _ from 'lodash/fp.js'
-import { getDateIfValid, rollingRangeToDates } from '../../utils/dateUtil.js'
+import {
+  getDateIfValid,
+  rollingRangeToDates,
+} from 'contexture-util/dateUtil.js'
 
 let getDateRange = (range, timezone) => {
   let { from, to } = rollingRangeToDates(range, timezone)

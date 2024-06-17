@@ -1,5 +1,8 @@
 import _ from 'lodash/fp.js'
-import { getDateIfValid, rollingRangeToDates } from '../../utils/dateUtil.js'
+import {
+  getDateIfValid,
+  rollingRangeToDates,
+} from 'contexture-util/dateUtil.js'
 import dateRangeFacet from './dateRangeFacet.js'
 
 let commonFilterParts = {
