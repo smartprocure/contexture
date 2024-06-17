@@ -116,24 +116,18 @@ let Header = ({
         style={popoverStyle}
       >
         {!disableSort && (
-          <DropdownItem
-            onClick={() => {
-              mutate({ sortField, sortDir: 'asc' })
-            }}
-          >
-            <Icon icon="SortAscending" />
-            Sort Ascending
-          </DropdownItem>
-        )}
-        {!disableSort && (
-          <DropdownItem
-            onClick={() => {
-              mutate({ sortField, sortDir: 'desc' })
-            }}
-          >
-            <Icon icon="SortDescending" />
-            Sort Descending
-          </DropdownItem>
+          <>
+            <DropdownItem onClick={() => mutate({ sortField, sortDir: 'asc' })}>
+              <Icon icon="SortAscending" />
+              Sort Ascending
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => mutate({ sortField, sortDir: 'desc' })}
+            >
+              <Icon icon="SortDescending" />
+              Sort Descending
+            </DropdownItem>
+          </>
         )}
         <DropdownItem
           onClick={() =>
