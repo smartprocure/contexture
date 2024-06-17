@@ -29,12 +29,12 @@ let quarterToOffset = {
 // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/common-options.html#date-math
 export let rangeToDatemath = {
   last1Hour: { from: 'now-1h', to: 'now' },
-  last1Day: { from: 'now-1d', to: 'now' },
-  last3Days: { from: 'now-3d', to: 'now' },
-  last7Days: { from: 'now-7d', to: 'now' },
-  last30Days: { from: 'now-30d', to: 'now' },
-  last90Days: { from: 'now-90d', to: 'now' },
-  last180Days: { from: 'now-180d', to: 'now' },
+  last1Day: { from: 'now-1d/d', to: 'now+1d/d-1ms' },
+  last3Days: { from: 'now-3d/d', to: 'now+d/d-1ms' },
+  last7Days: { from: 'now-7d/d', to: 'now+d/d-1ms' },
+  last30Days: { from: 'now-30d/d', to: 'now+d/d-1ms' },
+  last90Days: { from: 'now-90d/d', to: 'now+d/d-1ms' },
+  last180Days: { from: 'now-180d/d', to: 'now+d/d-1ms' },
   last12Months: { from: 'now/d-12M', to: 'now+1d/d-1ms' },
   last15Months: { from: 'now/d-15M', to: 'now+1d/d-1ms' },
   last18Months: { from: 'now/d-18M', to: 'now+1d/d-1ms' },
