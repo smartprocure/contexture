@@ -47,16 +47,23 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
   async runSearch({ requestOptions = {} } = {}, node, schema, filters, aggs) {
     let hoistedFromFilters = hoistOnTree(filters)
     let hoistedFromAggs = hoistOnTree(aggs)
-    let { searchWrapper } = config
+    let {
+      searchWrapper,
+      configOptions = {},
+      logger,
+      clusterDefaultTimeout,
+    } = config
     let { scroll, scrollId } = node
     let request = scrollId
       ? // If we have scrollId then keep scrolling, no query needed
         {
+          ...configOptions,
           scroll: scroll === true ? '60m' : hoistedFromFilters,
           body: { scroll_id: scrollId },
         }
       : // Deterministic ordering of JSON keys for request cache optimization
         {
+          ...configOptions,
           index: schema.elasticsearch.index,
           // Scroll support (used for bulk export)
           ...(scroll && { scroll: scroll === true ? '2m' : scroll }),
@@ -93,23 +100,30 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
 
     let metaObj = { request, requestOptions }
 
-    try {
-      // Log Request
-      node._meta.requests.push(metaObj)
-      let count = counter.inc()
-      debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
-      let { body } = await search(request, requestOptions)
-      metaObj.response = body
-      debug('(%s) Response: %O', count, body)
-    } catch (e) {
-      console.error({ e })
-      metaObj.response = e
-      node.error = e.meta.body.error
-      throw {
-        message: `${e}`,
-        ...e.meta.body.error,
-      }
-    }
+    node._meta.requests.push(metaObj)
+    let count = counter.inc()
+    debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
+    let { body } = await search(request, requestOptions)
+
+    // If body has timed_out set to true, log that partial results were returned,
+    // if partial is turned off an error will be thrown instead.
+    // https://www.elastic.co/guide/en/elasticsearch/guide/current/_search_options.html#_timeout_2
+    if (body?.timed_out)
+      logger &&
+        logger(
+          `Returned partial search results, took ${body.took}ms
+             Timeout Threshold: ${
+               configOptions.timeout ||
+               clusterDefaultTimeout ||
+               // Could grab from cluster settings if not provided with a query
+               // but would add overhead so N/A presented if not available from call site.
+               'N/A'
+             }`
+        )
+
+    metaObj.response = body
+    debug('(%s) Response: %O', count, body)
+    // Log Request
 
     return metaObj.response
   },

@@ -61,13 +61,10 @@ export let runTypeFunction = (config) => async (name, node, search) => {
       ? fn(node, search, schema, config)
       : fn(node, schema, config))
   } catch (error) {
-    throw {
-      message: `Failed running search for ${node.type} (${
-        node.key
-      }) at ${name}: ${_.getOr(error, 'message', error)}`,
-      error,
-      node,
-    }
+    // Sometimes we throw strings instead of errors
+    const message = _.getOr(error, 'message', error)
+    error.message = `(at contexture node with key=${node.key} and type=${node.type}) ${message}`
+    throw error
   }
 }
 

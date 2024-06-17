@@ -42,4 +42,20 @@ describe('mergeHighlights()', () => {
       'The quick brown fox <em>jumps</em> over the lazy <em>dog</em>'
     )
   })
+
+  it('should not strip unclosed pre/post tags', () => {
+    let actual = mergeHighlights(
+      {
+        pre: '<b class="search-highlight">',
+        post: '</b>',
+      },
+      [
+        'Shipping Address:</b><b class="search-highlight">MOBILE</b> DIVING AND SALVAGE <b class="another-class">UNIT 1</b>',
+        'Shipping Address:</b>MOBILE DIVING AND SALVAGE <b class="another-class">UNIT 1</b>',
+      ]
+    )
+    expect(actual).toEqual(
+      'Shipping Address:</b><b class="search-highlight">MOBILE</b> DIVING AND SALVAGE <b class="another-class">UNIT 1</b>'
+    )
+  })
 })

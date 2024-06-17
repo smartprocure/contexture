@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.28.0
+
+### Minor Changes
+
+- f1d42dde: Enable control of Elastic partial results config and ability to log partial results
+
+## 1.27.7
+
+### Patch Changes
+
+- 11186dcd: Bubble up original errors
+
+## 1.27.6
+
+### Patch Changes
+
+- a6bbf8d2: More correct merging of highlights
+
+  Fix issue where highlighting will behave wrongly when the text being highlighted contains substrings that match the highlighting tags.
+
 ## 1.27.5
 
 ### Patch Changes
