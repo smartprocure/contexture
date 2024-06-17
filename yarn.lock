@@ -7922,7 +7922,7 @@ __metadata:
   resolution: "contexture-mongo@workspace:packages/provider-mongo"
   dependencies:
     contexture: ^0.12.21
-    contexture-util: "workspace:^"
+    contexture-util: 0.1.1
     debug: ^4.3.1
     futil: ^1.76.4
     lodash: ^4.17.4
@@ -8009,7 +8009,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture-util@0.1.1, contexture-util@^0.1.1, contexture-util@workspace:^, contexture-util@workspace:packages/util":
+"contexture-util@0.1.1, contexture-util@^0.1.1, contexture-util@workspace:packages/util":
   version: 0.0.0-use.local
   resolution: "contexture-util@workspace:packages/util"
   dependencies:
@@ -8021,7 +8021,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "contexture@workspace:packages/server"
   dependencies:
-    contexture-util: "workspace:^"
+    contexture-util: 0.1.1
     date-fns: ^2.11.1
     futil: ^1.76.4
     lodash: ^4.17.21
