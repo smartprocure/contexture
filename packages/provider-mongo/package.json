@@ -1,6 +1,6 @@
 {
   "name": "contexture-mongo",
-  "version": "0.26.20",
+  "version": "0.26.21",
   "description": "Mongo Provider for Contexture",
   "type": "module",
   "exports": {
@@ -36,7 +36,7 @@
   "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/provider-mongo",
   "packageManager": "yarn@3.3.1",
   "dependencies": {
-    "contexture-util": "0.1.1",
+    "contexture-util": "0.1.2",
     "debug": "^4.3.1",
     "futil": "^1.76.4",
     "lodash": "^4.17.4",
@@ -47,7 +47,7 @@
     "mongodb": ">=4.0.0"
   },
   "devDependencies": {
-    "contexture": "^0.12.21",
+    "contexture": "^0.12.23",
     "mongodb-memory-server": "^9.1.1"
   }
 }

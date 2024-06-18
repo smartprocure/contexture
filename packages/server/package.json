@@ -1,6 +1,6 @@
 {
   "name": "contexture",
-  "version": "0.12.22",
+  "version": "0.12.23",
   "description": "The Contexture (aka ContextTree) Server",
   "type": "module",
   "exports": {
@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/server",
   "dependencies": {
-    "contexture-util": "0.1.1",
+    "contexture-util": "0.1.2",
     "date-fns": "^2.11.1",
     "futil": "^1.76.4",
     "lodash": "^4.17.21",
