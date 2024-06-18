@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.59.7",
+  "version": "2.59.8",
   "description": "React components for building contexture interfaces",
   "type": "module",
   "exports": {
@@ -78,8 +78,8 @@
   },
   "dependencies": {
     "@chakra-ui/react-use-outside-click": "^2.1.0",
-    "contexture": "^0.12.21",
-    "contexture-util": "0.1.1",
+    "contexture": "^0.12.23",
+    "contexture-util": "^0.1.2",
     "escape-string-regexp": "^5.0.0",
     "futil": "^1.76.4",
     "lodash": "^4.17.15",

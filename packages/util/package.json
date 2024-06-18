@@ -1,6 +1,6 @@
 {
   "name": "contexture-util",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Utilities for contexture packages",
   "type": "module",
   "packageManager": "yarn@3.3.1",
@@ -30,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/smartprocure/contexture/issues"
   },
-  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/common"
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/common",
+  "dependencies": {
+    "@elastic/datemath": "^5.0.3"
+  }
 }

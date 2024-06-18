@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.59.8
+
+### Patch Changes
+
+- Updated dependencies [5597cbcc]
+  - contexture-util@0.1.2
+  - contexture@0.12.23
+
 ## 2.59.7
 
 ### Patch Changes

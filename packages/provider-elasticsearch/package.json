@@ -1,6 +1,6 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "1.28.0",
+  "version": "1.29.0",
   "description": "ElasticSearch Provider for Contexture",
   "type": "module",
   "exports": {
@@ -35,8 +35,7 @@
   },
   "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/provider-elasticsearch",
   "dependencies": {
-    "@elastic/datemath": "^2.3.0",
-    "contexture-util": "^0.1.1",
+    "contexture-util": "^0.1.2",
     "debug": "^4.3.1",
     "escape-string-regexp": "^5.0.0",
     "futil": "^1.76.4",
