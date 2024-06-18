@@ -137,7 +137,8 @@ describe('Date example type test cases', () => {
         'last5Years',
       ],
     }))
-  it('last3Days', async () => testRange({ range: 'last3Days', expected: [] }))
+  it('last3Days', async () =>
+    testRange({ range: 'last3Days', expected: ['last3Days'] }))
   it('last7Days', async () =>
     testRange({ range: 'last7Days', expected: ['last3Days', 'last6Days'] }))
   it('last90Days', async () =>
