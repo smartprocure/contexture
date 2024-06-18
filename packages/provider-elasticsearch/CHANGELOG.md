@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.29.1
+
+### Patch Changes
+
+- d0bd30b1: Bump contexture-util
+
 ## 1.29.0
 
 ### Minor Changes
