@@ -53,14 +53,23 @@ let TableBody = ({
                 {...{ fields, visibleFields, hiddenFields }}
               >
                 {_.map(
-                  ({ field, display = (x) => x, Cell = Td }) => (
+                  ({
+                    field,
+                    display = (x) => x,
+                    Cell = Td,
+                    cellProps: { className, style, ...cellProps } = {},
+                  }) => (
                     <Cell
                       key={field}
-                      className={field === stickyColumn ? 'sticky-column' : ''}
+                      className={`${
+                        field === stickyColumn ? 'sticky-column' : ''
+                      } ${className}`}
                       style={{
                         position: field === stickyColumn ? 'sticky' : '',
                         left: field === stickyColumn ? 0 : '',
+                        ...style,
                       }}
+                      {...cellProps}
                     >
                       {defaultDisplay({
                         display,
