@@ -57,7 +57,6 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     let request = scrollId
       ? // If we have scrollId then keep scrolling, no query needed
         {
-          ...configOptions,
           scroll: scroll === true ? '60m' : hoistedFromFilters,
           body: { scroll_id: scrollId },
         }
@@ -91,8 +90,9 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     // If we have a scrollId, use a different client API method
     // The new elasticsearch client uses `this`, so we can just pass aroud `client.search` :(
     let search
-    if (scrollId) search = (...args) => child.scroll(...args)
-    else {
+    if (scrollId) {
+      search = (...args) => child.scroll(...args)
+    } else {
       search = (...args) => child.search(...args)
       // higher order wrapper function for search caching
       if (searchWrapper && !scroll) search = searchWrapper(search)

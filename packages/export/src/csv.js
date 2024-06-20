@@ -22,24 +22,37 @@ export default ({
 
   return {
     promise: (async () => {
-      for await (let r of iterableData) {
-        if (cancel) break
-        stream.write(
-          csv(
-            _.map(
-              (t) =>
-                t.display(_.get(t.key, r), {
-                  key: t.key,
-                  record: r,
-                  transform,
-                }),
-              transform
+      try {
+        for await (let r of iterableData) {
+          if (cancel) break
+          stream.write(
+            csv(
+              _.map(
+                (t) =>
+                  t.display(_.get(t.key, r), {
+                    key: t.key,
+                    record: r,
+                    transform,
+                  }),
+                transform
+              )
             )
           )
-        )
-        recordsWritten = recordsWritten + _.getOr(1, 'recordCount', r)
-        await onWrite({ recordsWritten, record: r })
+          recordsWritten = recordsWritten + _.getOr(1, 'recordCount', r)
+          await onWrite({ recordsWritten, record: r })
+        }
+      } catch (e) {
+        console.error('Error writing CSV')
+
+        // Ensure that the stream is closed and marked as not done,
+        // this prevents errors at the call site.
+        await onWrite({ recordsWritten, isStreamDone: false })
+        await stream.end()
+
+        // Rethrow the error to the call site.
+        throw e
       }
+
       await onWrite({ recordsWritten, isStreamDone: true })
       await stream.end()
     })(),

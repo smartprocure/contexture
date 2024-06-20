@@ -48,32 +48,44 @@ export default ({
 
   return {
     promise: (async () => {
-      for await (let r of iterableData) {
-        if (cancel) break
-        let row = F.mapIndexed(
-          (data, index) =>
-            convertToExcelCell(
-              data.display(_.get(data.key, r), {
-                key: data.key,
-                record: r,
-                transform,
-              }),
-              index
-            ),
-          transform
-        )
-        columns = F.mapIndexed(
-          (value, index) => ({
-            width: Math.min(
-              Math.max(value.width, row[index].value.length),
-              maxColumnWidth
-            ),
-          }),
-          columns
-        )
-        excelData.push(row)
-        recordsWritten = recordsWritten + _.getOr(1, 'recordCount', r)
-        await onWrite({ recordsWritten })
+      try {
+        for await (let r of iterableData) {
+          if (cancel) break
+          let row = F.mapIndexed(
+            (data, index) =>
+              convertToExcelCell(
+                data.display(_.get(data.key, r), {
+                  key: data.key,
+                  record: r,
+                  transform,
+                }),
+                index
+              ),
+            transform
+          )
+          columns = F.mapIndexed(
+            (value, index) => ({
+              width: Math.min(
+                Math.max(value.width, row[index].value.length),
+                maxColumnWidth
+              ),
+            }),
+            columns
+          )
+          excelData.push(row)
+          recordsWritten = recordsWritten + _.getOr(1, 'recordCount', r)
+          await onWrite({ recordsWritten })
+        }
+      } catch (e) {
+        console.error('Error writing Excel')
+
+        // Ensure that the stream is closed and marked as not done,
+        // this prevents errors at the call site.
+        await onWrite({ recordsWritten, isStreamDone: false })
+        await stream.end()
+
+        // Rethrow the error to the call site.
+        throw e
       }
 
       const readStream = await readStreamData(excelData, {
