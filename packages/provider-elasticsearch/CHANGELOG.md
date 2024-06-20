@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.29.2
+
+### Patch Changes
+
+- 2065fa24: Remove bad configuration from scrolling payload
+
 ## 1.29.1
 
 ### Patch Changes
