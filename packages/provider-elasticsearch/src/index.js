@@ -57,7 +57,6 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     let request = scrollId
       ? // If we have scrollId then keep scrolling, no query needed
         {
-          ...configOptions,
           scroll: scroll === true ? '60m' : hoistedFromFilters,
           body: { scroll_id: scrollId },
         }
