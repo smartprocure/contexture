@@ -360,4 +360,87 @@ export default F.stampKey('type', {
       search: null,
     },
   },
+  dateIntervalGroupStats: {
+    reactors: {
+      groupField: 'self',
+      statsField: 'self',
+      interval: 'self',
+      drilldown: 'self',
+    },
+  },
+  dateRangesGroupStats: {
+    reactors: {
+      groupField: 'self',
+      statsField: 'self',
+      ranges: 'self',
+      drilldown: 'self',
+    },
+  },
+  fieldValuePartitionGroupStats: {
+    reactors: {
+      groupField: 'self',
+      statsField: 'self',
+      matchValue: 'self',
+      stats: 'self',
+      drilldown: 'self',
+    },
+  },
+  fieldValuesDelta: {
+    reactors: {
+      groupField: 'self',
+      statsField: 'self',
+      size: 'self',
+      background: 'self',
+      foreground: 'self',
+      drilldown: 'self',
+    },
+  },
+  fieldValuesGroupStats: {
+    reactors: {
+      groupField: 'self',
+      statsField: 'self',
+      filter: 'self',
+      stats: 'self',
+      sort: 'self',
+      size: 'self',
+      drilldown: 'self',
+    },
+  },
+  numberIntervalGroupStats: {
+    reactors: {
+      groupField: 'self',
+      statsField: 'self',
+      interval: 'self',
+      drilldown: 'self',
+    },
+  },
+  numberRangesGroupStats: {
+    reactors: {
+      groupField: 'self',
+      statsField: 'self',
+      ranges: 'self',
+      drilldown: 'self',
+    },
+  },
+  percentilesGroupStats: {
+    reactors: {
+      groupField: 'self',
+      percents: 'self',
+      drilldown: 'self',
+    },
+  },
+  stats: {
+    reactors: {
+      statsField: 'self',
+      stats: 'self',
+    },
+  },
+  tagsQueryGroupStats: {
+    reactors: {
+      groupField: 'self',
+      statsField: 'self',
+      tags: 'self',
+      drilldown: 'self',
+    },
+  },
 })
