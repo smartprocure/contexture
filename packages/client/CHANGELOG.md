@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.54.0
+
+### Minor Changes
+
+- 5ac9a1f1: Add example types for missing elastic provider types
+
 ## 2.53.7
 
 ### Patch Changes
