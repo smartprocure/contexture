@@ -443,4 +443,9 @@ export default F.stampKey('type', {
       drilldown: 'self',
     },
   },
+  raw: {
+    reactors: {
+      filter: 'self',
+    },
+  },
 })
