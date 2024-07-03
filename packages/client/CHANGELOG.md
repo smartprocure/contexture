@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.54.1
+
+### Patch Changes
+
+- b6afd556: Add raw example type to client
+
 ## 2.54.0
 
 ### Minor Changes
