@@ -31,6 +31,14 @@ let popoverStyle = {
   width: 'auto',
 }
 
+let DefaultHeaderCell = withTheme(({ children, theme: { Th }, ...props }) => (
+  <Th {...props}>
+    <Flex style={{ display: 'inline-flex', alignItems: 'center' }}>
+      {children}
+    </Flex>
+  </Th>
+))
+
 let Header = ({
   field: fieldSchema,
   includes,
@@ -46,7 +54,6 @@ let Header = ({
   isStickyColumn,
   isLastColumn,
   theme: {
-    Th,
     Button,
     DropdownItem,
     Icon,
@@ -67,15 +74,7 @@ let Header = ({
     hideMenu,
     typeDefault,
   } = fieldSchema
-  let HeaderCell =
-    fieldSchema.HeaderCell ||
-    (({ children, ...props }) => (
-      <Th {...props}>
-        <Flex style={{ display: 'inline-flex', alignItems: 'center' }}>
-          {children}
-        </Flex>
-      </Th>
-    ))
+  let HeaderCell = fieldSchema.HeaderCell || DefaultHeaderCell
 
   let filterNode =
     criteria &&
