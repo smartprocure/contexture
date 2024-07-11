@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.59.10
+
+### Patch Changes
+
+- 50f03df7: Fix header cell rendering
+
 ## 2.59.9
 
 ### Patch Changes
