@@ -445,7 +445,7 @@ export default F.stampKey('type', {
   },
   raw: {
     reactors: {
-      filter: 'self',
+      filter: 'others',
     },
   },
 })
