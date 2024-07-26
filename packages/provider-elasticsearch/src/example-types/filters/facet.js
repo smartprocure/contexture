@@ -36,7 +36,8 @@ export default {
             // Size 0 no longer supported natively by ES: https://github.com/elastic/elasticsearch/issues/18838
             size: size || (size === 0 ? elasticsearchIntegerMax : 10),
             order,
-            ...(node.includeZeroes && { min_doc_count: 0 }),
+            ...(node.includeZeroes &&
+              !node.optionsFilter && { min_doc_count: 0 }),
           },
         },
         facetCardinality: { cardinality: { field } },
