@@ -1,5 +1,6 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
+import { isAtLeastVersion8 } from './compat.js'
 
 let Tree = F.tree((x) => x.properties)
 // flatLeaves should auto detect reject vs omit (or just more general obj vs arr method)
@@ -83,6 +84,10 @@ export let fromMappingsWithAliases = (mappings, aliases) => {
 
 export let getESSchemas = (client) =>
   Promise.all([client.indices.getMapping(), client.indices.getAlias()]).then(
-    ([{ body: mappings }, { body: aliases }]) =>
-      fromMappingsWithAliases(mappings, aliases)
+    ([mappingResult, aliasResult]) => {
+      return fromMappingsWithAliases(
+        isAtLeastVersion8(client) ? mappingResult : mappingResult.body,
+        isAtLeastVersion8(client) ? aliasResult : aliasResult.body
+      )
+    }
   )

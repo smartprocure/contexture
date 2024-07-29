@@ -2,6 +2,7 @@ import _ from 'lodash/fp.js'
 import { hoistOnTree } from './utils/results.js'
 import { getESSchemas } from './schema.js'
 import _debug from 'debug'
+import { isAtLeastVersion8 } from './compat.js'
 
 let debug = _debug('contexture:elasticsearch')
 
@@ -45,6 +46,7 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     }
   },
   async runSearch({ requestOptions = {} } = {}, node, schema, filters, aggs) {
+    let client = config.getClient()
     let hoistedFromFilters = hoistOnTree(filters)
     let hoistedFromAggs = hoistOnTree(aggs)
     let {
@@ -54,36 +56,41 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
       clusterDefaultTimeout,
     } = config
     let { scroll, scrollId } = node
-    let request = scrollId
-      ? // If we have scrollId then keep scrolling, no query needed
-        {
-          scroll: scroll === true ? '60m' : hoistedFromFilters,
-          body: { scroll_id: scrollId },
-        }
-      : // Deterministic ordering of JSON keys for request cache optimization
-        {
-          ...configOptions,
-          index: schema.elasticsearch.index,
-          // Scroll support (used for bulk export)
-          ...(scroll && { scroll: scroll === true ? '2m' : scroll }),
-          body: {
-            // Wrap in constant_score when not sorting by score to avoid wasting time on relevance scoring
-            ...(!_.isEmpty(hoistedFromAggs) && _.mergeAll(hoistedFromAggs)),
-            ...(!_.isEmpty(hoistedFromFilters) &&
-              _.mergeAll(hoistedFromFilters)),
-            query:
-              filters && !_.has('sort._score', aggs)
-                ? constantScore(filters)
-                : filters,
-            // If there are aggs, skip search results
-            ...(aggs.aggs && { size: 0 }),
-            // Sorting by _doc is more efficient for scrolling since it won't waste time on any sorting
-            ...(scroll && { sort: ['_doc'] }),
-            ...aggs,
-          },
-        }
+    let request
+    // If we have scrollId then keep scrolling, no query needed
+    if (scrollId) {
+      let body = { scroll_id: scrollId }
+      request = {
+        scroll: scroll === true ? '60m' : hoistedFromFilters,
+        ...(isAtLeastVersion8(client) ? body : { body }),
+      }
+    }
+    // Deterministic ordering of JSON keys for request cache optimization
+    else {
+      let body = {
+        // Wrap in constant_score when not sorting by score to avoid wasting time on relevance scoring
+        ...(!_.isEmpty(hoistedFromAggs) && _.mergeAll(hoistedFromAggs)),
+        ...(!_.isEmpty(hoistedFromFilters) && _.mergeAll(hoistedFromFilters)),
+        query:
+          filters && !_.has('sort._score', aggs)
+            ? constantScore(filters)
+            : filters,
+        // If there are aggs, skip search results
+        ...(aggs.aggs && { size: 0 }),
+        // Sorting by _doc is more efficient for scrolling since it won't waste time on any sorting
+        ...(scroll && { sort: ['_doc'] }),
+        ...aggs,
+      }
+      request = {
+        ...configOptions,
+        index: schema.elasticsearch.index,
+        // Scroll support (used for bulk export)
+        ...(scroll && { scroll: scroll === true ? '2m' : scroll }),
+        ...(isAtLeastVersion8(client) ? body : { body }),
+      }
+    }
 
-    let child = config.getClient().child({
+    let child = client.child({
       headers: requestOptions.headers,
       requestTimeout: requestOptions.requestTimeout,
     })
@@ -102,7 +109,8 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     node._meta.requests.push(metaObj)
     let count = counter.inc()
     debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
-    let { body } = await search(request, requestOptions)
+    let response = await search(request, requestOptions)
+    let body = isAtLeastVersion8(client) ? response : response?.body
 
     // If body has timed_out set to true, log that partial results were returned,
     // if partial is turned off an error will be thrown instead.
