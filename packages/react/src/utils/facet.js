@@ -23,9 +23,7 @@ export let Cardinality = _.flow(
   observer
 )(({ node, tree }) => {
   let size = node.size || 10
-  let optionsSize = _.size(node.context.options)
-  let count =
-    optionsSize < size ? optionsSize : _.get('context.cardinality', node)
+  let count = _.get('context.cardinality', node)
   if (count) {
     return (
       <Flex
@@ -33,7 +31,8 @@ export let Cardinality = _.flow(
         justifyContent="space-between"
       >
         <div>
-          Showing {toNumber(_.min([size, optionsSize]))} of {toNumber(count)}
+          Showing {toNumber(_.min([size, _.size(node.context.options)]))} of{' '}
+          {toNumber(count)}
         </div>
         {count > size && (
           <div>
