@@ -61,15 +61,16 @@ export default {
         name: x.key,
         count: x.doc_count,
       })),
-      cardinality: node.includeZeroes
-        ? _.get(
-            'aggregations.facetCardinality.value',
-            await search({
-              aggs: { facetCardinality: { cardinality: { field } } },
-              query: { match_all: {} },
-            })
-          )
-        : agg.facetCardinality.value,
+      cardinality:
+        node.includeZeroes && !node.optionsFilter
+          ? _.get(
+              'aggregations.facetCardinality.value',
+              await search({
+                aggs: { facetCardinality: { cardinality: { field } } },
+                query: { match_all: {} },
+              })
+            )
+          : agg.facetCardinality.value,
     }
 
     // Get missing counts for values sent up but not included in the results
