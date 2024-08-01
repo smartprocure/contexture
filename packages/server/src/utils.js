@@ -60,10 +60,13 @@ export let runTypeFunction = (config) => async (name, node, search) => {
     return await (search
       ? fn(node, search, schema, config)
       : fn(node, schema, config))
-  } catch (error) {
+  } catch (e) {
     // Sometimes we throw strings instead of errors
-    const message = _.getOr(error, 'message', error)
-    error.message = `(at contexture node with key=${node.key} and type=${node.type}) ${message}`
+    const error = _.isString(e) ? new Error(e) : e
+    error.cause = {
+      contexture: { node },
+      ...(_.isString(error.cause) ? { error: error.cause } : error.cause ?? {}),
+    }
     throw error
   }
 }

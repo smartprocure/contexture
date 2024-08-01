@@ -109,7 +109,20 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     node._meta.requests.push(metaObj)
     let count = counter.inc()
     debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
-    let response = await search(request, requestOptions)
+
+    let response
+    try {
+      response = await search(request, requestOptions)
+    } catch (e) {
+      // Provide information about the error in the standard `cause` property
+      // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause#providing_structured_data_as_the_error_cause
+      e.cause = e.meta ?? {}
+      delete e.meta
+      // Remove duplicated information.
+      delete e.cause.meta
+      throw e
+    }
+
     let body = isAtLeastVersion8(client) ? response : response?.body
 
     // If body has timed_out set to true, log that partial results were returned,
