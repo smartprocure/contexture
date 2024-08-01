@@ -47,7 +47,7 @@ describe('Server Provider', () => {
     let firstSearchCall =
       client.child.mock.results[0].value.search.mock.calls[0]
 
-    expect(firstSearchCall[0].body.query.constant_score.filter).toEqual({
+    expect(firstSearchCall[0].query.constant_score.filter).toEqual({
       query_string,
     })
   })
@@ -65,7 +65,7 @@ describe('Server Provider', () => {
     let firstSearchCall =
       client.child.mock.results[0].value.search.mock.calls[0]
 
-    expect(firstSearchCall[0].body).toEqual({ query: undefined })
+    expect(firstSearchCall[0]).toEqual({ query: undefined })
   })
   it('runSearch should not wrap queries in constant_score if sort._score is present', () => {
     const client = {
@@ -87,7 +87,7 @@ describe('Server Provider', () => {
     let firstSearchCall =
       client.child.mock.results[0].value.search.mock.calls[0]
 
-    expect(firstSearchCall[0].body.query).toEqual({
+    expect(firstSearchCall[0].query).toEqual({
       query_string,
     })
   })
