@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.54.2
+
+### Patch Changes
+
+- 54e71bb2: Fix raw example type reactors
+
 ## 2.54.1
 
 ### Patch Changes

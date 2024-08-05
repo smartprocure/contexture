@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.30.0
+
+### Minor Changes
+
+- 1fb99f79: Support elasticsearch client v8
+
+### Patch Changes
+
+- dca7d1dc: Respect include zero node config while filtering properly when filtering is enabled for facets
+- ac684f83: Use the standard Error class [cause property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause#providing_structured_data_as_the_error_cause) to add more context about the original elasticsearch error.
+
 ## 1.29.2
 
 ### Patch Changes
