@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.30.1
+
+### Patch Changes
+
+- 3cfb1e4e: Fix regression in contexture-elasticsearch error handling
+
 ## 1.30.0
 
 ### Minor Changes
