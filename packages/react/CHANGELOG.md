@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.59.11
+
+### Patch Changes
+
+- dca7d1dc: Respect include zero node config while filtering properly when filtering is enabled for facets
+- Updated dependencies [ac684f83]
+  - contexture@0.12.24
+
 ## 2.59.10
 
 ### Patch Changes

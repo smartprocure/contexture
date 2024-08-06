@@ -1,6 +1,6 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "1.29.2",
+  "version": "1.30.0",
   "description": "ElasticSearch Provider for Contexture",
   "type": "module",
   "exports": {
@@ -49,7 +49,7 @@
   "devDependencies": {
     "@elastic/elasticsearch": "^7.11.0",
     "agentkeepalive": "^4.1.4",
-    "contexture": "^0.12.22",
+    "contexture": "^0.12.24",
     "json-stable-stringify": "^1.0.1"
   },
   "packageManager": "yarn@3.2.0"
