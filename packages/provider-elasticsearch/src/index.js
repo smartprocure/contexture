@@ -116,10 +116,7 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     } catch (e) {
       // Provide information about the error in the standard `cause` property
       // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause#providing_structured_data_as_the_error_cause
-      e.cause = e.meta ?? {}
-      delete e.meta
-      // Remove duplicated information.
-      delete e.cause.meta
+      e.cause = _.omit('meta', e.meta) ?? {}
       throw e
     }
 
