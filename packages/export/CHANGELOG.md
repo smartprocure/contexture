@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 1.3.0
+
+### Minor Changes
+
+- 2be8a442: Add a new export strategy for the contexture-elasticsearch fieldValueGroupStats node.
+
 ## 1.2.0
 
 ### Minor Changes
