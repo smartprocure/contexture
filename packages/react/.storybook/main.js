@@ -50,6 +50,12 @@ export default {
       titlePrefix: 'Live Demos/Index Explorer',
     },
   ],
+   features: { emotionAlias: false },
+  refs: {
+    '@chakra-ui/react': {
+      disable: true,
+    },
+  },
 }
 
 function getAbsolutePath(value) {
