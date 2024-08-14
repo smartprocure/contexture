@@ -21,8 +21,8 @@ delete args['loader:']
 // Clear build directory since esbuild won't do it for us
 await fs.rm('dist', { force: true, recursive: true })
 
-let entryPoints = glob.sync('src/**/*.js', {
-  ignore: ['src/**/*.{test,stories}.js', 'src/**/{test,stories}/**/*'],
+let entryPoints = glob.sync('src/**/*.{js,ts,tsx}', {
+  ignore: ['src/**/*.{test,stories}.{js,ts,tsx}', 'src/**/{test,stories}/**/*'],
 })
 
 // Build project

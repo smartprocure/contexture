@@ -10140,6 +10140,7 @@ __metadata:
     contexture-util: ^0.1.2
     elasticsearch-browser: ^14.2.2
     emoji-datasource: ^5.0.1
+    esbuild-plugin-tsc: ^0.4.0
     escape-string-regexp: ^5.0.0
     eslint-plugin-react: ^7.32.0
     eslint-plugin-storybook: ^0.6.14
@@ -11510,6 +11511,17 @@ __metadata:
   version: 0.2.1
   resolution: "esbuild-plugin-alias@npm:0.2.1"
   checksum: afe2d2c8b5f09d5321cb8d9c0825e8a9f6e03c2d50df92f953a291d4620cc29eddb3da9e33b238f6d8f77738e0277bdcb831f127399449fecf78fb84c04e5da9
+  languageName: node
+  linkType: hard
+
+"esbuild-plugin-tsc@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "esbuild-plugin-tsc@npm:0.4.0"
+  dependencies:
+    strip-comments: ^2.0.1
+  peerDependencies:
+    typescript: ^4.0.0 || ^5.0.0
+  checksum: 080675ae2766b53c2bd2c423c3bae5dd6d1e5af03a06b79129eca6426d9eb358b49077f58a1dc1bc25a299aa8fccd4123f6afb18957b9273b9737e3c7bb38ce4
   languageName: node
   linkType: hard
 
@@ -19682,6 +19694,13 @@ __metadata:
   version: 4.0.0
   resolution: "strip-bom@npm:4.0.0"
   checksum: 9dbcfbaf503c57c06af15fe2c8176fb1bf3af5ff65003851a102749f875a6dbe0ab3b30115eccf6e805e9d756830d3e40ec508b62b3f1ddf3761a20ebe29d3f3
+  languageName: node
+  linkType: hard
+
+"strip-comments@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "strip-comments@npm:2.0.1"
+  checksum: 36cd122e1c27b5be69df87e1687770a62fe183bdee9f3ff5cf85d30bbc98280afc012581f2fd50c7ad077c90f656f272560c9d2e520d28604b8b7ea3bc87d6f9
   languageName: node
   linkType: hard
 
