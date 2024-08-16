@@ -11,6 +11,7 @@ import tagsQuery from './filters/tagsQuery.js'
 // Combo Filter + Results
 import facet from './filters/facet.js'
 import number from './filters/number.js'
+import step from './filters/step.js'
 import dateRangeFacet from './filters/dateRangeFacet.js'
 
 // Single Metrics
@@ -48,6 +49,7 @@ export {
   tagsQuery,
   facet,
   number,
+  step,
   dateRangeFacet,
   results,
   stats,

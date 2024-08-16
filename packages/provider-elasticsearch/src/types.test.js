@@ -30,6 +30,7 @@ describe('All Example Types', () => {
       'smartIntervalHistogram',
       'statistical',
       'stats',
+      'step',
       'tagsQuery',
       'tagsQueryGroupStats',
       'tagsText',
