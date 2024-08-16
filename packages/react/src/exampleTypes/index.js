@@ -19,6 +19,7 @@ import TagsText from './TagsText.js'
 import TermsStats from './TermsStats.js'
 import TermsStatsTable from './TermsStatsTable.js'
 import Text from './Text.js'
+import StepSlider from './StepSlider'
 import TypeMap from './TypeMap.js'
 
 export {
@@ -43,5 +44,6 @@ export {
   TermsStats,
   TermsStatsTable,
   Text,
+  StepSlider,
   TypeMap,
 }

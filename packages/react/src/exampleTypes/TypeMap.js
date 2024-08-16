@@ -9,6 +9,7 @@ import TagsText from './TagsText.js'
 import Exists from './Exists.js'
 import Bool from './Bool.js'
 import Text from './Text.js'
+import StepSlider from './StepSlider'
 
 export default {
   facet: Facet,
@@ -23,4 +24,5 @@ export default {
   mongoId: Text,
   exists: Exists,
   bool: Bool,
+  step: StepSlider,
 }
