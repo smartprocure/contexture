@@ -50,10 +50,11 @@ export default {
       titlePrefix: 'Live Demos/Index Explorer',
     },
   ],
-   features: { emotionAlias: false },
+  features: { emotionAlias: false },
   refs: {
+    // https://github.com/storybookjs/storybook/discussions/18821
     '@chakra-ui/react': {
-      disable: true,
+      disable: true, // 👈 chakra stories disabled here
     },
   },
 }

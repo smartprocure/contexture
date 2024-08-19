@@ -17,7 +17,7 @@ export type Node<
   ? BaseNode<NodeProps>
   : BaseNodeWithContext<NodeProps, ContextProps>
 
-export type FormatterFn = (value: number) => string
+export type FormatterFn = (value: number) => string | number
 
 export type Tree<NodeProps> = {
   mutate: (path: BaseNode['path'], value: Partial<NodeProps>) => unknown

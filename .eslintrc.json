@@ -1,6 +1,6 @@
 {
   "extends": ["eslint:recommended", "plugin:import/recommended"],
-  "ignorePatterns": ["dist", "node_modules", "*.ts"],
+  "ignorePatterns": ["dist", "node_modules"],
   "parserOptions": {
     "ecmaVersion": "2022",
     "sourceType": "module"
@@ -16,7 +16,7 @@
   "settings": {
     "import/resolver": {
       "typescript": {
-        "extensions": [".js", ".jsx"]
+        "extensions": [".ts", ".tsx", ".js", ".jsx"]
       }
     }
   }

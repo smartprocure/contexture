@@ -11,9 +11,9 @@ describe('step', () => {
   }
 
   it('checks if range is present and not empty', () => {
-    let withoutinput = { type: 'step', field: 'test' }
+    let inputWithoutRange = { type: 'step', field: 'test' }
     expect(!!hasValue(input)).toBe(true)
-    expect(!!hasValue(withoutinput)).toBe(false)
+    expect(!!hasValue(inputWithoutRange)).toBe(false)
   })
 
   it('returns proper elastic query', () => {

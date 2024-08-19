@@ -2,7 +2,7 @@ import React from 'react'
 
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import { act, render, screen } from '@testing-library/react'
+import { act, screen, within } from '@testing-library/react'
 
 import StepSlider from './StepSlider'
 
@@ -17,22 +17,22 @@ describe('StepSlider', () => {
   it('renders range slider', async () => {
     const rangeSlider = await screen.getByTestId('chakra-range-slider-track')
     const rangeSliderThumbs = await screen.getAllByRole('slider')
-    expect(rangeSlider).toBeDefined()
+    expect(rangeSlider).toBeInTheDocument()
     expect(rangeSliderThumbs).toHaveLength(2)
   })
 
   it('renders min and max values', async () => {
-    const rangeLabel = await screen.getByText('Range')
-    const rangeValue = await screen.getByText('0 - 1,000')
-    expect(rangeLabel).toBeDefined()
-    expect(rangeValue).toBeDefined()
+    const rangeLabel = await screen.queryByText('Range')
+    const rangeValue = await screen.queryByText('0 - 1,000')
+    expect(rangeLabel).toBeInTheDocument()
+    expect(rangeValue).toBeInTheDocument()
   })
 
   it('renders results', async () => {
-    const countLabel = await screen.getByText('Results')
-    const countValue = await screen.getByText('400,000')
-    expect(countLabel).toBeDefined()
-    expect(countValue).toBeDefined()
+    const countLabel = await screen.queryByText('Results')
+    const countValue = await screen.queryByText('400,000')
+    expect(countLabel).toBeInTheDocument()
+    expect(countValue).toBeInTheDocument()
   })
 
   /** Testing this behavior was not feasible */
@@ -49,7 +49,7 @@ describe('StepSlider', () => {
       ])
     })
 
-    const minAndMaxLabel = await screen.getByText('0 - 5,000')
-    expect(minAndMaxLabel).toBeDefined()
+    const minAndMaxLabel = await screen.queryByText('0 - 5,000')
+    expect(minAndMaxLabel).toBeInTheDocument()
   })
 })

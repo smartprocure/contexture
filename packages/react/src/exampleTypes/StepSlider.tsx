@@ -58,17 +58,13 @@ const getDefaultRange = (steps: number[], range: number[]): number[] => {
   return [minStep, maxStep]
 }
 
-const getRealValue = (steps: number[], value: number): number => {
+const convertStepToValue = (steps: number[], value: number): number => {
   return steps[value]
 }
 
-const StepSlider: FC<StepSliderProps> = ({
-  tree,
-  node,
-  formatter = toNumber,
-}) => {
+const StepSlider = ({ tree, node, formatter = toNumber }: StepSliderProps) => {
   const formatValue = (value: number): string => {
-    const realValue = getRealValue(steps, value)
+    const realValue = convertStepToValue(steps, value)
     const lastStepValue = steps[steps.length - 1]
     if (realValue === lastStepValue) return `${formatter(realValue)}+`
     return formatter(realValue).toString()
@@ -77,12 +73,12 @@ const StepSlider: FC<StepSliderProps> = ({
   const steps = node.steps
   const count = node.context.recordsCount ?? 0
   const defaultRange = getDefaultRange(steps, node.range)
-  const [rangeValues, setRangeValues] = useState(defaultRange)
+  const [rangeValues, setRangeValues] = useState<number[]>(defaultRange)
 
   const onRangeUpdated = (range: number[]) => {
     const realRange = [
-      getRealValue(steps, range[0]),
-      getRealValue(steps, range[1]),
+      convertStepToValue(steps, range[0]),
+      convertStepToValue(steps, range[1]),
     ]
     tree.mutate(node.path, { range: realRange })
   }
@@ -96,7 +92,7 @@ const StepSlider: FC<StepSliderProps> = ({
     <Box>
       <HStack paddingX="4px" justifyContent="space-between">
         <Label value={rangeLabel} label="Range" />
-        <Label value={currentCount} label="Results" alignment="right" />
+        <Label value={currentCount} label="Results" align="right" />
       </HStack>
       {/** This padding exists because of contexture native margins.
        * When the slider thumb is encapsulated on the filter UI,
@@ -129,7 +125,7 @@ interface SliderThumbProps {
   label: string
 }
 
-const SliderThumb: FC<SliderThumbProps> = ({ index, label }) => (
+const SliderThumb = ({ index, label }: SliderThumbProps) => (
   <Tooltip
     label={label}
     placement="top"
@@ -157,13 +153,13 @@ const SliderThumb: FC<SliderThumbProps> = ({ index, label }) => (
 interface LabelProps {
   value: string
   label: string
-  alignment?: 'left' | 'right'
+  align?: 'left' | 'right'
 }
 
-const Label: FC<LabelProps> = ({ value, label, alignment = 'left' }) => {
-  const cssAlignment = alignment === 'left' ? 'flex-start' : 'flex-end'
+const Label = ({ value, label, align = 'left' }: LabelProps) => {
+  const cssAlign = align === 'left' ? 'flex-start' : 'flex-end'
   return (
-    <Stack alignItems={cssAlignment}>
+    <Stack alignItems={cssAlign}>
       <Text
         color={theme.color.text.body.primary}
         fontSize={theme.font.size.md}
