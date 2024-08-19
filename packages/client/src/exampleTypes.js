@@ -187,6 +187,20 @@ export default F.stampKey('type', {
       max: null,
     },
   },
+  step: {
+    label: 'Number Slider',
+    reactors: {
+      range: 'all',
+    },
+    defaults: {
+      field: null,
+      range: [0, 1000],
+      steps: [0, 1000, 5000, 10000, 25000, 50000, 1000000],
+      context: {
+        recordsCount: 0,
+      },
+    },
+  },
   bool: {
     validate: validateValueExistence,
     reactors: {
