@@ -7,7 +7,7 @@ export default {
   args: {
     tree: TestTree(),
     path: ['step'],
-    formatter: toNumber
+    formatter: toNumber,
   },
 }
 
