@@ -107,6 +107,7 @@ const StepSlider = ({ tree, node, formatter = toNumber }: StepSliderProps) => {
           onChangeEnd={onRangeUpdated}
           defaultValue={defaultRange}
           marginTop={2}
+          zIndex={0}
         >
           <RangeSliderTrack background={theme.color.gray[100]}>
             <RangeSliderFilledTrack background={theme.color.blue[500]} />
