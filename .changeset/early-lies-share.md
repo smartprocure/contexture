@@ -1,7 +1,7 @@
 ---
-'contexture-elasticsearch': patch
-'contexture-client': patch
-'contexture-react': patch
+'contexture-elasticsearch': minor
+'contexture-client': minor
+'contexture-react': minor
 ---
 
 New type Step Slider type added
