@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.55.0
+
+### Minor Changes
+
+- 16e9bbff: New type Step Slider type added
+
 ## 2.54.2
 
 ### Patch Changes

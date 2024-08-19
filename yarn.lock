@@ -10026,7 +10026,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"contexture-client@^2.53.7, contexture-client@^2.54.2, contexture-client@workspace:packages/client":
+"contexture-client@^2.53.7, contexture-client@^2.55.0, contexture-client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "contexture-client@workspace:packages/client"
   dependencies:
@@ -10036,7 +10036,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture-elasticsearch@^1.30.0, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
+"contexture-elasticsearch@^1.31.0, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
   version: 0.0.0-use.local
   resolution: "contexture-elasticsearch@workspace:packages/provider-elasticsearch"
   dependencies:
@@ -10135,8 +10135,8 @@ __metadata:
     babel-jest: ^29.7.0
     chromatic: ^6.23.0
     contexture: ^0.12.24
-    contexture-client: ^2.54.2
-    contexture-elasticsearch: ^1.30.0
+    contexture-client: ^2.55.0
+    contexture-elasticsearch: ^1.31.0
     contexture-util: ^0.1.2
     elasticsearch-browser: ^14.2.2
     emoji-datasource: ^5.0.1

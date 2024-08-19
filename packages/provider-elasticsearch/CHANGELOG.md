@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.31.0
+
+### Minor Changes
+
+- 16e9bbff: New type Step Slider type added
+
 ## 1.30.1
 
 ### Patch Changes
