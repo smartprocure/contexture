@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.60.1
+
+### Patch Changes
+
+- ad5b2dd6: `StepSlider`component moved from `contexture-react` to `spark`
+
 ## 2.60.0
 
 ### Minor Changes
