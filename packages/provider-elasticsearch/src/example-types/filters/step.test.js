@@ -21,10 +21,10 @@ describe('step', () => {
     expect(filter(input)).toEqual(expectedValue)
   })
 
-  it('removes upper bound when range is last step', () => {
+  it('removes upper bound when upper bound is null', () => {
     const inputWithNewRange = {
       ...input,
-      range: [0, 1000],
+      range: [0, null],
     }
     let expectedValue = { range: { test: { gte: 0 } } }
     expect(filter(inputWithNewRange)).toEqual(expectedValue)
@@ -38,7 +38,7 @@ describe('step', () => {
         },
       },
     }
-    let output = buildQuery(input.field, input.range, input.steps)
+    let output = buildQuery(input.field, input.range)
     expect(output).toEqual(expectedDSL)
   })
 })
