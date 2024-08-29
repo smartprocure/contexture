@@ -3,4 +3,4 @@
 'contexture-client': minor
 ---
 
-`openUpperBound` feature added to `step` query on elastic search provider
+capbility of dealing with `null` ranges added to `step` query on elastic search provider
