@@ -7,39 +7,26 @@ const getMinAndMax = (range) => {
   return { min, max }
 }
 
-const isValueMaxOnSteps = (value, steps) => {
-  const max = steps[steps.length - 1]
-  return value === max
-}
-
-let filter = ({ field, range, steps }) => {
+let filter = ({ field, range }) => {
   const { min, max } = getMinAndMax(range)
-
-  /** In the last step, we do not filter by the upper bound */
-  if (isValueMaxOnSteps(max, steps)) {
-    return {
-      range: { [field]: pickSafeNumbers({ gte: min }) },
-    }
-  }
-
   return {
     range: { [field]: pickSafeNumbers({ gte: min, lte: max }) },
   }
 }
 
-let buildQuery = (field, range, steps) => {
+let buildQuery = (field, range) => {
   return {
     aggs: {
       rangeFilter: {
-        filter: filter({ field, range, steps }),
+        filter: filter({ field, range }),
       },
     },
   }
 }
 
 let result = async (node, search) => {
-  let { field, range, steps } = node
-  const result = await search(buildQuery(field, range, steps))
+  let { field, range } = node
+  const result = await search(buildQuery(field, range))
   const recordsCount = result.aggregations.rangeFilter.doc_count
   return { recordsCount }
 }
