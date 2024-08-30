@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.32.0
+
+### Minor Changes
+
+- 98299f3a: capbility of dealing with `null` ranges added to `step` query on elastic search provider
+
 ## 1.31.0
 
 ### Minor Changes
