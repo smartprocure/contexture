@@ -1,5 +1,6 @@
 import _ from 'lodash/fp.js'
 import { schema } from './testSchema.js'
+import { describe, it, expect } from 'vitest'
 import {
   mergeHighlightsOnSource,
   removePathsFromSource,

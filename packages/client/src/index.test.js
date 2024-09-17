@@ -1,4 +1,5 @@
-import { jest } from '@jest/globals'
+import { vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import ContextureClient, { encode, exampleTypes } from './index.js'
@@ -38,7 +39,7 @@ let AllTests = (ContextureClient) => {
         },
       ],
     }
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ service, debounce: 1 }, tree)
 
     it('should support per-node onSerialize hook', () => {
@@ -275,7 +276,7 @@ let AllTests = (ContextureClient) => {
     throw Error('Should have thrown')
   })
   it('should work', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient(
       { service, debounce: 1 },
       {
@@ -380,14 +381,14 @@ let AllTests = (ContextureClient) => {
         },
       ],
     }
-    let service = jest.fn(async (dto, lastUpdateTime) => {
+    let service = vi.fn(async (dto, lastUpdateTime) => {
       let testChange = dto.children[0].values[0]
       // arbitrarily delay the first call to trigger a stale update
       await asyncSetTimeout(testChange === 'a' ? 20 : 1)
       return mockService()(dto, lastUpdateTime)
     })
 
-    let spy = jest.fn()
+    let spy = vi.fn()
     // Just call the spy for `results`
     let onResult = (path) => _.isEqual(path, ['root', 'results']) && spy()
     let Tree = ContextureClient(
@@ -424,11 +425,11 @@ let AllTests = (ContextureClient) => {
         },
       ],
     }
-    let service = jest.fn(async () => {
+    let service = vi.fn(async () => {
       throw 'service error!'
     })
 
-    let spy = jest.fn()
+    let spy = vi.fn()
     // Just call the spy for `onError`
     let onError = () => spy()
     let Tree = ContextureClient(
@@ -447,10 +448,10 @@ let AllTests = (ContextureClient) => {
     expect(spy).toBeCalledTimes(1)
   })
   it('onError tree should be back to normal - no updating flags etc', async () => {
-    let service = jest.fn(async () => {
+    let service = vi.fn(async () => {
       throw 'service error!'
     })
-    let spy = jest.fn()
+    let spy = vi.fn()
     let onError = () => spy()
     let tree = ContextureClient(
       {
@@ -504,7 +505,7 @@ let AllTests = (ContextureClient) => {
         },
       ],
     }
-    let service = jest.fn(async () => {
+    let service = vi.fn(async () => {
       throw 'service error!'
     })
 
@@ -524,9 +525,9 @@ let AllTests = (ContextureClient) => {
     }
   })
   it('should support custom type reactors', async () => {
-    let service = jest.fn(mockService())
-    let resultsUpdated = jest.fn()
-    let filterUpdated = jest.fn()
+    let service = vi.fn(mockService())
+    let resultsUpdated = vi.fn()
+    let filterUpdated = vi.fn()
     let onResult = _.cond([
       [_.isEqual(['root', 'results']), resultsUpdated],
       [_.isEqual(['root', 'filter']), filterUpdated],
@@ -575,7 +576,7 @@ let AllTests = (ContextureClient) => {
     expect(filterUpdated).toBeCalledTimes(1)
   })
   it('should support custom type initializers', async () => {
-    let testInit = jest.fn((node, { extend }) =>
+    let testInit = vi.fn((node, { extend }) =>
       extend(node, { isExtended: true })
     )
     let Tree = ContextureClient(
@@ -629,9 +630,9 @@ let AllTests = (ContextureClient) => {
     expect(Tree.getNode(['root', 'filter']).context.example).toBe(0)
   })
   it('should custom type reactors should work with and without values, and nested', async () => {
-    let service = jest.fn(mockService({}))
-    let resultsUpdated = jest.fn()
-    let filterUpdated = jest.fn()
+    let service = vi.fn(mockService({}))
+    let resultsUpdated = vi.fn()
+    let filterUpdated = vi.fn()
     let onResult = _.cond([
       [_.isEqual(['root', 'results']), resultsUpdated],
       [_.isEqual(['root', 'filter']), filterUpdated],
@@ -705,9 +706,9 @@ let AllTests = (ContextureClient) => {
     expect(filterUpdated).toBeCalledTimes(2)
   })
   it('Tree lenses should work', async () => {
-    let service = jest.fn(mockService({}))
-    let resultsUpdated = jest.fn()
-    let filterUpdated = jest.fn()
+    let service = vi.fn(mockService({}))
+    let resultsUpdated = vi.fn()
+    let filterUpdated = vi.fn()
     let onResult = _.cond([
       [_.isEqual(['root', 'results']), resultsUpdated],
       [_.isEqual(['root', 'filter']), filterUpdated],
@@ -746,7 +747,7 @@ let AllTests = (ContextureClient) => {
     expect(resultsUpdated).toBeCalledTimes(1)
   })
   it('should support custom actions', async () => {
-    let service = jest.fn(mockService({}))
+    let service = vi.fn(mockService({}))
     let tree = ContextureClient(
       {
         debounce: 1,
@@ -809,7 +810,7 @@ let AllTests = (ContextureClient) => {
     expect(newNode.special).toBe(true)
   })
   it('should support custom reactors', async () => {
-    let service = jest.fn(mockService({}))
+    let service = vi.fn(mockService({}))
     let tree = ContextureClient(
       {
         debounce: 1,
@@ -862,7 +863,7 @@ let AllTests = (ContextureClient) => {
     })
   })
   it('should support updatingPromise', async () => {
-    let spy = jest.fn(mockService({}))
+    let spy = vi.fn(mockService({}))
     let service = async (...args) => {
       // Add an artificial delay so we can see when updating starts
       await asyncSetTimeout(10)
@@ -905,7 +906,7 @@ let AllTests = (ContextureClient) => {
   })
   describe('Previously fixed bugs', () => {
     it('should not incorrectly mark siblings for update when their parents are marked on self', async () => {
-      let service = addDelay(10, jest.fn(mockService()))
+      let service = addDelay(10, vi.fn(mockService()))
       let Tree = ContextureClient({ service, debounce: 1 })
       let tree = Tree({
         key: 'root',
@@ -935,7 +936,7 @@ let AllTests = (ContextureClient) => {
       ).toBeNull()
     })
     it('should not prevent siblings from updating', async () => {
-      let service = addDelay(10, jest.fn(mockService()))
+      let service = addDelay(10, vi.fn(mockService()))
       let Tree = ContextureClient({ service, debounce: 1 })
       let tree = Tree({
         key: 'root',
@@ -1004,7 +1005,7 @@ let AllTests = (ContextureClient) => {
       ).not.toBeNull()
     })
     it('should not keep nodes without results updating forever', async () => {
-      let service = jest.fn(mockService())
+      let service = vi.fn(mockService())
       let Tree = ContextureClient({ debounce: 1, service })
       let tree = Tree({
         key: 'root',
@@ -1034,7 +1035,7 @@ let AllTests = (ContextureClient) => {
     })
   })
   it('should support subquery', async () => {
-    let spy = jest.fn(
+    let spy = vi.fn(
       mockService({
         mocks({ type }) {
           if (type === 'facet')
@@ -1103,7 +1104,7 @@ let AllTests = (ContextureClient) => {
     expect(targetTree.getNode(['root', 'b']).context.count).toBe(1)
   })
   it('should support subquery clearing target tree', async () => {
-    let spy = jest.fn(
+    let spy = vi.fn(
       mockService({
         mocks({ key, type }) {
           if (type === 'facet')
@@ -1168,7 +1169,7 @@ let AllTests = (ContextureClient) => {
     expect(spy).toBeCalledTimes(2)
   })
   it('should respect disableAutoUpdate', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({
       service,
       debounce: 1,
@@ -1209,7 +1210,7 @@ let AllTests = (ContextureClient) => {
   })
   it('should not update nodes without values', async () => {
     // working here
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({
       service,
       debounce: 1,
@@ -1247,7 +1248,7 @@ let AllTests = (ContextureClient) => {
   })
   it('should allow individual nodes to be updated', async () => {
     // working here
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({
       service,
       debounce: 1,
@@ -1367,7 +1368,7 @@ let AllTests = (ContextureClient) => {
     })
   })
   it('should still debounce disableAutoUpdate even with self affecting reactors that triggerImmediate', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({
       service,
       debounce: 1,
@@ -1398,7 +1399,7 @@ let AllTests = (ContextureClient) => {
     expect(service).toBeCalledTimes(1)
   })
   it('should call onUpdateByOthers', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let types = {
       facet: {
         reactors: { values: 'others' },
@@ -1441,7 +1442,7 @@ let AllTests = (ContextureClient) => {
     expect(service).toBeCalledTimes(1)
   })
   it('onUpdateByOthers should not block on self update', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1469,7 +1470,7 @@ let AllTests = (ContextureClient) => {
     expect(service).toBeCalledTimes(1)
   })
   it('should support add at index', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1501,7 +1502,7 @@ let AllTests = (ContextureClient) => {
     expect(keys).toEqual(['results', 'filter1', 'analytics'])
   })
   it('should support add with children', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1552,7 +1553,7 @@ let AllTests = (ContextureClient) => {
     expect(toJS(newlyAddedNode.values)).toEqual([1, 2, 3])
   })
   it('should remove children from flat array', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1585,7 +1586,7 @@ let AllTests = (ContextureClient) => {
     expect(tree.getNode(['root', 'criteria', 'filter1'])).not.toBeDefined()
   })
   it('should replace', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1636,7 +1637,7 @@ let AllTests = (ContextureClient) => {
     expect(tree.tree.children[1].key).toEqual('criteria2')
   })
   it('should clear', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1685,7 +1686,7 @@ let AllTests = (ContextureClient) => {
     expect(tree.getNode(['root', 'criteria', 'filter2']).join).toBe('any')
   })
   it('should wrapInGroup replace', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1724,7 +1725,7 @@ let AllTests = (ContextureClient) => {
     expect(tree.getNode(['root', 'analytics', 'results'])).toBeDefined()
   })
   it('should wrapInGroup root', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1752,7 +1753,7 @@ let AllTests = (ContextureClient) => {
     ).toEqual(['newRootChild', 'root', 'criteria'])
   })
   it('should wrapInGroup', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1791,7 +1792,7 @@ let AllTests = (ContextureClient) => {
     ).toEqual(['newRootChild', 'root', 'criteria'])
   })
   it('should move', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1821,7 +1822,7 @@ let AllTests = (ContextureClient) => {
     expect(service).toBeCalledTimes(1)
   })
   it('should support pause actions', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1850,7 +1851,7 @@ let AllTests = (ContextureClient) => {
     expect(tree.getNode(['root', 'criteria', 'filter2']).paused).toBe(false)
   })
   it('should autogenerate keys on node add', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1898,7 +1899,7 @@ let AllTests = (ContextureClient) => {
     expect(tree.getNode(['root', 'holland-oats-terms_stats'])).toBeDefined()
   })
   it('should autogenerate keys on tree initialization', () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1949,7 +1950,7 @@ let AllTests = (ContextureClient) => {
     ).toEqual(['node', 'node1', 'node11', 'node2'])
   })
   it('should have debugInfo', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient({
       debounce: 1,
       service,
@@ -2045,7 +2046,7 @@ let AllTests = (ContextureClient) => {
     expect(resultsNode.metaHistory[0].requests[0].response.hits.total).toBe(1)
   })
   it('should support processResponseNode', () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient(
       { service, debounce: 1 },
       {
@@ -2078,7 +2079,7 @@ let AllTests = (ContextureClient) => {
     expect(service).toBeCalledTimes(0)
   })
   it('should support response merges', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient(
       { service, debounce: 1 },
       {
@@ -2106,7 +2107,7 @@ let AllTests = (ContextureClient) => {
     ])
   })
   it('should support key based pivot response merges', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let rows = [
       { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
       { type: 'fieldValues', field: 'City', size: 10 },
@@ -2159,7 +2160,7 @@ let AllTests = (ContextureClient) => {
     })
   })
   it('should merge pivot response with nested rows and columns', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let columns = [{ type: 'dateInterval', field: 'Date', interval: 'year' }]
     let rows = [
       { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
@@ -2322,7 +2323,7 @@ let AllTests = (ContextureClient) => {
     })
   })
   it('should support onDispatch (and pivot resetting drilldown)', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let rows = [
       { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
       { type: 'fieldValues', field: 'City', size: 10 },
@@ -2399,7 +2400,7 @@ let AllTests = (ContextureClient) => {
     expect(Tree.getNode(['root', 'pivot']).context.results).toEqual({})
   })
   it('should preserve expanded drilldowns when drilling and paginating', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let rows = [
       { type: 'fieldValuesPartition', field: 'State' },
       { type: 'fieldValues', field: 'City', size: 10 },
@@ -2447,7 +2448,7 @@ let AllTests = (ContextureClient) => {
     ])
   })
   it('should preserve expanded columns when changing sort configuration', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let columns = [
       { type: 'fieldValuesPartition', field: 'State' },
       { type: 'fieldValues', field: 'City', size: 10 },
@@ -2523,7 +2524,7 @@ let AllTests = (ContextureClient) => {
     ])
   })
   it('should support watchNode', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient(
       { service, debounce: 1 },
       {
@@ -2535,9 +2536,9 @@ let AllTests = (ContextureClient) => {
         ],
       }
     )
-    let resultWatcher = jest.fn()
+    let resultWatcher = vi.fn()
     Tree.watchNode(['root', 'results'], resultWatcher, ['page', 'context'])
-    let facetWatcher = jest.fn()
+    let facetWatcher = vi.fn()
     Tree.watchNode(['root', 'test'], facetWatcher, ['values'])
 
     let promise = Tree.mutate(['root', 'results'], { page: 1 })
@@ -2553,7 +2554,7 @@ let AllTests = (ContextureClient) => {
     expect(resultWatcher).toBeCalledTimes(6)
   })
   it('should getNode', async () => {
-    let service = jest.fn(mockService())
+    let service = vi.fn(mockService())
     let Tree = ContextureClient(
       { service, debounce: 1 },
       {
@@ -2569,7 +2570,7 @@ let AllTests = (ContextureClient) => {
     expect(result.infiniteScroll).toBe(true)
   })
   it('should support group level markedForUpdate', async () => {
-    let service = jest.fn(mockService({ delay: 10 }))
+    let service = vi.fn(mockService({ delay: 10 }))
     let tree = ContextureClient(
       { service, debounce: 1 },
       {
@@ -2613,7 +2614,7 @@ let AllTests = (ContextureClient) => {
     expect(tree.getNode(['root']).updating).toBe(false)
   })
   it('should support group level markedForUpdate and reset when children are done in disableAutoUpdateMode', async () => {
-    let service = jest.fn(mockService({ delay: 10 }))
+    let service = vi.fn(mockService({ delay: 10 }))
     let tree = ContextureClient(
       { service, debounce: 1, disableAutoUpdate: true },
       {

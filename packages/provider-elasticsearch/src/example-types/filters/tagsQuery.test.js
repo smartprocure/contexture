@@ -1,5 +1,6 @@
 import _ from 'lodash/fp.js'
 import tagsQuery from './tagsQuery.js'
+import { describe, it, expect } from 'vitest'
 
 let {
   wordPermutations,

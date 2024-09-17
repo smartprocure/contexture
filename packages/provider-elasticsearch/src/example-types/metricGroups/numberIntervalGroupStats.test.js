@@ -1,4 +1,5 @@
 import numberIntervalGroupStats from './numberIntervalGroupStats.js'
+import { expect, describe, it } from 'vitest'
 
 let { buildQuery, drilldown } = numberIntervalGroupStats
 

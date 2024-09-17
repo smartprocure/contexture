@@ -1,4 +1,5 @@
 import bool from './bool.js'
+import { expect, describe, it } from 'vitest'
 
 let node = {
   type: 'bool',

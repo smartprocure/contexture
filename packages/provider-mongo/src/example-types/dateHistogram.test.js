@@ -5,6 +5,7 @@ import {
   usingCollections,
 } from '../../jest/mongoTestUtil.js'
 import dateHistogram from './dateHistogram.js'
+import { expect, describe, it, beforeAll, afterAll } from 'vitest'
 
 beforeAll(mongoConnect)
 

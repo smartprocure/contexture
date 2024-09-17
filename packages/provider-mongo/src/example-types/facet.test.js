@@ -5,6 +5,7 @@ import {
   usingCollections,
 } from '../../jest/mongoTestUtil.js'
 import facet from './facet.js'
+import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 
 beforeAll(mongoConnect)
 

@@ -1,8 +1,9 @@
-import { jest } from '@jest/globals'
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import { getKey } from 'contexture-client/exampleTypes/pivot.js'
 import pivot, { getGroupingSize } from './pivot.js'
+import { expect, describe, it, vi } from 'vitest'
+
 
 let RowTree = F.tree(_.get('rows'), (key) => ({ key }))
 
@@ -167,7 +168,7 @@ describe('pivot', () => {
   }
 
   let getService = () =>
-    jest.fn((tree) => {
+    vi.fn((tree) => {
       _.last(tree.children).context = { results: pivotResult }
       return tree
     })

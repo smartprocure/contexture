@@ -1,4 +1,5 @@
-import { jest } from '@jest/globals'
+import { vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import _ from 'lodash/fp.js'
 import ContextureClient from './index.js'
 import mockService from './mockService.js'
@@ -12,7 +13,7 @@ let ContextureMobx = _.curry((x, y) =>
 let AllTests = (ContextureClient) => {
   describe('listeners', () => {
     it('watchNode', async () => {
-      let service = jest.fn(mockService({ delay: 10 }))
+      let service = vi.fn(mockService({ delay: 10 }))
       let tree = ContextureClient(
         { service, debounce: 1 },
         {
@@ -31,14 +32,14 @@ let AllTests = (ContextureClient) => {
       )
       let filterDom = ''
       let resultsDom = ''
-      let filterWatcher = jest.fn((node) => {
+      let filterWatcher = vi.fn((node) => {
         filterDom = `<div>
   <h1>Facet</h1>
   <b>Field: ${node.field}</>
   values: ${_.join(', ', node.values)}
 </div>`
       })
-      let resultWatcher = jest.fn((node) => {
+      let resultWatcher = vi.fn((node) => {
         resultsDom = `<table>${_.map(
           (result) =>
             `\n<tr>${_.map((val) => `<td>${val}</td>`, _.values(result))}</tr>`,
@@ -66,7 +67,7 @@ let AllTests = (ContextureClient) => {
       expect(resultWatcher).toBeCalledTimes(9)
     })
     it('watchNode with keys', async () => {
-      let service = jest.fn(mockService({ delay: 10 }))
+      let service = vi.fn(mockService({ delay: 10 }))
       let tree = ContextureClient(
         { service, debounce: 1 },
         {
@@ -85,14 +86,14 @@ let AllTests = (ContextureClient) => {
       )
       let filterDom = ''
       let resultsDom = ''
-      let filterWatcher = jest.fn((node) => {
+      let filterWatcher = vi.fn((node) => {
         filterDom = `<div>
   <h1>Facet</h1>
   <b>Field: ${node.field}</>
   values: ${_.join(', ', node.values)}
 </div>`
       })
-      let resultWatcher = jest.fn((node) => {
+      let resultWatcher = vi.fn((node) => {
         resultsDom = `<table>${_.map(
           (result) =>
             `\n<tr>${_.map((val) => `<td>${val}</td>`, _.values(result))}</tr>`,
@@ -120,7 +121,7 @@ let AllTests = (ContextureClient) => {
       expect(resultWatcher).toBeCalledTimes(1)
     })
     it('watchNode on children', async () => {
-      let service = jest.fn(mockService({ delay: 10 }))
+      let service = vi.fn(mockService({ delay: 10 }))
       let tree = ContextureClient(
         { service, debounce: 1 },
         {
@@ -160,7 +161,7 @@ let AllTests = (ContextureClient) => {
       expect(criteriaKeys).toEqual(['filter', 'newFilter'])
     })
     it('watchNode with changing keys', async () => {
-      let service = jest.fn(mockService({ delay: 10 }))
+      let service = vi.fn(mockService({ delay: 10 }))
       let tree = ContextureClient(
         { service, debounce: 1 },
         {
@@ -180,7 +181,7 @@ let AllTests = (ContextureClient) => {
 
       let keys = ['context.results']
       // Mutating the original keys will change what's watched
-      let resultWatcher = jest.fn(() => {
+      let resultWatcher = vi.fn(() => {
         keys[0] = 'pageSize'
       })
       tree.watchNode(['root', 'results'], resultWatcher, keys)

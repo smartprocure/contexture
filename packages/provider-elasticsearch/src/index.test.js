@@ -1,4 +1,5 @@
-import { jest } from '@jest/globals'
+import { vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import provider from './index.js'
 
 const requestOptions = {
@@ -35,8 +36,8 @@ describe('Server Provider', () => {
   })
   it('runSearch should wrap queries in constant_score if sort._score is not present', () => {
     const client = {
-      child: jest.fn().mockReturnValue({
-        search: jest.fn().mockReturnValue(Promise.resolve({})),
+      child: vi.fn().mockReturnValue({
+        search: vi.fn().mockReturnValue(Promise.resolve({})),
       }),
     }
 
@@ -53,8 +54,8 @@ describe('Server Provider', () => {
   })
   it('runSearch should not wrap queries in constant_score if no query is given', () => {
     const client = {
-      child: jest.fn().mockReturnValue({
-        search: jest.fn().mockReturnValue(Promise.resolve({})),
+      child: vi.fn().mockReturnValue({
+        search: vi.fn().mockReturnValue(Promise.resolve({})),
       }),
     }
 
@@ -69,8 +70,8 @@ describe('Server Provider', () => {
   })
   it('runSearch should not wrap queries in constant_score if sort._score is present', () => {
     const client = {
-      child: jest.fn().mockReturnValue({
-        search: jest.fn().mockReturnValue(Promise.resolve({})),
+      child: vi.fn().mockReturnValue({
+        search: vi.fn().mockReturnValue(Promise.resolve({})),
       }),
     }
 
@@ -93,8 +94,8 @@ describe('Server Provider', () => {
   })
   it('should pass any request options to the child client upon initialization', () => {
     const client = {
-      child: jest.fn().mockReturnValue({
-        search: jest.fn().mockReturnValue(Promise.resolve({})),
+      child: vi.fn().mockReturnValue({
+        search: vi.fn().mockReturnValue(Promise.resolve({})),
       }),
     }
 

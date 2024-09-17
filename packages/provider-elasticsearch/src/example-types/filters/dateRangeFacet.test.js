@@ -4,6 +4,7 @@ import {
   rollingRangeToDates,
 } from 'contexture-util/dateUtil.js'
 import dateRangeFacet from './dateRangeFacet.js'
+import { expect, describe, it } from 'vitest'
 
 let commonFilterParts = {
   type: 'dateRangeFacet',

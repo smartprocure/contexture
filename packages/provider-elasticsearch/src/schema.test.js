@@ -1,3 +1,5 @@
+import { vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import _ from 'lodash/fp.js'
 
 import aliases from './schema-data/aliases.js'

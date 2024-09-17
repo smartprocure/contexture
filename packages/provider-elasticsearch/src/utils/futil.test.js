@@ -8,6 +8,7 @@ import {
   unsetOnTree,
 } from './futil.js'
 import { simplifyBucket } from './elasticDSL.js'
+import { describe, expect, it } from 'vitest'
 
 describe('futil candidates', () => {
   it('maybeAppend should work', () => {

@@ -1,4 +1,5 @@
 import { sequentialResultTest } from '../testUtils.js'
+import { expect, describe, it } from 'vitest'
 
 describe('dateHistogram', () => {
   let test = (...x) =>

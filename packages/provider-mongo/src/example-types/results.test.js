@@ -1,5 +1,6 @@
 import F from 'futil'
 import result from './results.js'
+import { describe, expect, it } from 'vitest'
 
 let {
   defaults,
