@@ -10,11 +10,12 @@
     "version": "yarn changeset version && yarn install --mode=update-lockfile",
     "publish": "yarn foreach npm publish --tolerate-republish",
     "postinstall": "yarn foreach run prepack",
-    "test": "NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-vm-modules yarn vitest ."
+    "test": "vitest"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
     "@flex-development/toggle-pkg-type": "^1.0.1",
+    "@vitest/coverage-v8": "^2.1.1",
     "danger": "^11.2.3",
     "duti": "^0.15.2",
     "esbuild": "^0.17.5",

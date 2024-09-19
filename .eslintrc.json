@@ -7,8 +7,7 @@
   },
   "env": {
     "es2022": true,
-    "node": true,
-    // "jest": true
+    "node": true
   },
   "rules": {
     "import/extensions": [2, { "js": "always" }]
