@@ -1,5 +1,5 @@
 import { sequentialResultTest } from '../testUtils.js'
-import { describe, it, expect } from 'vitest'
+import { describe, it } from 'vitest'
 
 describe('term_stats', () => {
   let test = (...x) =>

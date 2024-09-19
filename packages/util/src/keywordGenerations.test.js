@@ -1,4 +1,4 @@
-import { vi, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { sanitizeTagInputs } from './keywordGenerations.js'
 
 describe('keywordGenerations', () => {
