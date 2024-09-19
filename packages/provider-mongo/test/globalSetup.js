@@ -9,7 +9,7 @@ export const setup = async () => {
   process.env.VITE_MONGO_URI = global.__mongoServer.getUri()
 }
 
-// https://nodkz.github.io/mongodb-memory-server/docs/guides/integration-examples/test-runners/
+// https://typegoose.github.io/mongodb-memory-server/docs/guides/integration-examples/test-runners
 
 export const teardown = async () => {
   if (globalThis.__mongoServer) {
