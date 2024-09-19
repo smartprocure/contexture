@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
-  root:'.',
+  root: '.',
   test: {
     coverage: {
       reporter: ['lcov'],

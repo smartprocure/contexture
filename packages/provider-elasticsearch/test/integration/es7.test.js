@@ -8,7 +8,6 @@ import { Client } from '@elastic/elasticsearch'
 import AgentKeepAlive from 'agentkeepalive'
 import { describe, expect, it } from 'vitest'
 
-
 describe('Integration Tests', () => {
   it.skip('should work?', async function () {
     this.timeout(10000)

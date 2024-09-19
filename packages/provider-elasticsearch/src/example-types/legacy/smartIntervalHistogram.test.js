@@ -1,5 +1,5 @@
 import { sequentialResultTest } from '../testUtils.js'
-import {  describe, it } from 'vitest'
+import { describe, it } from 'vitest'
 
 describe('smartIntervalHistogram', () => {
   it('should work', () =>

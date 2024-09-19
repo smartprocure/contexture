@@ -1,7 +1,6 @@
 import date from './date.js'
 import { expect, describe, it } from 'vitest'
 
-
 describe('date/filter', () => {
   it('should handle from', () => {
     expect(

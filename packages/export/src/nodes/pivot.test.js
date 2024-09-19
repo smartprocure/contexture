@@ -4,7 +4,6 @@ import { getKey } from 'contexture-client/exampleTypes/pivot.js'
 import pivot, { getGroupingSize } from './pivot.js'
 import { expect, describe, it, vi } from 'vitest'
 
-
 let RowTree = F.tree(_.get('rows'), (key) => ({ key }))
 
 describe('pivot', () => {

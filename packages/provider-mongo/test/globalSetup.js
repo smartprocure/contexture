@@ -2,7 +2,7 @@
 
 import { MongoMemoryServer } from 'mongodb-memory-server'
 
-export  const setup  = async () => {
+export const setup = async () => {
   globalThis.__mongoServer = await MongoMemoryServer.create()
   // Each test file has its own environment with its own `global` instance so
   // we need to use the process environment.

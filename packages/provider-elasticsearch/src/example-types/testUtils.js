@@ -2,7 +2,7 @@
 
 import F from 'futil'
 import _ from 'lodash/fp.js'
-import {vi, expect} from 'vitest'
+import { vi, expect } from 'vitest'
 import * as types from './index.js'
 
 export let sequentialResultTest = _.curry(

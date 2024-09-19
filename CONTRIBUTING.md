@@ -25,4 +25,3 @@ yarn workspace contexture-client run test .
 #### Tests
 
 Tests can be scoped via `vitest --project {project}`. Refer to [vitest's workspaces](./vitest.workspace.ts) for project names.
-

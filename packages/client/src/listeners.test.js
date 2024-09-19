@@ -1,4 +1,4 @@
-import { vi , describe, expect, it } from 'vitest'
+import { vi, describe, expect, it } from 'vitest'
 import _ from 'lodash/fp.js'
 import ContextureClient from './index.js'
 import mockService from './mockService.js'

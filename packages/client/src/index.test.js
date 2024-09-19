@@ -1,4 +1,4 @@
-import { vi , describe, expect, it } from 'vitest'
+import { vi, describe, expect, it } from 'vitest'
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import ContextureClient, { encode, exampleTypes } from './index.js'
