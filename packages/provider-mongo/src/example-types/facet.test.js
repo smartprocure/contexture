@@ -3,7 +3,7 @@ import {
   mongoConnect,
   mongoDisconnect,
   usingCollections,
-} from '../../jest/mongoTestUtil.js'
+} from '../../test/mongoTestUtil.js'
 import facet from './facet.js'
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 

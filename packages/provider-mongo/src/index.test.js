@@ -6,7 +6,7 @@ import {
   mongoConnect,
   mongoDisconnect,
   usingCollections,
-} from '../jest/mongoTestUtil.js'
+} from '../test/mongoTestUtil.js'
 import provider from './index.js'
 import types from './types.js'
 

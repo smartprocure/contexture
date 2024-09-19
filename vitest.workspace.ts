@@ -29,7 +29,7 @@ export default defineWorkspace([
     test: {
       name: 'provider-mongo',
       include: ['packages/provider-mongo/src/**/*.test.js'],
-      globalSetup: './packages/provider-mongo/jest/globalSetup.js',
+      globalSetup: './packages/provider-mongo/test/globalSetup.js',
     },
   },
   {
