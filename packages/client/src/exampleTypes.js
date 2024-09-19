@@ -194,7 +194,8 @@ export default F.stampKey('type', {
     },
     defaults: {
       field: null,
-      range: [0, 1000],
+      min: 0,
+      max: 1000,
       steps: [0, 1000, 5000, 10000, 25000, 50000, 1000000],
       context: {
         recordsCount: 0,
