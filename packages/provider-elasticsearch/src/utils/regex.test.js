@@ -1,4 +1,5 @@
 import * as regex from './regex.js'
+import { expect, describe, it } from 'vitest'
 
 describe('regex', () => {
   it('toSafeRegex', () => {

@@ -1,4 +1,5 @@
 import text from './text.js'
+import { expect, describe, it } from 'vitest'
 
 describe('text', () => {
   describe('text.hasValue', () => {

@@ -6,6 +6,7 @@ import {
   simplifyBuckets,
   basicSimplifyTree,
 } from './elasticDSL.js'
+import { describe, expect, it } from 'vitest'
 
 describe('elasticDSL utils', () => {
   describe('buildMetrics', () => {

@@ -1,6 +1,6 @@
-import { jest } from '@jest/globals'
 import _ from 'lodash/fp.js'
 import terms_stats from './terms_stats.js'
+import { expect, describe, it, vi } from 'vitest'
 
 describe('terms_stats', () => {
   let defaultTree = {
@@ -20,7 +20,7 @@ describe('terms_stats', () => {
   let simpleRecords = ['record1', 'record2', 'record3']
 
   let getSimpleService = () =>
-    jest.fn((tree) => {
+    vi.fn((tree) => {
       _.last(tree.children).context = {
         terms: simpleRecords,
         value: 1337,
@@ -62,7 +62,7 @@ describe('terms_stats', () => {
     expect(service).toMatchSnapshot()
   })
   it('doesnt throw error when service returns unexpected result', async () => {
-    let strategy = await prepareSimpleStrategy({ service: jest.fn(_.identity) })
+    let strategy = await prepareSimpleStrategy({ service: vi.fn(_.identity) })
     let arr = []
     for await (const i of strategy) arr.push(i)
     expect(arr).toEqual([])

@@ -1,5 +1,6 @@
 import fieldValuesGroupStats from './fieldValuesGroupStats.js'
 import { testSchema } from '../testUtils.js'
+import { expect, describe, it } from 'vitest'
 
 let { buildQuery, buildGroupQuery } = fieldValuesGroupStats
 

@@ -1,5 +1,6 @@
 import { testSchema } from '../testUtils.js'
 import text from './text.js'
+import { describe, expect, it } from 'vitest'
 
 describe('text', () => {
   it('should check for values', () => {

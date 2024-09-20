@@ -1,7 +1,7 @@
 // DO NOT RENAME THIS FILE... because we need it to run before the other tests...
 // No, we don't know why. We're sorry. #hackathon
 
-import { jest } from '@jest/globals'
+import { vi, describe, expect, it } from 'vitest'
 import { Tree } from './util/tree.js'
 import F from 'futil'
 import _ from 'lodash/fp.js'
@@ -49,10 +49,10 @@ describe('usage with mobx should generally work', () => {
       { key: 'filter', type: 'facet' },
     ],
   }
-  let service = jest.fn(() => responseData)
+  let service = vi.fn(() => responseData)
   let Tree = ContextureMobx({ service, debounce: 1 })(tree)
 
-  let reactor = jest.fn()
+  let reactor = vi.fn()
 
   it('should generally mutate and have updated contexts', async () => {
     let disposer = reaction(() => toJS(Tree.tree), reactor)
@@ -340,7 +340,7 @@ describe('usage with mobx should generally work', () => {
   })
   it('should support observing disableAutoUpdate', () => {
     service.mockClear()
-    let reactor = jest.fn()
+    let reactor = vi.fn()
     let tree = ContextureMobx({ service, debounce: 1 })({
       key: 'root',
       join: 'and',
@@ -358,8 +358,8 @@ describe('usage with mobx should generally work', () => {
     expect(reactor).toHaveBeenCalledTimes(1)
   })
   it('should react to group fns', async () => {
-    let service = jest.fn(mockService({}))
-    let reactor = jest.fn()
+    let service = vi.fn(mockService({}))
+    let reactor = vi.fn()
     let tree = ContextureMobx(
       { service, debounce: 1 },
       {

@@ -1,4 +1,5 @@
 import { flatten, encode, isParent } from './tree.js'
+import { expect, describe, it } from 'vitest'
 
 describe('tree', () => {
   let tree = {

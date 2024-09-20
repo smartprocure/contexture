@@ -1,4 +1,5 @@
 import { getField } from './fields.js'
+import { expect, describe, it } from 'vitest'
 
 describe('field utils', () => {
   it('getField should work', () => {

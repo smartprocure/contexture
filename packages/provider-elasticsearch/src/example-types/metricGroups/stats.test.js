@@ -1,3 +1,4 @@
+import { expect, describe, it } from 'vitest'
 import stats from './stats.js'
 
 let { buildQuery, result } = stats

@@ -1,5 +1,6 @@
 import fieldValuePartitionGroupStats from './fieldValuePartitionGroupStats.js'
 import { testSchema } from '../testUtils.js'
+import { expect, describe, it } from 'vitest'
 
 let { buildQuery, drilldown } = fieldValuePartitionGroupStats
 

@@ -1,4 +1,5 @@
 import step from './step.js'
+import { expect, describe, it } from 'vitest'
 
 const { hasValue, filter, buildQuery } = step
 

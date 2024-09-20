@@ -1,4 +1,5 @@
 import statistical from './statistical.js'
+import { expect, describe, it } from 'vitest'
 
 describe('statistical', () => {
   describe('statistical.result', () => {

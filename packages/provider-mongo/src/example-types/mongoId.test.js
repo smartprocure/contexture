@@ -1,5 +1,6 @@
 import mongoId from './mongoId.js'
 import { ObjectId } from 'mongodb'
+import { expect, describe, it } from 'vitest'
 
 describe('mongoId', () => {
   describe('mongoId.hasValue', () => {

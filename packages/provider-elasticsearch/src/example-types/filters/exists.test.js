@@ -1,4 +1,5 @@
 import exists from './exists.js'
+import { expect, describe, it } from 'vitest'
 
 describe('exists', () => {
   describe('hasValue', () => {

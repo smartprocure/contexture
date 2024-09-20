@@ -2,7 +2,7 @@ import _ from 'lodash/fp.js'
 import { MongoClient } from 'mongodb'
 
 export const mongoConnect = async () => {
-  global.__mongoClient = await MongoClient.connect(process.env.MONGO_URI)
+  global.__mongoClient = await MongoClient.connect(process.env.VITE_MONGO_URI)
 }
 
 export const mongoDisconnect = async () => {

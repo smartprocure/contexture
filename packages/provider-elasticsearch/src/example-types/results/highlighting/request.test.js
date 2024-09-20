@@ -4,6 +4,7 @@ import {
   getAllHighlightFields,
   getRequestHighlightFields,
 } from './request.js'
+import { describe, expect, it } from 'vitest'
 
 describe('getAllHighlightFields', () => {
   it('should only include text fields and subfields', () => {

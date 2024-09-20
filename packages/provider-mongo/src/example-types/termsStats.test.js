@@ -3,8 +3,9 @@ import {
   mongoConnect,
   mongoDisconnect,
   usingCollections,
-} from '../../jest/mongoTestUtil.js'
+} from '../../test/mongoTestUtil.js'
 import termsStats from './termsStats.js'
+import { expect, describe, it, beforeAll, afterAll } from 'vitest'
 
 beforeAll(mongoConnect)
 

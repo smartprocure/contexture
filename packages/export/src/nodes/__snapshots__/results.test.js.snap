@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`results  with contexts not wrapped in \`response\` retrieves records 1`] = `
-[MockFunction] {
+exports[`results >  with contexts not wrapped in \`response\` > retrieves records 1`] = `
+[MockFunction spy] {
   "calls": [
     [
       {
@@ -406,8 +406,8 @@ exports[`results  with contexts not wrapped in \`response\` retrieves records 1`
 }
 `;
 
-exports[`results  with contexts wrapped in \`response\` retrieves records 1`] = `
-[MockFunction] {
+exports[`results >  with contexts wrapped in \`response\` > retrieves records 1`] = `
+[MockFunction spy] {
   "calls": [
     [
       {

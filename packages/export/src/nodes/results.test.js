@@ -1,6 +1,6 @@
-import { jest } from '@jest/globals'
 import _ from 'lodash/fp.js'
 import results from './results.js'
+import { vi, expect, describe, it } from 'vitest'
 
 describe('results', () => {
   let defaultTree = {
@@ -25,7 +25,7 @@ describe('results', () => {
 
   let resultsTests = ({ wrap }) => {
     let getSimpleService = () =>
-      jest.fn((tree) => {
+      vi.fn((tree) => {
         let response = {
           totalRecords: 3,
           results: simpleRecords.map((_source) => ({ _source })),

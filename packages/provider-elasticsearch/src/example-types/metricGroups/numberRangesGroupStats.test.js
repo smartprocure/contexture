@@ -1,4 +1,5 @@
 import numberRangesGroupStats from './numberRangesGroupStats.js'
+import { expect, describe, it } from 'vitest'
 
 let { buildQuery, buildGroupQuery, drilldown } = numberRangesGroupStats
 

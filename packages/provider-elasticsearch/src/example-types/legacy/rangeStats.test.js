@@ -1,6 +1,7 @@
 import _ from 'lodash/fp.js'
 import * as utils from '../testUtils.js'
 import rangeStats from './rangeStats.js'
+import { describe, it } from 'vitest'
 
 describe('rangeStats', () => {
   describe('validContext', () => {
