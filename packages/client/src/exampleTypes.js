@@ -191,7 +191,7 @@ export default F.stampKey('type', {
     label: 'Number Slider',
     reactors: {
       min: 'all',
-      max: 'all'
+      max: 'all',
     },
     defaults: {
       field: null,
