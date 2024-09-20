@@ -1,40 +1,31 @@
 import _ from 'lodash/fp.js'
 import { pickSafeNumbers } from '../../utils/futil.js'
 
-const getMinAndMax = (range) => {
-  const min = range[0]
-  const max = range[range.length - 1]
-  return { min, max }
-}
+let filter = ({ field, min, max }) => ({
+  range: { [field]: pickSafeNumbers({ gte: min, lte: max }) },
+})
 
-let filter = ({ field, range }) => {
-  const { min, max } = getMinAndMax(range)
-  return {
-    range: { [field]: pickSafeNumbers({ gte: min, lte: max }) },
-  }
-}
-
-let buildQuery = (field, range) => {
+let buildQuery = (field, min, max) => {
   return {
     aggs: {
       rangeFilter: {
-        filter: filter({ field, range }),
+        filter: filter({ field, min, max }),
       },
     },
   }
 }
 
 let result = async (node, search) => {
-  let { field, range } = node
-  const result = await search(buildQuery(field, range))
+  let { field, min, max } = node
+  const result = await search(buildQuery(field, min, max))
   const recordsCount = result.aggregations.rangeFilter.doc_count
   return { recordsCount }
 }
 
 export default {
-  hasValue: ({ range }) => !_.isEmpty(range),
+  hasValue: ({ min }) => !_.isNil(min),
   filter,
-  validContext: ({ range }) => !_.isEmpty(range),
+  validContext: ({ min }) => !_.isNil(min),
   result,
   buildQuery,
 }
