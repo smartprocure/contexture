@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import _ from 'lodash/fp.js'
 import { PassThrough } from 'stream'
 import csv from './csv.js'

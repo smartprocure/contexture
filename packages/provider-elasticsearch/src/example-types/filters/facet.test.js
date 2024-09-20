@@ -1,6 +1,7 @@
 import _ from 'lodash/fp.js'
 import facet from './facet.js'
 import { sequentialResultTest, testSchema } from '../testUtils.js'
+import { describe, expect, it } from 'vitest'
 
 let facetTest = sequentialResultTest([
   {

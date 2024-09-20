@@ -1,5 +1,6 @@
 import _ from 'lodash/fp.js'
 import exists from './exists.js'
+import { expect, describe, it } from 'vitest'
 
 let node = {
   type: 'exists',

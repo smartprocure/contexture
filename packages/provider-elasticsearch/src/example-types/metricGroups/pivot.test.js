@@ -6,6 +6,7 @@ import pivotResponse from './pivotData/pivotResponse.js'
 import pivotResponseWithFilteredFieldValueGroup from './pivotData/pivotResponseWithFilteredFieldValueGroup.js'
 import columnResponse from './pivotData/columnResponse.js'
 import columnResult from './pivotData/columnResult.js'
+import { describe, it, expect } from 'vitest'
 
 let { filter, createPivotScope } = pivot
 

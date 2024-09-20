@@ -7,7 +7,7 @@ node_modules/
 # Build output
 dist
 
-# Jest
+# Vitest
 coverage
 
 # Yarn stuff: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored

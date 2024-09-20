@@ -1,4 +1,5 @@
 import number from './number.js'
+import { expect, describe, it } from 'vitest'
 
 describe('number', () => {
   describe('number.hasValue', () => {

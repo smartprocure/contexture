@@ -1,6 +1,6 @@
 import geo from './geo.js'
 import * as utils from '../testUtils.js'
-
+import { describe, it, expect } from 'vitest'
 describe('geo', () => {
   it('hasValue should work', () => {
     utils.hasValueContexts(geo)([

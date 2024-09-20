@@ -1,3 +1,4 @@
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 import _ from 'lodash/fp.js'
 import Contexture from 'contexture'
 import { ObjectId } from 'mongodb'
@@ -5,7 +6,7 @@ import {
   mongoConnect,
   mongoDisconnect,
   usingCollections,
-} from '../jest/mongoTestUtil.js'
+} from '../test/mongoTestUtil.js'
 import provider from './index.js'
 import types from './types.js'
 

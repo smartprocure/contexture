@@ -1,5 +1,6 @@
 import fieldValuesDelta from './fieldValuesDelta.js'
 import { testSchema } from '../testUtils.js'
+import { expect, describe, it } from 'vitest'
 
 let { buildQuery, result } = fieldValuesDelta
 

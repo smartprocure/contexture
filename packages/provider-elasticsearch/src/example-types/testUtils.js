@@ -2,7 +2,7 @@
 
 import F from 'futil'
 import _ from 'lodash/fp.js'
-import { jest } from '@jest/globals'
+import { vi, expect } from 'vitest'
 import * as types from './index.js'
 
 export let sequentialResultTest = _.curry(
@@ -12,7 +12,7 @@ export let sequentialResultTest = _.curry(
     if (_.isFunction(getService)) service = getService()
     else if (_.isArray(getService)) {
       let calls = 0
-      service = jest.fn(() => {
+      service = vi.fn(() => {
         calls++
         return Promise.resolve(getService[calls - 1])
       })

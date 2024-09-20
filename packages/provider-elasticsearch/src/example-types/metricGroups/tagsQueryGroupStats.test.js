@@ -1,5 +1,6 @@
 import tagsQueryGroupStats from './tagsQueryGroupStats.js'
 import { testSchema } from '../testUtils.js'
+import { expect, describe, it } from 'vitest'
 
 let { buildQuery } = tagsQueryGroupStats
 

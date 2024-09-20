@@ -1,4 +1,5 @@
 import query from './query.js'
+import { expect, describe, it } from 'vitest'
 
 describe('query', () => {
   it('should filter properly', () => {

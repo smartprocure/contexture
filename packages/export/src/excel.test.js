@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { PassThrough } from 'stream'
 import _ from 'lodash/fp.js'
 import excel from './excel.js'

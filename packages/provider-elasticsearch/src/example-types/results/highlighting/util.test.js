@@ -1,4 +1,5 @@
 import { mergeHighlights } from './util.js'
+import { describe, it, expect } from 'vitest'
 
 let tags = { pre: '<em>', post: '</em>' }
 

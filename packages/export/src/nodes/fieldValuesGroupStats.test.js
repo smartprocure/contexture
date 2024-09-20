@@ -1,4 +1,5 @@
 import { getResults, getTotal } from './fieldValuesGroupStats.js'
+import { expect, describe, it } from 'vitest'
 
 const cardinalityResult = {
   context: { cardinality: 10 },
