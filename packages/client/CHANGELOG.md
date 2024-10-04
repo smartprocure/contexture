@@ -1,8 +1,8 @@
 # Changelog
 
-## 3.0.0
+## 2.56.0
 
-### Major Changes
+### Minor Changes
 
 - bf80fccc: `step` type contract updated to use `min` and `max` instead of `range` so it can be consistent with `number` type
 

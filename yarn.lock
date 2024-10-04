@@ -7993,7 +7993,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"contexture-client@^3.0.0, contexture-client@workspace:packages/client":
+"contexture-client@^2.53.7, contexture-client@^2.56.0, contexture-client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "contexture-client@workspace:packages/client"
   dependencies:
@@ -8003,7 +8003,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture-elasticsearch@^2.0.0, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
+"contexture-elasticsearch@^1.33.0, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
   version: 0.0.0-use.local
   resolution: "contexture-elasticsearch@workspace:packages/provider-elasticsearch"
   dependencies:
@@ -8028,7 +8028,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "contexture-export@workspace:packages/export"
   dependencies:
-    contexture-client: ^3.0.0
+    contexture-client: ^2.53.7
     futil: ^1.76.4
     lodash: ^4.17.21
     minimal-csv-formatter: ^1.0.15
@@ -8091,8 +8091,8 @@ __metadata:
     "@storybook/storybook-deployer": ^2.8.16
     chromatic: ^6.23.0
     contexture: ^0.12.24
-    contexture-client: ^3.0.0
-    contexture-elasticsearch: ^2.0.0
+    contexture-client: ^2.56.0
+    contexture-elasticsearch: ^1.33.0
     contexture-util: ^0.1.2
     elasticsearch-browser: ^14.2.2
     emoji-datasource: ^5.0.1
