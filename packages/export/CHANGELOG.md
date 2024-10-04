@@ -5,7 +5,7 @@
 ### Patch Changes
 
 - Updated dependencies [bf80fccc]
-  - contexture-client@3.0.0
+  - contexture-client@2.56.0
 
 ## 1.3.0
 
