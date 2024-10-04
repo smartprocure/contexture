@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.33.1
+
+### Patch Changes
+
+- 43b4eecc: revert defaults on `step` type
+
 ## 1.33.0
 
 ### Minor Changes
