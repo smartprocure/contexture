@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.57.0
+
+### Minor Changes
+
+- 43b4eecc: revert defaults on `step` type
+
 ## 2.56.0
 
 ### Minor Changes

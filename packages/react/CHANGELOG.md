@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.60.2
+
+### Patch Changes
+
+- 43b4eecc: revert defaults on `step` type
+
 ## 2.60.1
 
 ### Patch Changes
