@@ -29,10 +29,6 @@ To keep track of all this, contexture's client manages the UI state and optimize
 - Nodes track statuses like loading, last update times, and validation out of the box.
 - The client can debounce changes to the entire tree and drop intermediate results.
 
-### React
-
-Contexture has a react component library that interacts with the client. There are generic components ranging from nested query builders to entire search layouts. Every included node type also has a component (like checkbox lists). You can drop in a single component for a complete UI with dynamic filters - or build it up component by component. There's even a robust theming API to customize every part of the UI.
-
 ### How does all this work?
 
 The client's functions ("actions") dispatch events to nodes (much like redux). An action might mutate node properties, pause or resume a node, or add, remove, or move a node to a group. Node-specific event reactor functions then determine which nodes to update. After an optional debounce, requests go to the server when there are nodes to update. The server walks the tree and runs queries for each node based on its type and the relevant provider. For more detailed information, each package has its own readme.
@@ -47,7 +43,6 @@ The client's functions ("actions") dispatch events to nodes (much like redux). A
 | [provider-elasticsearch](./packages/provider-elasticsearch) | [contexture-elasticsearch](https://www.npmjs.com/package/contexture-elasticsearch) | Elasticsearch provider for contexture                                                                             |
 | [provider-mongo](./packages/provider-mongo)                 | [contexture-mongo](https://www.npmjs.com/package/contexture-mongo)                 | MongoDB provider for contexture                                                                                   |
 | [client](./packages/client)                                 | [contexture-client](https://www.npmjs.com/package/contexture-client)               | The client library that manages the DSL, allowing for hyper efficient updates running only what is exactly needed |
-| [react](./packages/react)                                   | [contexture-react](https://www.npmjs.com/package/contexture-react)                 | React components for building contexture interfaces                                                               |
 | [export](./packages/export)                                 | [contexture-export](https://www.npmjs.com/package/contexture-export)               | Export searches into files or any other target                                                                    |
 
 #### Ecosystem And Resources
