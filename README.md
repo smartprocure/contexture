@@ -45,6 +45,8 @@ The client's functions ("actions") dispatch events to nodes (much like redux). A
 | [client](./packages/client)                                 | [contexture-client](https://www.npmjs.com/package/contexture-client)               | The client library that manages the DSL, allowing for hyper efficient updates running only what is exactly needed |
 | [export](./packages/export)                                 | [contexture-export](https://www.npmjs.com/package/contexture-export)               | Export searches into files or any other target                                                                    |
 
+We used to offer a React library with pre-built components for getting up and running quickly with contexture but it was removed in [this PR](https://github.com/smartprocure/contexture/pull/262)
+
 #### Ecosystem And Resources
 
 - [Elasticon 2018 Talk About Contexture](http://github.com/smartprocure/contexture-ec18-talk)
