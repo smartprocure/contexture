@@ -15,7 +15,7 @@
   "settings": {
     "import/resolver": {
       "typescript": {
-        "extensions": [".ts", ".tsx", ".js", ".jsx"]
+        "extensions": [".ts", ".js"]
       }
     }
   }
