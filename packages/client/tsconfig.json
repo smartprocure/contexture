@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "composite": true,
+      "declaration": true,
+      "declarationMap": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "incremental": true,
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "noEmit": false,
+      "outDir": "dist/esm",
+      "resolveJsonModule": true,
+      "skipLibCheck": true,
+      "strict": true,
+      "target": "ESNext",
+      "types": ["node", "vitest"]
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
+  }
+  
