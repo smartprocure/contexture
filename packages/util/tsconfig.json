@@ -1,0 +1,57 @@
+{
+    //Inherits settings from ../tsconfig.all.jsonc which is at root level
+    "extends": ["../../tsconfig.all.jsonc"],
+  
+    //Tells TypeScript to only compile files inside the src/ folder and its subdirectories.
+    //It includes .ts, .tsx, .js, and .jsx
+    "include": ["src/**/*"],
+  
+    //compilerOptions inherited from tsconfig.all.jsonc are overridden here.
+    // i have taken reference from spark/web compilerOptions.In that also we are overridding
+    "compilerOptions": {
+  
+  //Provides Node.js global types and  includes types for Vitest which is used by test files
+      "types": ["node", "vitest"],
+  
+      //In Spark we are creating dist in 2 folders named 'common' and 'common-node' , 
+      //and those dist files are further consumed by other packages like web etc. 
+      //Do we need to create dist folder  for web? "noEmit": true will not create dist folder at all
+      "noEmit": true,
+  
+      //Allow Importing TypeScript Extensions, for future support
+      "allowImportingTsExtensions": true,
+  
+      //same as what we do in Spark , a node_modules folder at root level , with in a subfolder named 'util'
+      "tsBuildInfoFile": "../../node_modules/.buildinfo/util",
+  
+      //Allows TypeScript to compile JavaScript files
+      "allowJs": true,
+  
+      //Disables type checking on .js files.
+      "checkJs": false,
+  
+      //Ensures that functions always return a value.for example there is whole code of function wrapped under IF statment,
+      //then it will throw  Error: Not all code paths return a value.
+      "noImplicitReturns": true,
+  
+      //Forces explicit undefined checks when accessing arrays or objects.
+      //for example let x = arr[0]; // Error: x might be undefined.
+      //to fix this let x: number[] | undefined or let x = arr[0] as number;
+      "noUncheckedIndexedAccess": true,
+  
+      //Ensures function parameters are used.// Error: 'name' is unused.
+      "noUnusedParameters": true,
+  
+      //strict it self holds 6 different type of checks 
+      //strictNullChecks-Error: Type 'null' is not assignable to 'string'
+      //noImplicitAny-Error: Parameter 'name' implicitly has an 'any' type
+      //strictFunctionTypes-Error: Type '(age: number) => void' is not assignable to type '(name: string) => void'
+      //strictBindCallApply-
+      //strictPropertyInitialization-
+      //noImplicitThis-
+      "strict": true,
+  
+      "isolatedModules": true
+    }
+  }
+  
