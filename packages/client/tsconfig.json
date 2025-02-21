@@ -9,12 +9,11 @@
   //compilerOptions inherited from tsconfig.all.jsonc are overridden here.
   // i have taken reference from spark/web compilerOptions.In that also we are overridding
   "compilerOptions": {
-
-//Provides Node.js global types and  includes types for Vitest which is used by test files
+    //Provides Node.js global types and  includes types for Vitest which is used by test files
     "types": ["node", "vitest"],
 
-    //In Spark we are creating dist in 2 folders named 'common' and 'common-node' , 
-    //and those dist files are further consumed by other packages like web etc. 
+    //In Spark we are creating dist in 2 folders named 'common' and 'common-node' ,
+    //and those dist files are further consumed by other packages like web etc.
     //Do we need to create dist folder  for web? "noEmit": true will not create dist folder at all
     "noEmit": true,
 
@@ -42,7 +41,7 @@
     //Ensures function parameters are used.// Error: 'name' is unused.
     "noUnusedParameters": true,
 
-    //strict it self holds 6 different type of checks 
+    //strict it self holds 6 different type of checks
     //strictNullChecks-Error: Type 'null' is not assignable to 'string'
     //noImplicitAny-Error: Parameter 'name' implicitly has an 'any' type
     //strictFunctionTypes-Error: Type '(age: number) => void' is not assignable to type '(name: string) => void'
