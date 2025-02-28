@@ -12,13 +12,7 @@
     //Provides Node.js global types and  includes types for Vitest which is used by test files
     "types": ["node", "vitest"],
 
-    //In Spark we are creating dist in 2 folders named 'common' and 'common-node' ,
-    //and those dist files are further consumed by other packages like web etc.
-    //Do we need to create dist folder  for web? "noEmit": true will not create dist folder at all
-    "noEmit": true,
-
-    //Allow Importing TypeScript Extensions, for future support
-    "allowImportingTsExtensions": true,
+    "outDir": "dist", // Output directory for compiled files
 
     //same as what we do in Spark , a node_modules folder at root level , with in a subfolder named 'server'
     "tsBuildInfoFile": "../../node_modules/.buildinfo/server",

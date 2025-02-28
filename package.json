@@ -7,9 +7,10 @@
   ],
   "scripts": {
     "foreach": "yarn workspaces foreach --no-private --parallel --verbose",
-    "build": "yarn build:tsc --build --verbose",
+    "build:tsc": "tsc --build --verbose",
+    "build": "yarn run build:tsc",
     "build:watch": "concurrently --raw --kill-others 'tsc --build --verbose --watch --inlineSourceMap'",
-    "build:clean": "tsc --build --clean && yarn foreach clean",
+    "build:clean": "tsc --build --clean && yarn workspaces foreach exec rm -rf dist",
     "version": "yarn changeset version && yarn install --mode=update-lockfile",
     "publish": "yarn foreach npm publish --tolerate-republish",
     "postinstall": "yarn foreach run prepack",
