@@ -1,40 +1,7 @@
 {
-  //Inherits settings from ../tsconfig.all.jsonc which is at root level
   "extends": ["../../tsconfig.all.jsonc"],
-
-  //Tells TypeScript to only compile files inside the src/ folder and its subdirectories.
-  //It includes .ts, .tsx, .js, and .jsx
   "include": ["src/**/*"],
-
   "compilerOptions": {
-    //Provides Node.js global types and  includes types for Vitest which is used by test files
-    "types": ["node", "vitest"],
-
-    "outDir": "dist", // Output directory for compiled files
-
-    //same as what we do in Spark , a node_modules folder at root level , with in that a subfolder named 'client'
-    "tsBuildInfoFile": "../../node_modules/.buildinfo/client",
-
-    //Allows TypeScript to compile JavaScript files
-    "allowJs": true,
-
-    //Disables type checking on .js files.
-    "checkJs": false,
-
-    //Ensures that functions always return a value.for example there is whole code of function wrapped under IF statment,
-    //then it will throw  Error: Not all code paths return a value.
-    "noImplicitReturns": true,
-
-    //Forces explicit undefined checks when accessing arrays or objects.
-    //for example let x = arr[0]; // Error: x might be undefined.
-    //to fix this let x: number[] | undefined or let x = arr[0] as number;
-    "noUncheckedIndexedAccess": true,
-
-    //Ensures function parameters are used.// Error: 'name' is unused.
-    "noUnusedParameters": true,
-
-    "strict": true,
-
-    "isolatedModules": true
+    "tsBuildInfoFile": "../../node_modules/.buildinfo/client"
   }
 }
