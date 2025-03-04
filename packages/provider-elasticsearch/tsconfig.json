@@ -6,8 +6,6 @@
   //It includes .ts, .tsx, .js, and .jsx
   "include": ["src/**/*"],
 
-  //compilerOptions inherited from tsconfig.all.jsonc are overridden here.
-  // i have taken reference from spark/web compilerOptions.In that also we are overridding
   "compilerOptions": {
     //Provides Node.js global types and  includes types for Vitest which is used by test files
     "types": ["node", "vitest"],
