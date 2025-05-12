@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.34.0
+
+### Minor Changes
+
+- ed93ab86: Add option to opt-out of merging highlights onto source
+
 ## 1.33.1
 
 ### Patch Changes
