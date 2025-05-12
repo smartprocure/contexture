@@ -11,6 +11,11 @@ interface HighlightConfig {
    */
   disable?: boolean
   /**
+   * By default, highlighted fragments are merged into `_source` unless this
+   * flat is set to `true`.
+   */
+  disableMergingOnSource?: boolean
+  /**
    * Paths that should be copied from source into the highlighted results.
    *
    * In the case of arrays of objects, nested paths get copied to every

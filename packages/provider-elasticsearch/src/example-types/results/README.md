@@ -152,7 +152,7 @@ In the spirit of keeping our API simple, we generate opinionated highlighting co
 
 ## 2. Response
 
-Currently the only supported behavior is to merge highlighted fragments into `_source` (we may provide an option to opt-out in the future). For this approach to work, fragments must contain the entire field value, so we set [number_of_fragments](https://www.elastic.co/guide/en/elasticsearch/reference/current/highlighting.html#highlighting-settings) to `0` in the request. The exception being blob text fields which set `number_of_fragments` to a number `> 0` since they're too big to highlight in their entirety.
+Currently we set [number_of_fragments](https://www.elastic.co/guide/en/elasticsearch/reference/current/highlighting.html#highlighting-settings) to `0` in the request to include the entire field value in highlighted fragments which makes UI implementations easier. The exception being blob text fields which set `number_of_fragments` to a number `> 0` since they're too big to highlight in their entirety.
 
 Assumming `subfield` to be a sub-field of `details`, the following rules apply when transforming the highlight response:
 
