@@ -18,7 +18,8 @@ let tags = {
 
 export let searchWithHighlights = (node, search, schema) => async (body) => {
   // Paths for fields to always include regardless of whether the user included
-  // them. They will be removed from the response hits so there's no harm done.
+  // them. They will be removed from the response hits so the user will not
+  // receive fields they did not request.
   let pathsToAdd = _.flatten(
     F.mapIndexed(
       (paths, arrayPath) => _.map((path) => `${arrayPath}.${path}`, paths),
@@ -53,7 +54,9 @@ export let searchWithHighlights = (node, search, schema) => async (body) => {
       hit.highlight = getResponseHighlight(schema, hit, tags, nestedPathsMap)
     }
     removePathsFromSource(schema, hit, addedPaths)
-    mergeHighlightsOnSource(schema, hit)
+    if (!node.highlight?.disableMergingOnSource) {
+      mergeHighlightsOnSource(schema, hit)
+    }
   }
 
   return response
