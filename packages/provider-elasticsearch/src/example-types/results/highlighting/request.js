@@ -181,7 +181,14 @@ export let getRequestHighlightFields = (schema, node) => {
     )
     if (!_.isEmpty(pathsToReplace)) {
       let regexp = new RegExp(_.join('|', pathsToReplace), 'g')
-      return JSON.parse(_.replace(regexp, path, queryStr))
+      const fieldGroupTransformed = _.replace(regexp, path, queryStr)
+      // Anytime that we have a group field, we need to replace `must` with
+      // `should` to ensure all the searched text is highlighted. This is safe
+      // because the query already returns the correct results and this is just
+      // ensuring that the highlights are correct.
+      // IE. if we search for `foo` and `bar` and the field group contains both
+      // but foo and bar are not in the same field, we want to highlight both still.
+      return JSON.parse(_.replace(/\bmust\b/g, 'should', fieldGroupTransformed))
     }
   }
 
