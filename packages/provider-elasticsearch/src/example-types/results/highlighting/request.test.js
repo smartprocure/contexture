@@ -380,7 +380,7 @@ describe('getRequestHighlightFields()', () => {
     }
     let query = (field) => ({
       bool: {
-        must: [
+        should: [
           { terms: { [field]: 'memphis' } },
           { query_string: { query: 'memphis', default_field: field } },
         ],
@@ -442,7 +442,7 @@ describe('getRequestHighlightFields()', () => {
     }
     let query = (field) => ({
       bool: {
-        must: [
+        should: [
           { terms: { [field]: 'memphis' } },
           { query_string: { query: 'memphis', default_field: field } },
         ],
