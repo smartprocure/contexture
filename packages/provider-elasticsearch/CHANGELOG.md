@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.34.1
+
+### Patch Changes
+
+- ecf4ba68: Fix highlighting related to multiple matches for separate fields in field group all searches.
+
 ## 1.34.0
 
 ### Minor Changes
