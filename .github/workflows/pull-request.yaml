@@ -23,7 +23,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: MONGOMS_DISTRO=rhel-9.0 yarn install --immutable
 
       - name: Lint
         uses: wearerequired/lint-action@v2
