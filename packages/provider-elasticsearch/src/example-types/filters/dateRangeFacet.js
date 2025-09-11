@@ -7,13 +7,13 @@ import {
 
 const typeToFields = {
   range: {
-    fromField: "gte",
-    toField: "lte"
+    fromField: 'gte',
+    toField: 'lte',
   },
   date_range: {
-    fromField: "from",
-    toField: "to"
-  }
+    fromField: 'from',
+    toField: 'to',
+  },
 }
 
 let getDateRange = (range, timezone, type) => {
