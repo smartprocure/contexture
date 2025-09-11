@@ -5,15 +5,47 @@ import {
   rollingRangeToDates,
 } from 'contexture-util/dateUtil.js'
 
-let getDateRange = (range, timezone) => {
+const typeToFields = {
+  range: {
+    fromField: "gte",
+    toField: "lte"
+  },
+  date_range: {
+    fromField: "from",
+    toField: "to"
+  }
+}
+
+let getDateRange = (range, timezone, type) => {
   let { from, to } = rollingRangeToDates(range, timezone)
+  let { fromField, toField } = typeToFields[type]
+
   return F.compactObject({
-    gte: getDateIfValid(from),
-    lte: getDateIfValid(to),
+    [fromField]: getDateIfValid(from),
+    [toField]: getDateIfValid(to),
   })
 }
 
-export default {
+const genAggsQuery = (field, format, ranges, timezone) => ({
+  aggs: {
+    range: {
+      date_range: {
+        field,
+        format: format || 'date_optional_time',
+        ranges: _.map(
+          ({ range, key }) => ({
+            key,
+            ...getDateRange(range, timezone, 'date_range'),
+          }),
+          ranges
+        ),
+      },
+    },
+  },
+  size: 0,
+})
+
+var dateRangeFacet_default = {
   hasValue: _.get('values.length'),
   /**
    * VALID CONTEXT
@@ -37,12 +69,11 @@ export default {
         range: {
           [field]: {
             format: 'date_optional_time',
-            ...getDateRange(range, timezone),
+            ...getDateRange(range, timezone, 'range'),
           },
         },
       }))
     )(ranges)
-
     return { bool: { should } }
   },
   /**
@@ -56,24 +87,7 @@ export default {
       ]
    */
   async result({ field, format, timezone = 'UTC', ranges }, search) {
-    let counts = await search({
-      aggs: {
-        range: {
-          date_range: {
-            field,
-            format: format || 'date_optional_time',
-            ranges: _.map(
-              ({ range, key }) => ({
-                key,
-                ...getDateRange(range, timezone),
-              }),
-              ranges
-            ),
-          },
-        },
-      },
-      size: 0,
-    })
+    let counts = await search(genAggsQuery(field, format, ranges, timezone))
     return {
       options: _.flow(
         _.get('aggregations.range.buckets'),
@@ -85,3 +99,5 @@ export default {
     }
   },
 }
+
+export { dateRangeFacet_default as default, genAggsQuery }
