@@ -8,8 +8,8 @@ import {
 let getDateRange = (range, timezone) => {
   let { from, to } = rollingRangeToDates(range, timezone)
   return F.compactObject({
-    from: getDateIfValid(from),
-    to: getDateIfValid(to),
+    gte: getDateIfValid(from),
+    lte: getDateIfValid(to),
   })
 }
 
