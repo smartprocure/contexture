@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.34.2
+
+### Patch Changes
+
+- cb0212419: Changed deprecated from to gte for range query
+
 ## 1.34.1
 
 ### Patch Changes
