@@ -258,4 +258,59 @@ describe('dateIntervalGroupStats', () => {
       },
     })
   })
+  it('should accept offset parameter', () => {
+    expect(
+      buildQuery({
+        key: 'test',
+        type: 'dateIntervalGroupStats',
+        groupField: 'PO.IssuedDate',
+        statsField: 'LineItem.TotalPrice',
+        offset: '+92d',
+      })
+    ).toEqual({
+      aggs: {
+        groups: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            calendar_interval: 'year',
+            min_doc_count: 0,
+            offset: '+92d',
+          },
+          aggs: {
+            min: { min: { field: 'LineItem.TotalPrice' } },
+            max: { max: { field: 'LineItem.TotalPrice' } },
+            avg: { avg: { field: 'LineItem.TotalPrice' } },
+            sum: { sum: { field: 'LineItem.TotalPrice' } },
+          },
+        },
+      },
+    })
+  })
+  it('should accept minDocCount parameter', () => {
+    expect(
+      buildQuery({
+        key: 'test',
+        type: 'dateIntervalGroupStats',
+        groupField: 'PO.IssuedDate',
+        statsField: 'LineItem.TotalPrice',
+        minDocCount: 1,
+      })
+    ).toEqual({
+      aggs: {
+        groups: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            calendar_interval: 'year',
+            min_doc_count: 1,
+          },
+          aggs: {
+            min: { min: { field: 'LineItem.TotalPrice' } },
+            max: { max: { field: 'LineItem.TotalPrice' } },
+            avg: { avg: { field: 'LineItem.TotalPrice' } },
+            sum: { sum: { field: 'LineItem.TotalPrice' } },
+          },
+        },
+      },
+    })
+  })
 })
