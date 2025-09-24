@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.35.0
+
+### Minor Changes
+
+- dcc46da2e: Accept more parameters in dateIntervalGroupStats query
+
 ## 1.34.3
 
 ### Patch Changes
