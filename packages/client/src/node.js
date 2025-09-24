@@ -30,6 +30,7 @@ export let internalStateKeys = [
   'onMarkForUpdate',
   'afterSearch',
   'forceReplaceResponse',
+  'wasUpdatedByOthers',
   'expand',
   'collapse',
 ]
