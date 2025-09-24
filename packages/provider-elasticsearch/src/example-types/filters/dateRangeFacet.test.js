@@ -3,7 +3,7 @@ import {
   getDateIfValid,
   rollingRangeToDates,
 } from 'contexture-util/dateUtil.js'
-import dateRangeFacet from './dateRangeFacet.js'
+import dateRangeFacet, { genAggsQuery } from './dateRangeFacet.js'
 import { expect, describe, it } from 'vitest'
 
 let commonFilterParts = {
@@ -64,6 +64,62 @@ describe('dateRangeFacet/filter', () => {
           },
         ],
       },
+    })
+  })
+})
+
+describe('genAggsQuery', () => {
+  it('should generate correct aggregation query with default format', () => {
+    const field = 'test_field'
+    const ranges = [
+      { range: 'allFutureDates', key: 'future' },
+      { range: 'allPastDates', key: 'past' },
+    ]
+    const timezone = 'UTC'
+
+    const result = genAggsQuery(field, undefined, ranges, timezone)
+
+    expect(result).toEqual({
+      aggs: {
+        range: {
+          date_range: {
+            field: 'test_field',
+            format: 'date_optional_time',
+            ranges: [
+              {
+                key: 'future',
+                from: getDatePart('allFutureDates', 'from'),
+              },
+              {
+                key: 'past',
+                to: getDatePart('allPastDates', 'to'),
+              },
+            ],
+          },
+        },
+      },
+      size: 0,
+    })
+  })
+
+  it('should handle empty ranges array', () => {
+    const field = 'empty_field'
+    const ranges = []
+    const timezone = 'UTC'
+
+    const result = genAggsQuery(field, undefined, ranges, timezone)
+
+    expect(result).toEqual({
+      aggs: {
+        range: {
+          date_range: {
+            field: 'empty_field',
+            format: 'date_optional_time',
+            ranges: [],
+          },
+        },
+      },
+      size: 0,
     })
   })
 })

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.34.3
+
+### Patch Changes
+
+- 4d5919520: date_range agg uses from/to
+
 ## 1.34.2
 
 ### Patch Changes
