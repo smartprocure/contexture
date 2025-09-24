@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.0
+
+### Minor Changes
+
+- a264b8a9a: Run onUpdateByOthers after search results come back
+
 ## 2.57.0
 
 ### Minor Changes
