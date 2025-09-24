@@ -48,7 +48,13 @@ let drilldown = ({ field, interval, drilldown, monthOffset = 3 }) => {
 }
 
 let buildGroupQuery = (node, children, groupsKey) => {
-  let { field, interval = 'year', monthOffset = 3 } = node
+  let {
+    field,
+    interval = 'year',
+    monthOffset = 3,
+    minDocCount = 0,
+    offset,
+  } = node
   let fiscalOrField = fieldFiscalMappingOr(interval)
   interval = toElasticInterval(interval)
 
@@ -72,7 +78,8 @@ let buildGroupQuery = (node, children, groupsKey) => {
           }),
           field: fiscalOrField(field),
           calendar_interval: interval,
-          min_doc_count: 0,
+          min_doc_count: minDocCount,
+          offset,
         },
         ...children,
       },
