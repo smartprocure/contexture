@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.1
+
+### Patch Changes
+
+- Revert back to running onUpdateByOthers before running the search
+
 ## 2.58.0
 
 ### Minor Changes
