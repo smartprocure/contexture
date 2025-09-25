@@ -134,14 +134,19 @@ export let ContextTree = _.curry(
         _.map(snapshot),
         _.find({ path: snapshot(event.path) })
       )(updatedNodes)
-      if (!affectsSelf)
-        await Promise.all(
-          _.map((n) => {
+      await Promise.all(
+        _.map(
+          (n) => {
             // When updated by others, force replace instead of merge response
             extend(n, { forceReplaceResponse: true })
             runTypeFunction(types, 'onUpdateByOthers', n, actionProps)
-          }, updatedNodes)
+          },
+          _.remove(
+            (n) => _.isEqual(snapshot(n.path), snapshot(event.path)),
+            updatedNodes
+          )
         )
+      )
 
       // If disableAutoUpdate but this dispatch affects the target node, update *just* that node (to allow things like paging changes to always go through)
       // The assumption here is that any event that affects the target node would likely be assumed to take effect immediately by end users
