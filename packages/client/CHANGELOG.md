@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.2
+
+### Patch Changes
+
+- 9e14e0017: Revert onUpdateByOthers change
+
 ## 2.58.1
 
 ### Patch Changes
