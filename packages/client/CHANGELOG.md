@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.59.0
+
+### Minor Changes
+
+- 075257afb: Call onUpdateByOthers on properties that have an 'all' reactor
+
 ## 2.58.2
 
 ### Patch Changes
