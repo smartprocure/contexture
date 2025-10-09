@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.36.0
+
+### Minor Changes
+
+- c42464c41: Increase the number of highlights on blob types to 5.
+
 ## 1.35.0
 
 ### Minor Changes
