@@ -347,11 +347,11 @@ describe('getRequestHighlightFields()', () => {
     expect(actual).toEqual({
       state: {
         fragment_size: 250,
-        number_of_fragments: 3,
+        number_of_fragments: 5,
       },
       'state.subfield': {
         fragment_size: 250,
-        number_of_fragments: 3,
+        number_of_fragments: 5,
       },
     })
   })

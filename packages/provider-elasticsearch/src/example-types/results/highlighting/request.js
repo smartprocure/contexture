@@ -156,7 +156,7 @@ let collectKeysAndValues = (predicate, coll) => {
 
 let blobConfiguration = {
   fragment_size: 250,
-  number_of_fragments: 3,
+  number_of_fragments: 5,
 }
 
 /*
