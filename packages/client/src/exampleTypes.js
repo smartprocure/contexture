@@ -150,6 +150,7 @@ export default F.stampKey('type', {
       sortField: 'self',
       sortDir: 'self',
       include: 'self',
+      tableColumns: 'self',
     },
     defaults: {
       page: 1,
