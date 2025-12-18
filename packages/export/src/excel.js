@@ -9,8 +9,8 @@ let indexColumnBackgroundColor = '#bbbbbb'
 
 const convertToExcelCell = (value, index) => {
   if (value?.meta?.__isHyperlink) {    
-    const excelSafeUrl = value.url.replace(/"/g, '""');
-    const displayValue = value.meta.__alias || excelSafeUrl || '';
+    const excelSafeUrl = value?.url?.replace(/"/g, '""')||'';
+    const displayValue = value?.meta?.__alias || excelSafeUrl || '';
     return {
       value: `HYPERLINK("${excelSafeUrl}", "${displayValue}")`,
       type: 'Formula',
