@@ -1,6 +1,6 @@
-# Release Notes: contexture-export
-
-## [Patch] - Hyperlink Support for Excel Exports
+---
+'contexture-export': patch
+---
 
 ### Overview
 
