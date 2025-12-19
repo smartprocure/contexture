@@ -1,6 +1,6 @@
-# Release Notes: contexture-export
-
-## [Patch] - Hyperlink Support for Excel Exports
+---
+"contexture-export": patch
+---
 
 ### Overview
 
@@ -19,10 +19,9 @@ To render a cell as a link, the record data for that cell must follow this struc
 
 ```json
 {
-  "url": "https://example.com/detail/123",
+  "url": "[https://example.com/detail/123](https://example.com/detail/123)",
   "meta": {
     "__isHyperlink": true,
     "__alias": "Click to Open Link"
   }
 }
-```
