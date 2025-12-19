@@ -1,5 +1,5 @@
 ---
-"contexture-export": patch
+'contexture-export': patch
 ---
 
 ### Overview
@@ -25,3 +25,4 @@ To render a cell as a link, the record data for that cell must follow this struc
     "__alias": "Click to Open Link"
   }
 }
+```
