@@ -12,8 +12,8 @@ import {
 } from './response.js'
 
 let tags = {
-  pre: '<b class="search-highlight">',
-  post: '</b>',
+  pre: '<em class="search-highlight">',
+  post: '</em>',
 }
 
 export let searchWithHighlights = (node, search, schema) => async (body) => {
