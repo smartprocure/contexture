@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.61.0
+
+### Minor Changes
+
+- 5f6603408: Add tableColumns reactor to results type
+
 ## 2.60.0
 
 ### Minor Changes

@@ -8,6 +8,14 @@ let headerBackgroundColor = '#999999'
 let indexColumnBackgroundColor = '#bbbbbb'
 
 const convertToExcelCell = (value, index) => {
+  if (value?.meta?.__isHyperlink) {
+    const displayValue = value?.meta?.__alias || value?.url || 'Link'
+    return {
+      value: `HYPERLINK("${value?.url}", "${displayValue}")`,
+      type: 'Formula',
+      wrap: true,
+    }
+  }
   return {
     wrap: true,
     value: value ? `${value}` : ``,
