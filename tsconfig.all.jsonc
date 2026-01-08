@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowUnreachableCode": false, // Prevents accidental execution of unreachable code.
+    "allowUnusedLabels": false, // Disallows unused labels to avoid confusion in code.
+    "noFallthroughCasesInSwitch": true, // Ensures every switch case explicitly handles its execution flow.
+    "noUnusedLocals": true, // Reports unused local variables to keep the code clean.
+    "noErrorTruncation": true, // Prevents truncation of error messages for better debugging.
+    "isolatedModules": true, // Ensures each module can be transpiled independently for better tooling support.
+    "verbatimModuleSyntax": true, // Enforces explicit use of `type` imports for type-only dependencies.
+    "module": "nodenext", // Uses the ES module system compatible with Node.js.
+    "moduleResolution": "nodenext", // Resolves modules as per Node.js ESM standards.
+    "resolveJsonModule": true, // Allows importing JSON files as modules.
+    "types": ["vitest/globals"], // Provides Node.js global types and includes Vitest types.
+    "jsx": "react", // Specifies JSX transformation method for React applications.
+    "noEmitOnError": true, // Prevents output generation if there are TypeScript errors.
+    "incremental": true, // Enables incremental builds for better performance.
+    "noUncheckedIndexedAccess": true, // Forces explicit undefined checks when accessing arrays or objects.
+    "noUnusedParameters": true, // Ensures function parameters are used (reports unused ones).
+    "strict": true, // Enables all strict type-checking options (includes `strictNullChecks`, `noImplicitAny`, etc.).
+    "noEmit": true // Specifies the output directory for compiled files.
+  }
+}

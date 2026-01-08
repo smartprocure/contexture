@@ -7,6 +7,10 @@
   ],
   "scripts": {
     "foreach": "yarn workspaces foreach --no-private --parallel --verbose",
+    "build:tsc": "tsc --build --verbose",
+    "build": "yarn run build:tsc",
+    "build:watch": "tsc --build --verbose --watch --inlineSourceMap",
+    "build:clean": "tsc --build --clean",
     "version": "yarn changeset version && yarn install --mode=update-lockfile",
     "publish": "yarn foreach npm publish --tolerate-republish",
     "postinstall": "yarn foreach run prepack",
@@ -16,6 +20,7 @@
     "@changesets/cli": "^2.26.0",
     "@flex-development/toggle-pkg-type": "^1.0.1",
     "@vitest/coverage-v8": "^2.1.1",
+    "concurrently": "^9.1.2",
     "danger": "^11.2.3",
     "duti": "^0.15.2",
     "esbuild": "^0.17.5",
@@ -25,6 +30,8 @@
     "glob": "^8.1.0",
     "minimist": "^1.2.7",
     "prettier": "^2.8.3",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3",
     "vitest": "^2.1.1"
   },
   "packageManager": "yarn@3.3.1"
