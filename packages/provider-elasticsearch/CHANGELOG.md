@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.37.0
+
+### Minor Changes
+
+- 9c06ef7e9: Change default elastic highlight tags from b to span
+
 ## 1.36.0
 
 ### Minor Changes
