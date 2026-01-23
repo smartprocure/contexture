@@ -147,6 +147,7 @@ export default F.stampKey('type', {
     reactors: {
       page: 'self',
       pageSize: 'self',
+      sort: 'self',
       sortField: 'self',
       sortDir: 'self',
       include: 'self',
