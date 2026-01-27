@@ -1,9 +1,10 @@
 import F from 'futil'
+import _ from 'lodash/fp.js'
 import { getField } from '../../utils/fields.js'
 import { searchWithHighlights } from './highlighting/search.js'
 
 export let getSortParameter = ({ sort, sortField, sortDir }, schema) => {
-  if (sort) {
+  if (!_.isEmpty(sort)) {
     return Object.fromEntries(
       sort.map(({ field, desc }) => [
         getField(schema, field),

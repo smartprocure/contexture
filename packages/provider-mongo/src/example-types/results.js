@@ -113,7 +113,7 @@ let projectFromInclude = (include) =>
   )(include)
 
 export let getSortStage = ({ sort, sortField, sortDir }) => {
-  if (sort) {
+  if (!_.isEmpty(sort)) {
     return [
       {
         $sort: Object.fromEntries(
