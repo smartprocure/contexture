@@ -2196,7 +2196,7 @@ __metadata:
   dependencies:
     "@elastic/elasticsearch": ^7.11.0
     agentkeepalive: ^4.1.4
-    contexture: ^0.12.24
+    contexture: ^0.13.0
     contexture-util: ^0.1.2
     debug: ^4.3.1
     escape-string-regexp: ^5.0.0
@@ -2227,7 +2227,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "contexture-mongo@workspace:packages/provider-mongo"
   dependencies:
-    contexture: ^0.12.23
+    contexture: ^0.13.0
     contexture-util: ^0.1.2
     debug: ^4.3.1
     futil: ^1.76.4
@@ -2268,7 +2268,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture@^0.12.23, contexture@^0.12.24, contexture@workspace:packages/server":
+"contexture@^0.13.0, contexture@workspace:packages/server":
   version: 0.0.0-use.local
   resolution: "contexture@workspace:packages/server"
   dependencies:
