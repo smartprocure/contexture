@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.62.0
+
+### Minor Changes
+
+- a76313e0a: Support sorting on multiple fields
+
 ## 2.61.0
 
 ### Minor Changes

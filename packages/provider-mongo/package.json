@@ -1,6 +1,6 @@
 {
   "name": "contexture-mongo",
-  "version": "0.26.21",
+  "version": "0.27.0",
   "description": "Mongo Provider for Contexture",
   "type": "module",
   "exports": {
@@ -47,7 +47,7 @@
     "mongodb": ">=4.0.0"
   },
   "devDependencies": {
-    "contexture": "^0.12.23",
+    "contexture": "^0.13.0",
     "mongodb-memory-server": "^9.1.1"
   }
 }

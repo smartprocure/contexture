@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.27.0
+
+### Minor Changes
+
+- a76313e0a: Support sorting on multiple fields
+
 ## 0.26.21
 
 ### Patch Changes
