@@ -80,12 +80,10 @@ await csv(
         - `include`: An array with the list of fields that will
           be included on each retrieved record. This is relevant to the
           `results` type. It's undefined by default (which is valid).
-        - `sortField`: Specifies what field will be used to sort the data.
-          This is relevant to the `results` type. It's undefined by default
-          (which is valid).
-        - `sortDir`: Specifies in which direction the data will be sorted
-          (`asc` or `desc`). This is relevant to the `results` type. It's
-          undefined by default (which is valid).
+        - `sort`: Specifies which fields will be used to sort the data.
+          This is relevant to the `results` type. It's undefined by default.
+        - `sortField`: Deprecated, use `sort`.
+        - `sortDir`: Deprecated, use `sort`.
         - `pageSize`: It allows you to specify how many records per page
           (per call of `getNext`) are returned. It defaults to 100.
         - `page`: Indicates the starting page of the specified search.

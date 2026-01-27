@@ -1,5 +1,5 @@
 import F from 'futil'
-import result from './results.js'
+import result, { getSortStage } from './results.js'
 import { describe, expect, it } from 'vitest'
 
 let {
@@ -547,5 +547,26 @@ describe('results', () => {
       let schema = { fields: { createdBy: true, _createdByOrganization: true } }
       expect(() => checkPopulate(node, schema)).not.toThrowError()
     })
+  })
+})
+
+describe(getSortStage, () => {
+  it('sort on multiple fields', () => {
+    const actual = getSortStage({
+      sort: [{ field: 'name' }, { field: 'age', desc: true }],
+      sortField: 'city',
+      sortDir: 'asc',
+    })
+    const expected = [{ $sort: { name: 1, age: -1 } }]
+    expect(actual).toEqual(expected)
+  })
+
+  it('legacy sort on single field', () => {
+    const actual = getSortStage({
+      sortField: 'name',
+      sortDir: 'asc',
+    })
+    const expected = [{ $sort: { name: 1 } }]
+    expect(actual).toEqual(expected)
   })
 })

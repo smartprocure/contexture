@@ -112,26 +112,40 @@ let projectFromInclude = (include) =>
     _.countBy(_.identity)
   )(include)
 
+export let getSortStage = ({ sort, sortField, sortDir }) => {
+  if (!_.isEmpty(sort)) {
+    return [
+      {
+        $sort: Object.fromEntries(
+          sort.map(({ field, desc }) => [field, desc ? -1 : 1])
+        ),
+      },
+    ]
+  }
+  if (sortField) {
+    return [{ $sort: { [sortField]: sortDir === 'asc' ? 1 : -1 } }]
+  }
+  return []
+}
+
 let getResultsQuery = (node, getSchema, startRecord) => {
-  let { pageSize, sortField, sortDir, populate, include, skipCount } = node
+  let { pageSize, sortField, sort, populate, include, skipCount } = node
 
   // $sort, $skip, $limit
-  let $sort = {
-    $sort: {
-      [sortField]: sortDir === 'asc' ? 1 : -1,
-    },
-  }
+  let $sort = getSortStage(node)
 
   let $limit = { $limit: F.when(skipCount, _.add(1), pageSize) }
-  let sort = _.compact([sortField && $sort])
   let skipLimit = _.compact([{ $skip: startRecord }, pageSize > 0 && $limit])
-  let sortSkipLimit = _.compact([...sort, ...skipLimit])
-  // If sort field is a join field move $sort, $skip, and $limit to after $lookup.
-  // Otherwise, place those stages first to take advantage of any indexes on that field.
+  let sortSkipLimit = _.compact([...$sort, ...skipLimit])
+  // If any sort fields is a join field move $sort, $skip, and $limit to after
+  // $lookup. Otherwise, place those stages first to take advantage of any
+  // indexes on the sort fields.
   let sortOnJoinField = _.some((x) => {
     let lookupField = _.getOr(x, `${x}.as`, populate)
-    return (
-      _.startsWith(`${lookupField}.`, sortField) || sortField === lookupField
+    return _.some(
+      ({ field: sortField }) =>
+        _.startsWith(`${lookupField}.`, sortField) || sortField === lookupField,
+      sort ?? [{ field: sortField }]
     )
   }, _.keys(populate))
   // check if any of the "populate" fields are indicating they can have more than one record
@@ -143,8 +157,9 @@ let getResultsQuery = (node, getSchema, startRecord) => {
 
   return [
     ...(!sortOnJoinField && !hasMany ? sortSkipLimit : []),
-    // if "hasMany" is set on a "populate" field but we are not sorting on a "populate" field, sort as early as possible
-    ...(hasMany && !sortOnJoinField ? sort : []),
+    // if "hasMany" is set on a "populate" field but we are not sorting on a
+    // "populate" field, sort as early as possible
+    ...(hasMany && !sortOnJoinField ? $sort : []),
     ...convertPopulate(getSchema)(populate),
     ...(sortOnJoinField ? sortSkipLimit : []),
     ...(hasMany && !sortOnJoinField ? skipLimit : []),
