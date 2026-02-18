@@ -1,5 +1,11 @@
 # contexture-util
 
+## 0.2.0
+
+### Minor Changes
+
+- 894ef9d3f: Add today date range
+
 ## 0.1.2
 
 ### Patch Changes

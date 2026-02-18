@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.38.1
+
+### Patch Changes
+
+- Updated dependencies [894ef9d3f]
+  - contexture-util@0.2.0
+
 ## 1.38.0
 
 ### Minor Changes
