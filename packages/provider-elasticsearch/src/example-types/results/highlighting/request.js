@@ -198,11 +198,22 @@ export let getRequestHighlightFields = (schema, node) => {
   // are currently using to work around performance issues when highlighting
   // fields not included in the node.
   if (!node.highlight?.highlightOtherMatches && _.isArray(node.include)) {
+    const include = expandGlobs(schema, node.include)
     let subFields = getSchemaSubFields({
-      fields: _.pick(node.include, schema.fields),
+      fields: _.pick(include, schema.fields),
     })
     highlightFields = _.pick(
-      _.uniq([...node.include, ..._.keys(subFields)]),
+      _.uniq([...include, ..._.keys(subFields)]),
+      highlightFields
+    )
+  }
+  if (_.isArray(node.exclude)) {
+    const exclude = expandGlobs(schema, node.exclude)
+    let subFields = getSchemaSubFields({
+      fields: _.pick(exclude, schema.fields),
+    })
+    highlightFields = _.omit(
+      _.uniq([...exclude, ..._.keys(subFields)]),
       highlightFields
     )
   }

@@ -464,4 +464,112 @@ describe('getRequestHighlightFields()', () => {
       },
     })
   })
+  it('should expand include', () => {
+    const schema = {
+      fields: {
+        state: {
+          elasticsearch: {
+            dataType: 'text',
+            mapping: {
+              fields: {
+                keyword: { type: 'keyword' },
+                subfield: { type: 'text' },
+              },
+            },
+          },
+        },
+        'city.street': {
+          elasticsearch: {
+            dataType: 'text',
+            mapping: {
+              fields: {
+                keyword: { type: 'keyword' },
+                subfield: { type: 'text' },
+              },
+            },
+          },
+        },
+      },
+    }
+    const node = { include: ['city'] }
+    const actual = getRequestHighlightFields(schema, node)
+    expect(actual).toEqual({
+      'city.street': {},
+      'city.street.subfield': {},
+    })
+  })
+  it('should expand exclude, irrespective of highlightOtherMatches', () => {
+    const schema = {
+      fields: {
+        state: {
+          elasticsearch: {
+            dataType: 'text',
+            mapping: {
+              fields: {
+                keyword: { type: 'keyword' },
+                subfield: { type: 'text' },
+              },
+            },
+          },
+        },
+        'city.street': {
+          elasticsearch: {
+            dataType: 'text',
+            mapping: {
+              fields: {
+                keyword: { type: 'keyword' },
+                subfield: { type: 'text' },
+              },
+            },
+          },
+        },
+      },
+    }
+    const node1 = {
+      exclude: ['city'],
+      highlight: { highlightOtherMatches: true },
+    }
+    const actual1 = getRequestHighlightFields(schema, node1)
+    expect(actual1).toEqual({ state: {}, 'state.subfield': {} })
+    const node2 = {
+      exclude: ['city'],
+      highlight: { highlightOtherMatches: false },
+    }
+    const actual2 = getRequestHighlightFields(schema, node2)
+    expect(actual2).toEqual({ state: {}, 'state.subfield': {} })
+  })
+  it('should handle both include and exclude', () => {
+    const schema = {
+      fields: {
+        state: {
+          elasticsearch: {
+            dataType: 'text',
+            mapping: {
+              fields: {
+                keyword: { type: 'keyword' },
+                subfield: { type: 'text' },
+              },
+            },
+          },
+        },
+        'city.street': {
+          elasticsearch: {
+            dataType: 'text',
+            mapping: {
+              fields: {
+                keyword: { type: 'keyword' },
+                subfield: { type: 'text' },
+              },
+            },
+          },
+        },
+      },
+    }
+    const node = {
+      include: ['state'],
+      exclude: ['state'],
+    }
+    const actual = getRequestHighlightFields(schema, node)
+    expect(actual).toEqual({})
+  })
 })
