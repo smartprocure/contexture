@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.38.2
+
+### Patch Changes
+
+- a820fae15: Handle node `exclude` while highlighting, that is, remove the excluded fields from highlighting. Also, expand `include` to handle glob expansion for highlighting.
+
 ## 1.38.1
 
 ### Patch Changes
