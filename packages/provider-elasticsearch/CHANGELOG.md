@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.38.3
+
+### Patch Changes
+
+- 050f8f4ac: node.exclude is removed from highlighting only when `highlightOtherMatches` is falsy.
+
 ## 1.38.2
 
 ### Patch Changes
