@@ -498,7 +498,7 @@ describe('getRequestHighlightFields()', () => {
       'city.street.subfield': {},
     })
   })
-  it('should expand exclude, irrespective of highlightOtherMatches', () => {
+  it('should expand exclude,  depending on highlightOtherMatches', () => {
     const schema = {
       fields: {
         state: {
@@ -530,7 +530,12 @@ describe('getRequestHighlightFields()', () => {
       highlight: { highlightOtherMatches: true },
     }
     const actual1 = getRequestHighlightFields(schema, node1)
-    expect(actual1).toEqual({ state: {}, 'state.subfield': {} })
+    expect(actual1).toEqual({
+      state: {},
+      'state.subfield': {},
+      'city.street': {},
+      'city.street.subfield': {},
+    })
     const node2 = {
       exclude: ['city'],
       highlight: { highlightOtherMatches: false },
